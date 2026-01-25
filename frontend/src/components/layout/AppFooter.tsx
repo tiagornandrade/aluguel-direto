@@ -8,6 +8,7 @@ export function AppFooter() {
         <div className="flex gap-6">
           <Link href="/termos" className="text-sm text-muted dark:text-gray-400 hover:text-primary">Termos</Link>
           <Link href="/termos" className="text-sm text-muted dark:text-gray-400 hover:text-primary">Privacidade</Link>
+          <Link href="#" className="text-sm text-muted dark:text-gray-400 hover:text-primary">Suporte</Link>
         </div>
       </div>
     </footer>
