@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Histórico de Pagamentos e Recibos | SaaS Aluguel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .status-badge-pago {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .status-badge-pendente {
+            background-color: #fef9c3;
+            color: #854d0e;
+        }
+        .status-badge-atrasado {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<div class="flex h-full min-h-screen">
+<!-- SideNavBar -->
+<aside class="w-64 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark hidden lg:flex flex-col fixed h-full">
+<div class="flex flex-col h-full p-4">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="bg-primary rounded-lg p-2 text-white">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">SaaS Aluguel</h1>
+<p class="text-[#636f88] text-xs font-normal">Administrador</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 grow">
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-sm font-medium">Imóveis</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<p class="text-sm font-medium">Contratos</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white shadow-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<p class="text-sm font-medium">Financeiro</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">chat</span>
+<p class="text-sm font-medium">Mensagens</p>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-full bg-cover" data-alt="Foto de perfil do usuário" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUXP2-xpR9NROT4beBoW4LSHjCvd_N3x3tvs2Em7EburhTFtR8IJmLNq5Mpg_98TrC9TQ97kXK4nEEH0raijDHrdFgJuVbb81ktZUDTA_LjcubeD94wzX_VsLK7SDdIq-ETyZlviNsvN9yEZSpwyYsB-9HTE8iE3iuEr5mIAu4zgnrWYMUqWd_Y6Qyt2WQRFCbNLxmb57ayMqPkikffh3tawub8h94S4Qsx6yNos9dqblNxAoV92UxgRk4VY9Vxv4NdSb3RFt3E9M");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-gray-800 dark:text-gray-200">João Silva</p>
+<p class="text-xs text-gray-500">Proprietário</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-64 p-4 md:p-8">
+<div class="max-w-6xl mx-auto space-y-6">
+<!-- PageHeading -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-tight">Histórico de Pagamentos e Recibos</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-base font-normal">Gerencie seus recebimentos e acesse recibos digitais de forma transparente.</p>
+</div>
+<button class="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Exportar Relatório
+                    </button>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800 shadow-sm">
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-medium uppercase tracking-wider">Total Recebido no Ano</p>
+<p class="text-[#111318] dark:text-white tracking-tight text-3xl font-bold">R$ 45.200,00</p>
+<div class="flex items-center gap-1">
+<span class="text-[#07883b] text-sm font-bold">+12%</span>
+<span class="text-gray-400 text-xs">em relação ao ano anterior</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800 shadow-sm">
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-medium uppercase tracking-wider">Próximo Vencimento</p>
+<p class="text-[#111318] dark:text-white tracking-tight text-3xl font-bold">10/11/2023</p>
+<p class="text-gray-500 text-sm">Valor previsto: R$ 3.800,00</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-800 shadow-sm">
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-medium uppercase tracking-wider">Pendências em Aberto</p>
+<p class="text-[#111318] dark:text-white tracking-tight text-3xl font-bold">02</p>
+<p class="text-red-500 text-sm font-medium">Atenção necessária</p>
+</div>
+</div>
+<!-- Filters and Tabs Section -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
+<!-- Tabs -->
+<div class="border-b border-gray-200 dark:border-gray-800 px-4 flex flex-wrap gap-6">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-primary pb-3 pt-4" href="#">
+<p class="text-sm font-bold tracking-tight">Todos os Pagamentos</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#636f88] pb-3 pt-4 hover:text-gray-800 transition-colors" href="#">
+<p class="text-sm font-bold tracking-tight">Recebidos</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#636f88] pb-3 pt-4 hover:text-gray-800 transition-colors" href="#">
+<p class="text-sm font-bold tracking-tight">Pendentes</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#636f88] pb-3 pt-4 hover:text-gray-800 transition-colors" href="#">
+<p class="text-sm font-bold tracking-tight">Atrasados</p>
+</a>
+</div>
+<!-- SearchBar & Filters -->
+<div class="p-4 flex flex-col md:flex-row gap-3">
+<div class="flex-1">
+<label class="flex flex-col h-11 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-gray-200 dark:border-gray-800 bg-[#f0f2f4] dark:bg-gray-900/50">
+<div class="text-[#636f88] flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full border-none bg-transparent focus:ring-0 text-base font-normal px-3" placeholder="Buscar por mês ou referência..."/>
+</div>
+</label>
+</div>
+<div class="flex gap-2">
+<select class="form-select rounded-lg border-gray-200 dark:border-gray-800 bg-[#f0f2f4] dark:bg-gray-900/50 text-sm font-medium focus:ring-primary h-11">
+<option>Ano: 2023</option>
+<option>Ano: 2022</option>
+</select>
+<button class="bg-[#f0f2f4] dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-lg px-3 flex items-center gap-2 text-gray-600 dark:text-gray-400">
+<span class="material-symbols-outlined">filter_list</span>
+<span class="text-sm font-medium">Filtros</span>
+</button>
+</div>
+</div>
+<!-- Payments Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-gray-800/50 border-y border-gray-200 dark:border-gray-800">
+<th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Mês de Referência</th>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Vencimento</th>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Valor Total</th>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Status</th>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-gray-900 dark:text-white">Outubro 2023</p>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">10/10/2023</td>
+<td class="px-6 py-4 text-sm font-bold text-gray-900 dark:text-white">R$ 3.800,00</td>
+<td class="px-6 py-4 text-center">
+<span class="status-badge-pago px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide inline-block">Pago</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg title='Download Recibo'">
+<span class="material-symbols-outlined">download_for_offline</span>
+</button>
+<button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg title='Ver Detalhes'">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-gray-900 dark:text-white">Setembro 2023</p>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">10/09/2023</td>
+<td class="px-6 py-4 text-sm font-bold text-gray-900 dark:text-white">R$ 3.800,00</td>
+<td class="px-6 py-4 text-center">
+<span class="status-badge-pago px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide inline-block">Pago</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined">download_for_offline</span>
+</button>
+<button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 - Pendente -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-gray-900 dark:text-white">Novembro 2023</p>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">10/11/2023</td>
+<td class="px-6 py-4 text-sm font-bold text-gray-900 dark:text-white">R$ 3.800,00</td>
+<td class="px-6 py-4 text-center">
+<span class="status-badge-pendente px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide inline-block">Pendente</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-gray-300 cursor-not-allowed">
+<span class="material-symbols-outlined">download_for_offline</span>
+</button>
+<button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 - Atrasado -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-gray-900 dark:text-white">Agosto 2023 (Multa)</p>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">10/08/2023</td>
+<td class="px-6 py-4 text-sm font-bold text-red-600">R$ 4.020,00</td>
+<td class="px-6 py-4 text-center">
+<span class="status-badge-atrasado px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide inline-block">Atrasado</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-gray-300 cursor-not-allowed">
+<span class="material-symbols-outlined">download_for_offline</span>
+</button>
+<button class="p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+<p class="text-sm text-gray-500">Mostrando <span class="font-medium text-gray-900 dark:text-white">1-10</span> de <span class="font-medium text-gray-900 dark:text-white">24</span> pagamentos</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-gray-200 dark:border-gray-800 rounded text-sm text-gray-500 disabled:opacity-50" disabled="">Anterior</button>
+<button class="px-3 py-1 border border-primary bg-primary text-white rounded text-sm">1</button>
+<button class="px-3 py-1 border border-gray-200 dark:border-gray-800 rounded text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50">2</button>
+<button class="px-3 py-1 border border-gray-200 dark:border-gray-800 rounded text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50">3</button>
+<button class="px-3 py-1 border border-gray-200 dark:border-gray-800 rounded text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50">Próximo</button>
+</div>
+</div>
+</div>
+<!-- Receipt Promotion / Help Section -->
+<div class="bg-primary/5 rounded-xl p-6 border border-primary/10 flex flex-col md:flex-row items-center gap-6">
+<div class="bg-white dark:bg-background-dark p-3 rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-primary text-4xl">verified_user</span>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h3 class="text-gray-900 dark:text-white font-bold text-lg">Recibos Digitais Automatizados</h3>
+<p class="text-gray-600 dark:text-gray-400 text-sm">Todos os nossos recibos são gerados automaticamente após a confirmação do pagamento e possuem validade jurídica conforme a legislação vigente.</p>
+</div>
+<button class="whitespace-nowrap bg-white dark:bg-background-dark text-primary border border-primary font-bold px-6 py-2 rounded-lg hover:bg-primary/5 transition-all text-sm">
+                        Saber mais
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

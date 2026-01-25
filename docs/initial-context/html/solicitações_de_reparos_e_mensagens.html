@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solicitações de Reparos e Mensagens - RentalSaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-slate-200">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e5e7eb] dark:border-slate-700 bg-white dark:bg-slate-900 px-10 py-3 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z"></path>
+</svg>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">RentalSaaS</h2>
+</div>
+<nav class="flex items-center gap-6 ml-4">
+<a class="text-[#636f88] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#636f88] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Propriedades</a>
+<a class="text-[#636f88] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary py-1" href="#">Reparos</a>
+<a class="text-[#636f88] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Pagamentos</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111318] dark:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111318] dark:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200" data-alt="Foto de perfil do usuário logado" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZlLTVuGF-GXPVpqG3icO0KD8kKia2Fu_UXqzE6WNIwBPzjZ3n-1m-PE8v6dVjCjb_bhnxKRxQy_7a2OBHx-dRRgdeF5BzvQCnLq9rfOrBP_0A9gEJ7-hqdgUtAITX2WqCxkkt2OJNEevUHJrgs8pPrhSbs-r4Ue4hilJwe-2B3xKoHE_dS9DZkKG5Td7Me95CoiJgPoIsnT3TH7bdrWKmiAuneN6LAWzl4MD1HCbu4PoSbx-fu6jxlbKSVczi7Jm4VnLtLha3oNQ");'>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<!-- Sidebar: List of Requests -->
+<aside class="w-[380px] border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-full">
+<div class="p-4 flex flex-col gap-4">
+<div class="flex flex-col">
+<h1 class="text-[#111318] dark:text-white text-lg font-bold leading-normal">Solicitações</h1>
+<p class="text-[#636f88] dark:text-slate-400 text-xs font-normal leading-normal">Gestão de reparos e manutenção</p>
+</div>
+<!-- SearchBar -->
+<div class="w-full">
+<label class="flex flex-col w-full">
+<div class="flex w-full items-stretch rounded-lg h-10 border border-slate-200 dark:border-slate-700 bg-background-light dark:bg-slate-800">
+<div class="text-[#636f88] flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full border-none bg-transparent focus:ring-0 text-sm placeholder:text-[#636f88] px-3" placeholder="Buscar solicitações..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="px-3 py-1.5 rounded-full bg-primary text-white text-xs font-medium">Ativos</button>
+<button class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium">Arquivados</button>
+<button class="px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium">Urgentes</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Request Item Active -->
+<div class="flex flex-col gap-1 px-2">
+<div class="flex items-center gap-4 bg-primary/5 dark:bg-primary/20 border-l-4 border-primary px-3 min-h-[80px] py-3 cursor-pointer">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<div class="flex justify-between items-start">
+<p class="text-[#111318] dark:text-white text-sm font-semibold leading-tight line-clamp-1">Vazamento na Cozinha</p>
+<span class="text-[10px] text-slate-400">14:30</span>
+</div>
+<p class="text-[#636f88] dark:text-slate-400 text-xs font-normal leading-normal line-clamp-1">Rua das Flores, 123 - Ap 42</p>
+<div class="flex items-center mt-1">
+<span class="px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold">Em Execução</span>
+</div>
+</div>
+</div>
+<!-- ListItem 2 -->
+<div class="flex items-center gap-4 hover:bg-slate-50 dark:hover:bg-slate-800 px-3 min-h-[80px] py-3 cursor-pointer border-b border-slate-50 dark:border-slate-800">
+<div class="text-slate-500 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 shrink-0 size-10">
+<span class="material-symbols-outlined">gate</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<div class="flex justify-between items-start">
+<p class="text-[#111318] dark:text-white text-sm font-semibold leading-tight line-clamp-1">Portão Eletrônico</p>
+<span class="text-[10px] text-slate-400">Ontem</span>
+</div>
+<p class="text-[#636f88] dark:text-slate-400 text-xs font-normal leading-normal line-clamp-1">Av. Central, 456</p>
+<div class="flex items-center mt-1">
+<span class="px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 text-[10px] font-bold">Pendente</span>
+</div>
+</div>
+</div>
+<!-- ListItem 3 -->
+<div class="flex items-center gap-4 hover:bg-slate-50 dark:hover:bg-slate-800 px-3 min-h-[80px] py-3 cursor-pointer border-b border-slate-50 dark:border-slate-800">
+<div class="text-slate-500 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 shrink-0 size-10">
+<span class="material-symbols-outlined">electrical_services</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<div class="flex justify-between items-start">
+<p class="text-[#111318] dark:text-white text-sm font-semibold leading-tight line-clamp-1">Curto-circuito Sala</p>
+<span class="text-[10px] text-slate-400">2 dias</span>
+</div>
+<p class="text-[#636f88] dark:text-slate-400 text-xs font-normal leading-normal line-clamp-1">Rua Humaitá, 89</p>
+<div class="flex items-center mt-1">
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">Concluído</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content: Selected Request Details -->
+<section class="flex-1 flex flex-col bg-background-light dark:bg-background-dark">
+<!-- Details Header -->
+<div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Protocolo #29381</span>
+<span class="size-1 bg-slate-300 rounded-full"></span>
+<span class="text-xs font-medium text-slate-400">Aberto em 12/10/2023</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Vazamento na Cozinha</h2>
+<div class="flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">location_on</span>
+<p class="text-sm text-slate-600 dark:text-slate-400">Rua das Flores, 123, Bloco B, Ap 42 - Vila Mariana</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-sm">history</span> Log de Atividade
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90">
+<span class="material-symbols-outlined text-sm">edit</span> Editar Status
+                        </button>
+</div>
+</div>
+<!-- Status Stepper -->
+<div class="flex items-center w-full max-w-3xl mx-auto">
+<div class="flex flex-col items-center flex-1 relative">
+<div class="size-8 rounded-full bg-emerald-500 text-white flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<span class="text-[11px] font-bold mt-2 text-emerald-600">Pendente</span>
+<div class="absolute h-1 w-full left-1/2 top-4 bg-emerald-500"></div>
+</div>
+<div class="flex flex-col items-center flex-1 relative">
+<div class="size-8 rounded-full bg-emerald-500 text-white flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+<span class="text-[11px] font-bold mt-2 text-emerald-600">Em Análise</span>
+<div class="absolute h-1 w-full left-1/2 top-4 bg-primary"></div>
+</div>
+<div class="flex flex-col items-center flex-1 relative">
+<div class="size-8 rounded-full bg-primary text-white flex items-center justify-center ring-4 ring-primary/20 z-10">
+<span class="material-symbols-outlined text-sm">engineering</span>
+</div>
+<span class="text-[11px] font-bold mt-2 text-primary">Em Execução</span>
+<div class="absolute h-1 w-full left-1/2 top-4 bg-slate-200 dark:bg-slate-700"></div>
+</div>
+<div class="flex flex-col items-center flex-1 relative">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-400 flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-sm">task_alt</span>
+</div>
+<span class="text-[11px] font-bold mt-2 text-slate-400">Concluído</span>
+</div>
+</div>
+</div>
+<!-- Message & Timeline Feed -->
+<div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
+<!-- System Log -->
+<div class="flex justify-center">
+<div class="px-4 py-1.5 bg-slate-200/50 dark:bg-slate-800 rounded-full">
+<p class="text-[11px] font-medium text-slate-500 uppercase tracking-tighter">12 de Outubro, 2023</p>
+</div>
+</div>
+<!-- Landlord Message -->
+<div class="flex flex-col gap-2 max-w-[80%]">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-300 overflow-hidden" data-alt="Avatar do proprietário" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDybfNiovEqsRy8TqReXYqCePRWWDbQ9NpQHhlQLLzPsw8EI2Whosig_fxyIKfg89fRYLwxnr9NLADrwk-koQ9G4-PHu8A0d3B8L19fsoP7ftkIUw7MDdLV1NX7wQgDu_adxBipYY3N4iqIZE9mnNAiDA3C5tkYfXFtHw_SF9C_3dMtTXEI7irdhHEi5nIaoUb-dV1cfBouFKVptkBvPP_-6m4zgFk3RPyJVaBrRWeH5bMRVcvLzVcfE2tcvxJDzPKSY8Eb34bG8yQ"); background-size: cover;'></div>
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">Ricardo (Proprietário)</span>
+<span class="text-[10px] text-slate-400">14:15</span>
+</div>
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl rounded-tl-none border border-slate-200 dark:border-slate-700 shadow-sm">
+<p class="text-sm text-slate-800 dark:text-slate-200">Olá, notei sua solicitação. Pode me enviar fotos do local exato do vazamento para eu acionar o encanador?</p>
+</div>
+</div>
+<!-- Tenant Message + Photos -->
+<div class="flex flex-col gap-2 max-w-[80%] ml-auto items-end">
+<div class="flex items-center gap-2">
+<span class="text-[10px] text-slate-400">14:28</span>
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">Mariana (Inquilina)</span>
+<div class="size-6 rounded-full bg-slate-300 overflow-hidden" data-alt="Avatar da inquilina" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAL_cGmLwhlqn8yMwUVnAvaTaGbnpc7t7M-H6AMzf-DvyB_1x5_yIgDyMSjr9zUrGA6Q1rDOQlmuqUwxZEOk9TBXmY9AZPLLwJ7XFZ284aiN7U5CgLWw1GS8JQoPWsSmURngk7AvhuAXBjqYhjpyL4GEIieIpn-rnTuy7mryiCfnbY84pTaDvnOOKJXEjRW0v4oVjiFSwFdxAAw9y-GI5bzq3ZlhlywTIAPtpLn1R_hkLted93fsOFgmNp4mmELkxiYL1pgkh5fQM4"); background-size: cover;'></div>
+</div>
+<div class="bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm">
+<p class="text-sm">Oi Ricardo! Claro, segue as fotos. Está saindo bastante água por baixo da pia da cozinha.</p>
+<div class="grid grid-cols-2 gap-2 mt-3">
+<div class="aspect-square rounded-lg bg-white/10 overflow-hidden cursor-pointer hover:opacity-90 transition-opacity border border-white/20" data-alt="Foto do vazamento na pia" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkFXXj_3cYAs_qflKZBt6WtOQmQ1R-ul7znowE2ED5I8BIH_USoacJSvO2zHzo6rEsq9D7JWOzL4uxrwjlxtbKmWPo7k22blUMaY3-wIfSa9bmB_Aj4P0V8X8RpsePo2H6pRQzjqLDSv7UvoVvTry4HwpgWhFdFoevrJn3B9zTo-ER3HFCD0ReaHveZRL4EQeuc1meh0v12IvoQ3cdhkHieAOr1ii_QhuAnBe_igmx0xpTWuqv9ukLIQCG2ispwFwgydNfl0wxKcc"); background-size: cover;'></div>
+<div class="aspect-square rounded-lg bg-white/10 overflow-hidden cursor-pointer hover:opacity-90 transition-opacity border border-white/20" data-alt="Close-up do cano com vazamento" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBRW8g9-DEOQux8Xf3ZTE4lwLwp0n72n7_Pygfa4bbqoc7SzkbxLxMPmr_WAi95OOoHaPl3XbTwa6cvR93IqIAT7mwQyHCGbcPEvYISdl3r4vAWHZkg4q4VGEXq9hZTYWLyTVvZd2DUoyb3fC9RRyLIc_d1ISvp-CarfqjaZB41VrtWLiCg0-K5bauyDgDoTlyqWHF1xBdAuQvQXCytjqFlX0cxyMaDXCjmOy24H-0yoCxdO5ypJm0ERtAjfe7JTpXuQqvrdfCPF1I"); background-size: cover;'></div>
+</div>
+</div>
+</div>
+<!-- Status Change Log -->
+<div class="flex justify-center my-4">
+<div class="flex items-center gap-2 px-4 py-2 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 rounded-lg">
+<span class="material-symbols-outlined text-indigo-500 text-sm">info</span>
+<p class="text-[11px] text-indigo-700 dark:text-indigo-400 font-medium italic">Status alterado para <span class="font-bold">Em Execução</span> por Ricardo às 14:30</p>
+</div>
+</div>
+<!-- Landlord Reply -->
+<div class="flex flex-col gap-2 max-w-[80%]">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-300 overflow-hidden" data-alt="Avatar do proprietário" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9SPLBwrylxbvjnzW_KxGUkBvTotwkNW3MU1AmzNngMGmvXUMCvMiJPHzAq5TDe73jPje96rzU8GMoYJrjYYHd2tKm7nBL3cQ_BlZajDW2uyeqBvXfa23fnMo7HshNMqlwVcUl6jSfRfeFggb8N8R7ixLfPgZqEf01l9dNf8BhZRnrZrfopgifWhS_cMFr3U9tRjWPtmBtbAzBjoLDrTFX0g2YX8lNQxjH81EHnH25nmOXlqpHZi7_xJsrGJZdINN9zSUCtpv7H_U"); background-size: cover;'></div>
+<span class="text-xs font-bold text-slate-700 dark:text-slate-300">Ricardo (Proprietário)</span>
+<span class="text-[10px] text-slate-400">14:31</span>
+</div>
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl rounded-tl-none border border-slate-200 dark:border-slate-700 shadow-sm">
+<p class="text-sm text-slate-800 dark:text-slate-200">Visto. Já acionei o Sr. Wilson (encanador). Ele deve chegar aí em até 1 hora. Por favor, deixe o registro fechado até ele chegar.</p>
+</div>
+</div>
+</div>
+<!-- Message Input Area -->
+<div class="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+<div class="flex flex-col gap-2 max-w-5xl mx-auto">
+<div class="flex items-center gap-2 bg-background-light dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">image</span>
+</button>
+<div class="w-[1px] h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<textarea class="form-input flex-1 border-none bg-transparent focus:ring-0 text-sm resize-none py-2 placeholder:text-slate-500" placeholder="Escreva sua mensagem ou atualização..." rows="1"></textarea>
+<button class="bg-primary text-white p-2 rounded-lg flex items-center justify-center hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+<p class="text-[10px] text-slate-400 px-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">security</span> Esta conversa está sendo registrada para fins contratuais e de auditoria.
+                    </p>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard do Inquilino | AluguelDireto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen">
+<div class="relative flex flex-col w-full min-h-screen group/design-root overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e5e7eb] dark:border-[#2a2f3e] bg-white dark:bg-background-dark px-6 md:px-20 lg:px-40 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">apartment</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">AluguelDireto</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-primary text-sm font-semibold leading-normal" href="#">Meu Aluguel</a>
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors leading-normal" href="#">Pagamentos</a>
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors leading-normal" href="#">Solicitações</a>
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors leading-normal" href="#">Documentos</a>
+</nav>
+<div class="flex gap-2 items-center border-l dark:border-[#2a2f3e] pl-8">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-[#2a2f3e] text-[#111318] dark:text-white transition-colors hover:bg-gray-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Foto de perfil do usuário João" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdEFvdwOkjPjcz1tpKxxTyg6UHc9OtFrq3x28CSynonykhAeP4RSs2uPYRKZFlbVZhovVE9o9Z6c9dTDIy1fvfzzS20aVNGb-Mp71m-1TSeLMDldI6pFNFfCzjsn7hTf8tW5a7cYGisT-21nbOxDHLx51licCNMJRL4L12YaLY6NQV2BdD54qsUk9Dn06YJhqwXHXZ9h6EOFaDBqaiGvE_4e3JKjAjISrPx4FI-YaCM0IgE8GnPE-IHOjVNb__guF4IO4w_gL5TxU");'></div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-8 px-6 md:px-20 lg:px-40">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-6">
+<!-- PageHeading -->
+<div class="flex flex-wrap justify-between gap-3">
+<div class="flex min-w-72 flex-col gap-1">
+<h1 class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Olá, João Silva</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-base font-normal">Bem-vindo ao seu dashboard de aluguel. Tudo parece em ordem.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- Left/Main Column -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<!-- Next Rent Card (Modified Card Component) -->
+<div class="bg-white dark:bg-[#1a202c] rounded-xl overflow-hidden shadow-sm border border-[#e5e7eb] dark:border-[#2a2f3e]">
+<div class="p-6 flex flex-col md:flex-row gap-6">
+<div class="w-full md:w-1/3 h-40 md:h-auto bg-center bg-no-repeat bg-cover rounded-lg" data-alt="Fachada moderna do apartamento alugado" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAchmZBM4t9JXB2B1NL7v3i1Iwafbob0rdkdwaB_2Vxj-XG-YA_cAstrQ8ZH0MAc4kVWvP3KHvO-0K-grx0UJnPF-J0CWuSZpBaJRDKQlv9_6Be1r5K_gYx45HX1Gc4WYM0AT6ptfWLfA4BqZkOALargPQMjeQugYyPsGqZOXVmPw-tekJigVTmFbUeeDmX5pvOCeMUsNkHj7qmsBtySd46z-O7vKdGSq--WKKqlDNSlvhNfGM0ADPEbEK-HvXFwHLzjYsK1G3C49w");'></div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-semibold uppercase tracking-wider mb-1">Próximo Aluguel</p>
+<p class="text-[#111318] dark:text-white text-4xl font-black leading-tight mb-2">R$ 2.500,00</p>
+<div class="flex items-center gap-2 text-[#636f88] dark:text-gray-400 mb-6">
+<span class="material-symbols-outlined text-sm">event</span>
+<p class="text-base">Vencimento em 05/11/2023</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex flex-1 min-w-[180px] items-center justify-center gap-2 rounded-lg h-12 px-6 bg-primary text-white text-sm font-bold transition-all hover:bg-primary/90 shadow-md">
+<span class="material-symbols-outlined text-lg">content_copy</span>
+<span>Copiar Pix/Boleto</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg h-12 px-6 bg-[#f0f2f4] dark:bg-[#2a2f3e] text-[#111318] dark:text-white text-sm font-bold transition-colors hover:bg-gray-200">
+<span>Ver Detalhes</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Property Summary -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-[#111318] dark:text-white text-xl font-bold tracking-tight">Resumo do Imóvel</h2>
+</div>
+<div class="bg-white dark:bg-[#1a202c] rounded-xl border border-[#e5e7eb] dark:border-[#2a2f3e] divide-y divide-[#e5e7eb] dark:divide-[#2a2f3e]">
+<!-- ListItem 1: Address -->
+<div class="flex items-center gap-4 px-6 py-4 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111318] dark:text-white text-base font-semibold">Rua das Flores, 123 - Apto 42</p>
+<p class="text-[#636f88] dark:text-gray-400 text-sm">São Paulo, SP - CEP 01234-567</p>
+</div>
+</div>
+<button class="flex items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f4] dark:bg-[#2a2f3e] text-[#111318] dark:text-white text-sm font-medium hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined text-sm mr-2">map</span>
+                                        Mapa
+                                    </button>
+</div>
+<!-- ListItem 2: Landlord -->
+<div class="flex items-center gap-4 px-6 py-4 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111318] dark:text-white text-base font-semibold">Proprietário: Carlos Alberto</p>
+<p class="text-[#636f88] dark:text-gray-400 text-sm">Contrato iniciado em Jan 2023</p>
+</div>
+</div>
+<button class="flex items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f4] dark:bg-[#2a2f3e] text-[#111318] dark:text-white text-sm font-medium hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined text-sm mr-2">description</span>
+                                        Ver Contrato
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Recent Requests Widget -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-[#111318] dark:text-white text-xl font-bold tracking-tight">Solicitações Recentes</h2>
+<button class="text-primary text-sm font-bold hover:underline">Nova Solicitação</button>
+</div>
+<div class="bg-white dark:bg-[#1a202c] rounded-xl border border-[#e5e7eb] dark:border-[#2a2f3e] overflow-hidden">
+<!-- Request 1 -->
+<div class="flex items-center justify-between p-4 border-b border-[#e5e7eb] dark:border-[#2a2f3e]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-orange-500">build</span>
+<div>
+<p class="font-medium text-[#111318] dark:text-white">Reparo na infiltração (Banheiro)</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Aberto em 24/10/2023</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 text-xs font-bold rounded-full">Em andamento</span>
+</div>
+<!-- Request 2 -->
+<div class="flex items-center justify-between p-4 border-b border-[#e5e7eb] dark:border-[#2a2f3e]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">key</span>
+<div>
+<p class="font-medium text-[#111318] dark:text-white">Cópia extra de chaves (Portaria)</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Finalizado em 15/10/2023</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-bold rounded-full">Concluído</span>
+</div>
+<div class="p-3 text-center">
+<button class="text-[#636f88] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors">Ver todas as solicitações</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar: Central de Ajuda -->
+<aside class="flex flex-col gap-6">
+<div class="bg-white dark:bg-[#1a202c] rounded-xl p-6 border border-[#e5e7eb] dark:border-[#2a2f3e] shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">help_center</span>
+<h3 class="text-lg font-bold text-[#111318] dark:text-white">Central de Ajuda</h3>
+</div>
+<p class="text-sm text-[#636f88] dark:text-gray-400 mb-6 leading-relaxed">Dúvidas sobre o seu contrato ou sobre o uso da plataforma?</p>
+<nav class="flex flex-col gap-2">
+<a class="group flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-background-dark/50 hover:bg-primary/10 transition-colors" href="#">
+<span class="text-sm font-semibold text-[#111318] dark:text-white">Como sair do imóvel</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-background-dark/50 hover:bg-primary/10 transition-colors" href="#">
+<span class="text-sm font-semibold text-[#111318] dark:text-white">Regras do contrato</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-background-dark/50 hover:bg-primary/10 transition-colors" href="#">
+<span class="text-sm font-semibold text-[#111318] dark:text-white">Vistorias e Danos</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+<a class="group flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-background-dark/50 hover:bg-primary/10 transition-colors" href="#">
+<span class="text-sm font-semibold text-[#111318] dark:text-white">Suporte 24h</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">chevron_right</span>
+</a>
+</nav>
+</div>
+<!-- Secondary Widget: Contract Progress -->
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-6 border border-primary/20">
+<h3 class="text-sm font-bold text-primary mb-3">Tempo de Contrato</h3>
+<div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full mb-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 40%"></div>
+</div>
+<p class="text-xs text-[#636f88] dark:text-gray-400 leading-relaxed">Você está há <strong>10 meses</strong> no imóvel de um contrato de 30 meses.</p>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Footer for copyright and links -->
+<footer class="px-6 md:px-20 lg:px-40 py-8 border-t border-[#e5e7eb] dark:border-[#2a2f3e] mt-12">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-[#636f88] dark:text-gray-400">© 2023 AluguelDireto. Plataforma de Locação Digital.</p>
+<div class="flex gap-6">
+<a class="text-sm text-[#636f88] dark:text-gray-400 hover:text-primary" href="#">Termos</a>
+<a class="text-sm text-[#636f88] dark:text-gray-400 hover:text-primary" href="#">Privacidade</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

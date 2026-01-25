@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Assinatura Eletrônica do Contrato | SaaS Locação Direta</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: "Public Sans", sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .document-shadow { shadow-[0_4px_20px_rgba(0,0,0,0.08)]; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f4] dark:border-b-gray-800 bg-white dark:bg-gray-900 px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-[#111318] dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">SaaS Locação Direta</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<div class="flex items-center gap-9">
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Meus Contratos</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Imóveis</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Pagamentos</a>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-white px-3 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-lg">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-white px-3 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-lg">account_circle</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWQXSEuVpkoJ29Y93HTRliAOYuM0CGj-wFllSL7fFKcImxbgEHSlblx2_geicygv-7EIhkwal7Gn2_HHJpQ4MMhJSY4h0-3jq2y91bEBassmVfzognvyJPW5OD86yIkCoG876HCWysEIMaUy7mAUkeJkkSu4Sfs62hfUDXtybP3E3IjeZrb0S1baS1YB_ZXr-Eo7zIAZDrj3aHdM56E_t2z7TL7mOvsJne-W5q53DMYSZHHWdd-BwA-LRMRhtkei94GeOV3q3aVCg");'></div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto flex flex-col min-h-[calc(100vh-64px)]">
+<!-- Header & Breadcrumbs -->
+<div class="px-10 py-6">
+<nav class="flex flex-wrap gap-2 pb-4">
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium" href="#">Home</a>
+<span class="text-[#636f88] dark:text-gray-500 text-sm">/</span>
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium" href="#">Contratos</a>
+<span class="text-[#636f88] dark:text-gray-500 text-sm">/</span>
+<span class="text-[#111318] dark:text-white text-sm font-bold">Assinatura Eletrônica</span>
+</nav>
+<div class="flex flex-wrap justify-between items-end gap-3">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-tight">Assinatura do Contrato de Locação</h1>
+<div class="flex items-center gap-2">
+<span class="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-0.5 rounded text-xs font-bold uppercase tracking-wider">Aguardando Assinaturas</span>
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-normal">Contrato Ref: #2023-0892 • Criado em 14/10/2023</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-gray-800 border border-solid border-gray-200 dark:border-gray-700 text-[#111318] dark:text-white text-sm font-bold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Baixar Minuta</span>
+</button>
+<button class="flex items-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-gray-800 border border-solid border-gray-200 dark:border-gray-700 text-[#111318] dark:text-white text-sm font-bold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-sm">share</span>
+<span>Compartilhar</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="flex flex-1 px-10 gap-8 pb-10 overflow-hidden h-[calc(100vh-250px)]">
+<!-- Left Side: Document Viewer -->
+<div class="flex-1 flex flex-col bg-gray-200 dark:bg-gray-800/50 rounded-xl overflow-hidden border border-solid border-gray-300 dark:border-gray-700 relative">
+<!-- Toolbar -->
+<div class="bg-white dark:bg-gray-900 h-12 flex items-center justify-between px-4 border-b border-solid border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold text-gray-500 dark:text-gray-400">Página 1 de 12</span>
+<div class="h-4 w-px bg-gray-300 dark:bg-gray-700"></div>
+<div class="flex gap-1">
+<button class="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-600 dark:text-gray-300"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-600 dark:text-gray-300"><span class="material-symbols-outlined">zoom_out</span></button>
+</div>
+</div>
+<div class="flex items-center gap-2 text-xs font-medium text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span>Criptografado com AES-256</span>
+</div>
+</div>
+<!-- Document Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-12 flex flex-col items-center gap-8 custom-scrollbar">
+<div class="bg-white dark:bg-white text-black w-full max-w-[800px] aspect-[1/1.4] shadow-2xl p-16 relative">
+<div class="absolute top-8 right-12 opacity-10 rotate-12 select-none pointer-events-none">
+<h4 class="text-4xl font-black text-gray-400">DRAFT</h4>
+</div>
+<div class="border-b-2 border-black pb-4 mb-8 text-center">
+<h2 class="text-xl font-bold uppercase tracking-widest">Contrato de Locação Residencial</h2>
+<p class="text-xs text-gray-500 mt-1">SISTEMA DIGITAL DE LOCAÇÃO DIRETA</p>
+</div>
+<div class="space-y-6 text-sm leading-relaxed text-justify">
+<p><strong>LOCADOR:</strong> CARLOS ALBERTO SILVA, brasileiro, casado, portador do CPF nº 000.000.000-00, residente e domiciliado na Rua das Palmeiras, 123.</p>
+<p><strong>LOCATÁRIO:</strong> MARIANA OLIVEIRA SANTOS, brasileira, solteira, portadora do CPF nº 111.111.111-11.</p>
+<h3 class="font-bold border-l-4 border-black pl-3 py-1 bg-gray-50">CLÁUSULA PRIMEIRA - DO OBJETO</h3>
+<p>O presente contrato tem como objeto a locação do imóvel residencial situado na Rua dos Pinheiros, 456, Apto 42, São Paulo - SP, CEP 05422-000.</p>
+<h3 class="font-bold border-l-4 border-black pl-3 py-1 bg-gray-50">CLÁUSULA SEGUNDA - DO VALOR</h3>
+<p>O valor mensal do aluguel é de R$ 3.200,00 (três mil e duzentos reais), a serem pagos via boleto bancário ou transferência PIX até o dia 05 de cada mês.</p>
+<h3 class="font-bold border-l-4 border-black pl-3 py-1 bg-gray-50">CLÁUSULA TERCEIRA - DO PRAZO</h3>
+<p>O prazo de locação é de 30 (trinta) meses, iniciando-se em 01 de Novembro de 2023 e terminando em 30 de Abril de 2026.</p>
+<div class="mt-20 border-t border-dotted border-gray-400 pt-8 flex justify-between">
+<div class="w-1/2">
+<div class="h-1 bg-gray-100 mb-2"></div>
+<p class="text-[10px] text-gray-400 uppercase">Assinatura Digital do Locador</p>
+</div>
+<div class="w-1/2 ml-10">
+<div class="h-1 bg-gray-100 mb-2"></div>
+<p class="text-[10px] text-gray-400 uppercase">Assinatura Digital do Locatário</p>
+</div>
+</div>
+</div>
+<!-- Page Footer -->
+<div class="absolute bottom-8 left-16 right-16 flex justify-between items-center text-[10px] text-gray-400 border-t pt-4">
+<span>Hash: 8b2f9c1d0e3a...</span>
+<span>Autenticação Digital Plataforma Locação Direta</span>
+<span>Página 1</span>
+</div>
+</div>
+<!-- Placeholder for Page 2 -->
+<div class="bg-white dark:bg-white w-full max-w-[800px] aspect-[1/1.4] shadow-md opacity-50 mb-10"></div>
+</div>
+</div>
+<!-- Right Side: Interaction Sidebar -->
+<aside class="w-[380px] flex flex-col gap-6">
+<!-- Signatories Status -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-solid border-gray-200 dark:border-gray-800 p-5 shadow-sm">
+<h3 class="text-[#111318] dark:text-white text-sm font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+                        Signatários
+                    </h3>
+<div class="space-y-4">
+<!-- Signer 1 -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-background-light dark:bg-gray-800/50">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 text-primary rounded-full size-8 flex items-center justify-center font-bold text-xs">CS</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#111318] dark:text-white leading-tight">Carlos Alberto Silva</p>
+<p class="text-[11px] text-[#636f88] dark:text-gray-400">Locador</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-sm font-bold">check_circle</span>
+<span class="text-[11px] font-bold uppercase">Assinado</span>
+</div>
+</div>
+<!-- Signer 2 -->
+<div class="flex items-center justify-between p-3 rounded-lg border border-solid border-primary/20 bg-primary/5">
+<div class="flex items-center gap-3">
+<div class="bg-primary text-white rounded-full size-8 flex items-center justify-center font-bold text-xs">MO</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#111318] dark:text-white leading-tight">Mariana Oliveira</p>
+<p class="text-[11px] text-[#636f88] dark:text-gray-400">Locatário (Você)</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-amber-600 dark:text-amber-400">
+<span class="material-symbols-outlined text-sm animate-pulse">pending</span>
+<span class="text-[11px] font-bold uppercase">Pendente</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Clauses Summary -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-solid border-gray-200 dark:border-gray-800 p-5 shadow-sm">
+<h3 class="text-[#111318] dark:text-white text-sm font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                        Cláusulas Chave
+                    </h3>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-solid border-gray-100 dark:border-gray-800">
+<span class="text-xs text-[#636f88] dark:text-gray-400 font-medium">Aluguel Mensal</span>
+<span class="text-sm font-bold text-[#111318] dark:text-white tracking-tight">R$ 3.200,00</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-solid border-gray-100 dark:border-gray-800">
+<span class="text-xs text-[#636f88] dark:text-gray-400 font-medium">Prazo Total</span>
+<span class="text-sm font-bold text-[#111318] dark:text-white">30 meses</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-solid border-gray-100 dark:border-gray-800">
+<span class="text-xs text-[#636f88] dark:text-gray-400 font-medium">Reajuste Anual</span>
+<span class="text-sm font-bold text-[#111318] dark:text-white">IPCA (IBGE)</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-xs text-[#636f88] dark:text-gray-400 font-medium">Garantia</span>
+<span class="text-sm font-bold text-[#111318] dark:text-white">Seguro Fiança</span>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-auto bg-white dark:bg-gray-900 rounded-xl border border-solid border-gray-200 dark:border-gray-800 p-5 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+<p class="text-[11px] text-[#636f88] dark:text-gray-400 text-center mb-4">
+                        Ao assinar, você concorda com os termos acima e com a validade jurídica da assinatura eletrônica.
+                    </p>
+<button class="w-full flex items-center justify-center gap-2 rounded-xl h-14 bg-primary text-white text-base font-bold shadow-lg shadow-primary/20 hover:bg-blue-700 transition-all transform active:scale-[0.98]">
+<span class="material-symbols-outlined">draw</span>
+<span>Assinar Documento</span>
+</button>
+<button class="w-full mt-3 text-sm font-medium text-[#636f88] dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors py-2">
+                        Solicitar Correção
+                    </button>
+</div>
+</aside>
+</div>
+</main>
+<!-- Modal: Identity Confirmation Overlay (Hidden by default, shown for visualization) -->
+<!-- Remove "hidden" to see modal during development -->
+<div class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+<div class="bg-white dark:bg-gray-900 w-full max-w-[480px] rounded-2xl shadow-2xl overflow-hidden">
+<div class="p-8 text-center">
+<div class="size-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-4xl">fingerprint</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-2xl font-bold mb-3">Confirme sua Identidade</h2>
+<p class="text-[#636f88] dark:text-gray-400 text-base leading-relaxed mb-8">
+                    Para garantir a validade jurídica da sua assinatura, enviamos um código de 6 dígitos para o e-mail: <br/>
+<strong class="text-[#111318] dark:text-white">ma****a@gmail.com</strong>
+</p>
+<div class="flex justify-center gap-3 mb-8">
+<input class="size-12 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-center font-bold text-xl dark:bg-gray-800 dark:text-white focus:border-primary outline-none transition-all" maxlength="1" type="text"/>
+<input class="size-12 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-center font-bold text-xl dark:bg-gray-800 dark:text-white focus:border-primary outline-none transition-all" maxlength="1" type="text"/>
+<input class="size-12 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-center font-bold text-xl dark:bg-gray-800 dark:text-white focus:border-primary outline-none transition-all" maxlength="1" type="text"/>
+<div class="flex items-center text-gray-400">-</div>
+<input class="size-12 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-center font-bold text-xl dark:bg-gray-800 dark:text-white focus:border-primary outline-none transition-all" maxlength="1" type="text"/>
+<input class="size-12 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-center font-bold text-xl dark:bg-gray-800 dark:text-white focus:border-primary outline-none transition-all" maxlength="1" type="text"/>
+<input class="size-12 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-center font-bold text-xl dark:bg-gray-800 dark:text-white focus:border-primary outline-none transition-all" maxlength="1" type="text"/>
+</div>
+<div class="space-y-4">
+<button class="w-full h-12 bg-primary text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">
+                        Confirmar e Assinar
+                    </button>
+<button class="w-full py-2 text-sm font-semibold text-primary hover:underline">
+                        Reenviar código (58s)
+                    </button>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 text-center border-t border-solid border-gray-100 dark:border-gray-700">
+<button class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest hover:text-red-500 transition-colors">Cancelar Operação</button>
+</div>
+</div>
+</div>
+</body></html>

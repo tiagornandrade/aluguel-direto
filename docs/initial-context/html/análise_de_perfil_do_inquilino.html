@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Análise de Perfil do Inquilino - DirectRental SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dcdfe5] dark:border-[#2a3142] bg-white dark:bg-[#1a1f2e] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-[#111318] dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">DirectRental</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-sm font-medium leading-normal hover:text-primary" href="#">Dashboard</a>
+<a class="text-sm font-medium leading-normal hover:text-primary" href="#">Imóveis</a>
+<a class="text-sm font-medium leading-normal border-b-2 border-primary text-primary" href="#">Inquilinos</a>
+<a class="text-sm font-medium leading-normal hover:text-primary" href="#">Contratos</a>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 bg-[#f0f2f4] dark:bg-[#2a3142] text-[#111318] dark:text-white px-2.5">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 bg-[#f0f2f4] dark:bg-[#2a3142] text-[#111318] dark:text-white px-2.5">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCD089S8ctxwtDu8Ugh3ulMuCrcTJ8spn9SBD2-evHwD8-KkT3MenyDMSsxJT17y8RPtEuYgQh6vqSjjRdZRD1rK2tS3aojXwq_rCIP8-TTpKIIULY1xVD-Ary1zA3P48lGEHnFC0rGK1RQkDNtvH5sf6z4yPDlvl8H56xSGzDSA5PYN4kqegakTDAbGdlF-SWahbzBfmvze7_4Xh6HWxBpqgfokHVfSJvdGZd1I-16d2r4V0yIe1sY0KXOnV-1MiXRDzMIZKQh1g8");'></div>
+</div>
+</header>
+<main class="flex-1 flex flex-col max-w-[1440px] mx-auto w-full px-10 py-6 gap-6">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 text-sm">
+<a class="text-[#636f88] dark:text-gray-400 font-medium hover:text-primary" href="#">Home</a>
+<span class="text-[#636f88] dark:text-gray-600">/</span>
+<a class="text-[#636f88] dark:text-gray-400 font-medium hover:text-primary" href="#">Inquilinos</a>
+<span class="text-[#636f88] dark:text-gray-600">/</span>
+<span class="text-[#111318] dark:text-white font-medium">Análise de Perfil</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-3">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<h1 class="text-3xl font-black leading-tight tracking-[-0.033em]">Análise de Perfil: João Silva</h1>
+<span class="px-3 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 text-xs font-bold rounded-full uppercase tracking-wider">Aguardando Aprovação</span>
+</div>
+<p class="text-[#636f88] dark:text-gray-400 text-base font-normal">Solicitação enviada em 12 de Outubro, 2023 • Imóvel: Loft Vila Olímpia</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-[#2a3142] text-[#111318] dark:text-white text-sm font-bold shadow-sm">
+<span class="material-symbols-outlined mr-2 text-lg">person</span>
+                    Ver Perfil Completo
+                </button>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-12 gap-6 flex-1 min-h-[600px]">
+<!-- Left Column: Document List -->
+<div class="col-span-5 flex flex-col gap-6">
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-[#dcdfe5] dark:border-[#2a3142] overflow-hidden flex flex-col">
+<div class="p-4 border-b border-[#dcdfe5] dark:border-[#2a3142] bg-gray-50 dark:bg-[#23293a]">
+<h2 class="text-base font-bold text-[#111318] dark:text-white">Documentação e Verificação</h2>
+</div>
+<div class="divide-y divide-[#dcdfe5] dark:divide-[#2a3142]">
+<!-- Item 1 -->
+<div class="p-4 flex flex-col gap-3 bg-primary/5 border-l-4 border-primary">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<span class="material-symbols-outlined text-primary">badge</span>
+<div>
+<p class="text-sm font-bold text-[#111318] dark:text-white">Identidade (RG/CNH)</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Frente e Verso • PDF</p>
+</div>
+</div>
+<button class="text-xs font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">visibility</span> Visualizar
+                                </button>
+</div>
+<div class="flex gap-2 mt-1">
+<button class="flex-1 flex items-center justify-center gap-2 rounded-lg h-9 px-3 bg-white dark:bg-[#2a3142] border border-[#dcdfe5] dark:border-[#3a445b] text-sm font-medium hover:bg-green-50 hover:text-green-600 hover:border-green-200 transition-colors">
+<span class="material-symbols-outlined text-base">check_circle</span> Aprovar
+                                </button>
+<button class="flex-1 flex items-center justify-center gap-2 rounded-lg h-9 px-3 bg-white dark:bg-[#2a3142] border border-[#dcdfe5] dark:border-[#3a445b] text-sm font-medium hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors">
+<span class="material-symbols-outlined text-base">cancel</span> Recusar
+                                </button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<span class="material-symbols-outlined text-gray-400">payments</span>
+<div>
+<p class="text-sm font-bold text-[#111318] dark:text-white">Comprovante de Renda</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Holerite Out/23 • PNG</p>
+</div>
+</div>
+<button class="text-xs font-bold text-[#636f88] dark:text-gray-400 flex items-center gap-1 hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span> Visualizar
+                                </button>
+</div>
+<div class="flex gap-2 mt-1">
+<button class="flex-1 flex items-center justify-center gap-2 rounded-lg h-9 px-3 bg-white dark:bg-[#2a3142] border border-[#dcdfe5] dark:border-[#3a445b] text-sm font-medium hover:bg-green-50 hover:text-green-600 hover:border-green-200 transition-colors">
+<span class="material-symbols-outlined text-base">check_circle</span> Aprovar
+                                </button>
+<button class="flex-1 flex items-center justify-center gap-2 rounded-lg h-9 px-3 bg-white dark:bg-[#2a3142] border border-[#dcdfe5] dark:border-[#3a445b] text-sm font-medium hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors">
+<span class="material-symbols-outlined text-base">cancel</span> Recusar
+                                </button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<span class="material-symbols-outlined text-gray-400">home_pin</span>
+<div>
+<p class="text-sm font-bold text-[#111318] dark:text-white">Comprovante de Residência</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Conta de Luz • PDF</p>
+</div>
+</div>
+<button class="text-xs font-bold text-[#636f88] dark:text-gray-400 flex items-center gap-1 hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span> Visualizar
+                                </button>
+</div>
+<div class="flex gap-2 mt-1">
+<button class="flex-1 flex items-center justify-center gap-2 rounded-lg h-9 px-3 bg-white dark:bg-[#2a3142] border border-[#dcdfe5] dark:border-[#3a445b] text-sm font-medium hover:bg-green-50 hover:text-green-600 hover:border-green-200 transition-colors">
+<span class="material-symbols-outlined text-base">check_circle</span> Aprovar
+                                </button>
+<button class="flex-1 flex items-center justify-center gap-2 rounded-lg h-9 px-3 bg-white dark:bg-[#2a3142] border border-[#dcdfe5] dark:border-[#3a445b] text-sm font-medium hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors">
+<span class="material-symbols-outlined text-base">cancel</span> Recusar
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Final Opinion Textarea -->
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-[#dcdfe5] dark:border-[#2a3142] p-5 flex flex-col gap-3">
+<h3 class="text-base font-bold text-[#111318] dark:text-white">Parecer Final</h3>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Anote observações importantes sobre este inquilino ou descreva o motivo de possíveis correções.</p>
+<textarea class="w-full h-32 rounded-lg border-[#dcdfe5] dark:border-[#2a3142] bg-white dark:bg-[#111621] focus:ring-primary focus:border-primary text-sm p-3" placeholder="Ex: Documento de identidade está com baixa resolução, favor solicitar nova foto..."></textarea>
+</div>
+</div>
+<!-- Right Column: Document Viewer -->
+<div class="col-span-7 flex flex-col">
+<div class="flex-1 bg-white dark:bg-[#1a1f2e] rounded-xl border border-[#dcdfe5] dark:border-[#2a3142] flex flex-col overflow-hidden relative shadow-sm">
+<!-- Viewer Header -->
+<div class="flex items-center justify-between p-3 border-b border-[#dcdfe5] dark:border-[#2a3142] bg-gray-50 dark:bg-[#23293a]">
+<span class="text-sm font-bold truncate max-w-[300px]">documento_identidade_joao_silva.pdf</span>
+<div class="flex items-center gap-2">
+<button class="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-lg">zoom_out</span>
+</button>
+<span class="text-xs font-medium px-2">100%</span>
+<button class="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-lg">zoom_in</span>
+</button>
+<div class="w-px h-4 bg-gray-300 mx-1"></div>
+<button class="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-lg">rotate_right</span>
+</button>
+<button class="p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-gray-600 dark:text-gray-300">
+<span class="material-symbols-outlined text-lg">download</span>
+</button>
+</div>
+</div>
+<!-- Preview Area -->
+<div class="flex-1 bg-[#f0f2f4] dark:bg-[#111621] overflow-auto flex items-center justify-center p-8">
+<div class="w-full max-w-[600px] aspect-[1/1.4] bg-white shadow-xl rounded border border-gray-200 flex items-center justify-center relative overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center opacity-90 group-hover:opacity-100 transition-opacity" data-alt="Mock ID card document preview" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDg1-4-w4ePxsvV9piwtGBYkSb5MKHeUKATS2spr8zmuSFVAxuVZ8fs98eQExkOfF5l6kvv3IideE7gNOQVwzYzJOHjIXwcUoNC4JSJ8_UzXPWymUwGIO9dOc394AEZ-ED_YNN9S2c64JQV6F0GeanWNhtIr32O2pS95FTDvdNSAlZodFyh52J3vjcYq8pY4BLuaPT0t3d9gD3Ha4Hv8ISx_i57IUZzWYGcZk6fo7SN0Dhub2jQ21mWBJJWCrhWz8eeLyfKr3FUmho');"></div>
+<!-- Mock watermark/overlay -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 rotate-[-45deg]">
+<span class="text-8xl font-black">CONFIDENCIAL</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Bottom Bar -->
+<footer class="sticky bottom-0 bg-white dark:bg-[#1a1f2e] border-t border-[#dcdfe5] dark:border-[#2a3142] p-4 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between px-6">
+<div class="flex items-center gap-3 text-sm font-medium text-[#636f88] dark:text-gray-400">
+<span class="flex h-2 w-2 rounded-full bg-amber-500"></span>
+                Verificação em progresso: 1 de 3 documentos analisados
+            </div>
+<div class="flex gap-4">
+<button class="flex items-center justify-center rounded-lg h-12 px-6 bg-white dark:bg-[#1a1f2e] border-2 border-[#dcdfe5] dark:border-[#3a445b] text-[#111318] dark:text-white text-base font-bold hover:bg-gray-50 dark:hover:bg-[#2a3142] transition-colors">
+                    Solicitar Correções
+                </button>
+<button class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary text-white text-base font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors">
+                    Aprovar Perfil para Contrato
+                </button>
+</div>
+</div>
+</footer>
+</body></html>

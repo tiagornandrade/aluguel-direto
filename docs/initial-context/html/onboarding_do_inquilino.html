@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding do Inquilino - RentaDirect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full bg-white dark:bg-background-dark border-b border-solid border-[#f0f2f4] dark:border-gray-800 px-4 md:px-10 lg:px-40 py-3 flex items-center justify-between sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="text-primary">
+<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-[#111318] dark:text-white text-xl font-bold leading-tight tracking-tight">RentaDirect</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-9">
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Pagamentos</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Suporte</a>
+</nav>
+<div class="flex items-center gap-3 border-l pl-8 border-gray-200 dark:border-gray-700">
+<span class="text-sm font-medium">João Silva</span>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMS3Og5vSe4L9IkwG7073_Bfc0wi5yloLxvVIT-b-JRXd-2-Nf1_f7Cn104tL90HaLHx2Y0lJdO7_O6H9CyzfvtgW5dvCmmsiuiDf7IrjlgF6Q1H9nV_3Sk0wDrjJeXA_JN3PRWdKt8LmK2m8eHbOAT_j-DAhIogO2JmTLzZ-F7FhTiq2CsWjdshIsFl6hg3xrZ3XEYoXnqclEge_FmbsZUiBSuU0mWfqikvlYJzIrj825Ht_zKWC20hDVlKN3esvihSB6cVU1SCA");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-6xl mx-auto w-full px-4 py-10">
+<!-- Headline & Meta -->
+<div class="mb-10 text-center">
+<h1 class="text-[#111318] dark:text-white tracking-tight text-4xl font-bold leading-tight mb-3">Tudo pronto para sua nova casa?</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-lg font-normal max-w-2xl mx-auto">Siga os passos abaixo para finalizar seu processo de locação com segurança na nossa infraestrutura digital.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Tasks and Progress -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Action Cards -->
+<section>
+<h2 class="text-[#111318] dark:text-white text-xl font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">task_alt</span>
+                        Ações Prioritárias
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+<span class="material-symbols-outlined text-2xl">person_edit</span>
+</div>
+<h3 class="font-bold text-base mb-1">Completar Perfil</h3>
+<p class="text-xs text-[#636f88] dark:text-gray-400 mb-4">Envie seus documentos de identificação pendentes.</p>
+<span class="text-primary text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                                Começar <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow group cursor-pointer border-l-4 border-l-primary">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+<span class="material-symbols-outlined text-2xl">description</span>
+</div>
+<h3 class="font-bold text-base mb-1">Assinar Contrato</h3>
+<p class="text-xs text-[#636f88] dark:text-gray-400 mb-4">Verifique as cláusulas e assine digitalmente.</p>
+<span class="bg-primary text-white text-xs px-2 py-1 rounded font-bold uppercase tracking-wider inline-block">
+                                Urgente
+                            </span>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors text-primary">
+<span class="material-symbols-outlined text-2xl">auto_stories</span>
+</div>
+<h3 class="font-bold text-base mb-1">Guia do Inquilino</h3>
+<p class="text-xs text-[#636f88] dark:text-gray-400 mb-4">Regras da casa e dicas para sua nova jornada.</p>
+<span class="text-primary text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                                Acessar <span class="material-symbols-outlined text-sm">open_in_new</span>
+</span>
+</div>
+</div>
+</section>
+<!-- Visual Checklist -->
+<section class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm">
+<h2 class="text-[#111318] dark:text-white text-xl font-bold mb-6">Progresso da Locação</h2>
+<div class="space-y-6">
+<!-- Step 1 Done -->
+<div class="flex items-start gap-4">
+<div class="bg-green-100 dark:bg-green-900/30 text-green-600 p-1 rounded-full">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<h4 class="font-semibold text-sm">Reserva do Imóvel</h4>
+<span class="text-xs font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded-full">Concluído</span>
+</div>
+<p class="text-xs text-[#636f88] dark:text-gray-400">A unidade na Rua das Flores, 123 foi bloqueada para você.</p>
+</div>
+</div>
+<!-- Step 2 Active -->
+<div class="flex items-start gap-4 relative">
+<div class="absolute left-3 top-8 bottom-[-16px] w-[1px] bg-gray-200 dark:bg-gray-700"></div>
+<div class="bg-primary text-white p-1 rounded-full z-10">
+<span class="material-symbols-outlined text-lg">pending</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<h4 class="font-semibold text-sm">Validação de Documentos</h4>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">Em análise</span>
+</div>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Estamos verificando sua identidade e comprovante de renda.</p>
+<div class="mt-3 w-full bg-gray-100 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-2/3"></div>
+</div>
+</div>
+</div>
+<!-- Step 3 Pending -->
+<div class="flex items-start gap-4 relative">
+<div class="absolute left-3 top-8 bottom-[-16px] w-[1px] bg-gray-200 dark:bg-gray-700"></div>
+<div class="bg-gray-100 dark:bg-gray-700 text-gray-400 p-1 rounded-full z-10">
+<span class="material-symbols-outlined text-lg">radio_button_unchecked</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<h4 class="font-semibold text-sm text-gray-400">Assinatura Digital</h4>
+</div>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Disponível após aprovação dos documentos.</p>
+</div>
+</div>
+<!-- Step 4 Pending -->
+<div class="flex items-start gap-4">
+<div class="bg-gray-100 dark:bg-gray-700 text-gray-400 p-1 rounded-full z-10">
+<span class="material-symbols-outlined text-lg">key</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center mb-1">
+<h4 class="font-semibold text-sm text-gray-400">Entrega das Chaves</h4>
+</div>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Agendamento liberado após o primeiro pagamento.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Summary & Info -->
+<div class="space-y-6">
+<!-- First Payment Summary Widget -->
+<section class="bg-primary text-white rounded-xl p-6 shadow-lg relative overflow-hidden">
+<div class="absolute -right-6 -top-6 opacity-10">
+<span class="material-symbols-outlined text-[120px]">payments</span>
+</div>
+<h3 class="text-sm font-semibold uppercase tracking-wider opacity-90 mb-4">Resumo do Primeiro Pagamento</h3>
+<div class="space-y-4 relative z-10">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-xs opacity-75 mb-1">Aluguel + Caução</p>
+<p class="text-3xl font-bold tracking-tight">R$ 3.450,00</p>
+</div>
+</div>
+<div class="pt-4 border-t border-white/20">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-sm">event</span>
+<span class="text-xs font-medium uppercase">Vencimento</span>
+</div>
+<p class="text-lg font-semibold">15 de Outubro, 2023</p>
+</div>
+<button class="w-full bg-white text-primary font-bold py-3 rounded-lg hover:bg-gray-100 transition-colors text-sm">
+                            Gerar Boleto / PIX
+                        </button>
+</div>
+</section>
+<!-- Security Assurance -->
+<section class="bg-white dark:bg-gray-800 rounded-xl p-5 border border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-primary text-2xl">verified_user</span>
+<h4 class="font-bold text-sm">Segurança RentaDirect</h4>
+</div>
+<p class="text-xs text-[#636f88] dark:text-gray-400 leading-relaxed">
+                        Seus dados e pagamentos estão protegidos por criptografia de ponta a ponta. O valor da caução fica retido em conta garantia até o fim do contrato.
+                    </p>
+</section>
+<!-- Quick Support -->
+<section class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-5 border border-dashed border-gray-300 dark:border-gray-600">
+<h4 class="font-bold text-sm mb-2">Precisa de ajuda?</h4>
+<p class="text-xs text-[#636f88] dark:text-gray-400 mb-4">Nosso time de suporte está disponível de Seg. a Sex. das 09h às 18h.</p>
+<a class="flex items-center gap-2 text-primary text-sm font-semibold" href="#">
+<span class="material-symbols-outlined text-lg">chat_bubble</span>
+                        Falar com consultor
+                    </a>
+</section>
+<!-- Image Grid Placeholder (Property Preview) -->
+<div class="rounded-xl overflow-hidden shadow-sm border border-gray-200">
+<div class="w-full h-32 bg-center bg-no-repeat bg-cover" data-alt="Modern apartment interior living room" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9fcRTyXrNlY9wJ6eqLbM0QACxxK8PzC476k3ly8ILDfd0rFgU8nRgGPGSGegDM4J4TxouNu0OYPmbmzZ5ldsjUjy5IVkpsDybiZc_k77RG08ev-s-RM2u_o15GQxEVWYIqI0OnQCks2ovjKUvvJzsIy0ciKsCC_cbFGckoXJxXjPAK5M9-0H3ExwROhDrlrq0I52qZVcdUNy_OJRd7t6NuEKsUnDVHiKRDFa9sbYpjJjoJi4-ifiW4symbYsdlsyFJMZK3Vn9BpE");'></div>
+<div class="p-3 bg-white dark:bg-gray-800">
+<p class="text-[10px] font-bold text-primary uppercase mb-1">Imóvel Reservado</p>
+<p class="text-xs font-medium truncate">Apt 402 - Edifício Horizon</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full border-t border-gray-200 dark:border-gray-800 mt-auto py-8 bg-white dark:bg-background-dark">
+<div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-[#636f88] dark:text-gray-500">© 2023 RentaDirect. Infraestrutura digital para locação direta.</p>
+<div class="flex gap-6">
+<a class="text-xs text-[#636f88] dark:text-gray-400 hover:text-primary transition-colors" href="#">Termos de Uso</a>
+<a class="text-xs text-[#636f88] dark:text-gray-400 hover:text-primary transition-colors" href="#">Privacidade</a>
+<a class="text-xs text-[#636f88] dark:text-gray-400 hover:text-primary transition-colors" href="#">Central de Ajuda</a>
+</div>
+</div>
+</footer>
+</body></html>

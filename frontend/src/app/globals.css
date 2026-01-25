@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #1754cf;
+  --accent: #059669;
+  --background-light: #f6f6f8;
+  --background-dark: #111621;
+  --ink: #111318;
+  --muted: #636f88;
+  --border: #dcdfe5;
+}
+
+body {
+  font-family: var(--font-public-sans), "Public Sans", sans-serif;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}

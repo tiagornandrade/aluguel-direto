@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Suporte e Mediação de Disputas - Plataforma de Aluguel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#111318] dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">handshake</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">PropDirect</h2>
+</div>
+<div class="flex items-center gap-9">
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal" href="#">Imóveis</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal" href="#">Contratos</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal" href="#">Pagamentos</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">Suporte</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6">
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#636f88] flex border-none bg-gray-100 dark:bg-gray-800 items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-gray-100 dark:bg-gray-800 text-[#111318] dark:text-white focus:ring-0 h-full placeholder:text-[#636f88] px-4 rounded-r-lg pl-2 text-sm" placeholder="Buscar ajuda..."/>
+</div>
+</label>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200 dark:border-gray-700" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSuyc7nRVrseHItV3K0rYTkqL5PNUHMGBQdzZ4lhFWUPfxcVuiv6XGoGpVnsroIL33FN17eMEy2vaFD7JEwFTYLPj_atBTdYug5BPiYAjPB70jqY8gwANvDFAJNEAIOiln0rHG69L7ZpQw8kA8liNhUNzOznIxSS0u4I6vIZDp5mRvmDUFAHu8BH10AptxrWinvFtrdUy1DmHUCnVNFEeqnouHLWP-HeZ3Hbnhh3OuFl-gdKcjKsZlKUIvYSDpJ9jwpK-W5De7YU4");'></div>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] w-full px-6 gap-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 py-2">
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Home</a>
+<span class="text-[#636f88] dark:text-gray-500 text-sm font-medium leading-normal">/</span>
+<span class="text-[#111318] dark:text-white text-sm font-medium leading-normal">Central de Ajuda e Disputas</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-center gap-3">
+<div class="flex min-w-72 flex-col gap-1">
+<p class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Central de Ajuda e Disputas</p>
+<p class="text-[#636f88] dark:text-gray-400 text-base font-normal leading-normal">Resolva problemas técnicos ou inicie uma mediação para seu contrato.</p>
+</div>
+</div>
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Main Form Column -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+<h2 class="text-[#111318] dark:text-white text-xl font-bold pb-6">Abrir novo chamado</h2>
+<div class="flex flex-col gap-6">
+<!-- Contract/Property Selection -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-semibold leading-normal">Vincular ao Imóvel ou Contrato</label>
+<select class="form-input flex w-full rounded-lg text-[#111318] dark:text-white border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-12 px-4 focus:border-primary focus:ring-1 focus:ring-primary">
+<option value="">Selecione o contrato relacionado</option>
+<option value="1">Apartamento Vila Nova - Contrato #8821</option>
+<option value="2">Casa Jardim Europa - Contrato #7432</option>
+<option value="3">Studio Centro - Contrato #9012</option>
+</select>
+</div>
+<!-- Category Selection -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-semibold leading-normal">Categoria do Problema</label>
+<select class="form-input flex w-full rounded-lg text-[#111318] dark:text-white border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 h-12 px-4 focus:border-primary focus:ring-1 focus:ring-primary">
+<option value="">Selecione uma categoria</option>
+<option value="vistoria">Divergência na Vistoria</option>
+<option value="pagamento">Atraso de Pagamento</option>
+<option value="manutencao">Problema de Manutenção / Reparos</option>
+<option value="tecnico">Erro Técnico na Plataforma</option>
+<option value="outro">Outros</option>
+</select>
+</div>
+<!-- Description -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-semibold leading-normal">Descrição do Problema</label>
+<textarea class="form-input flex w-full rounded-lg text-[#111318] dark:text-white border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 min-h-[160px] p-4 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Descreva detalhadamente o que aconteceu..."></textarea>
+</div>
+<!-- Attachments -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-semibold leading-normal">Evidências (Fotos ou Documentos)</label>
+<div class="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-8 flex flex-col items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-gray-400 text-4xl">cloud_upload</span>
+<p class="text-[#111318] dark:text-white text-sm font-medium">Clique para fazer upload ou arraste arquivos aqui</p>
+<p class="text-[#636f88] dark:text-gray-500 text-xs text-center">Formatos aceitos: JPG, PNG, PDF (Máx. 10MB)</p>
+</div>
+</div>
+<!-- Footer Buttons -->
+<div class="flex justify-end gap-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+<button class="px-6 py-2.5 rounded-lg text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Cancelar</button>
+<button class="px-8 py-2.5 rounded-lg text-sm font-bold bg-primary text-white hover:bg-primary/90 transition-colors">Abrir Chamado</button>
+</div>
+</div>
+</div>
+<!-- My Tickets Section -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+<h2 class="text-[#111318] dark:text-white text-xl font-bold pb-4">Meus Chamados</h2>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-gray-100 dark:border-gray-800">
+<th class="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">ID / Data</th>
+<th class="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Assunto</th>
+<th class="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
+<th class="py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<tr>
+<td class="py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold dark:text-white">#12903</span>
+<span class="text-xs text-gray-500">12 Out, 2023</span>
+</div>
+</td>
+<td class="py-4">
+<span class="text-sm text-gray-700 dark:text-gray-300">Divergência na Vistoria de Saída</span>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">Em Mediação</span>
+</td>
+<td class="py-4">
+<button class="text-primary text-sm font-semibold hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+<tr>
+<td class="py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold dark:text-white">#11842</span>
+<span class="text-xs text-gray-500">28 Set, 2023</span>
+</div>
+</td>
+<td class="py-4">
+<span class="text-sm text-gray-700 dark:text-gray-300">Atraso no Repasse do Aluguel</span>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Resolvido</span>
+</td>
+<td class="py-4">
+<button class="text-primary text-sm font-semibold hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+<tr>
+<td class="py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold dark:text-white">#10551</span>
+<span class="text-xs text-gray-500">15 Set, 2023</span>
+</div>
+</td>
+<td class="py-4">
+<span class="text-sm text-gray-700 dark:text-gray-300">Erro no Boleto de Condomínio</span>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400">Aberto</span>
+</td>
+<td class="py-4">
+<button class="text-primary text-sm font-semibold hover:underline">Ver Detalhes</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Sidebar Column -->
+<div class="flex flex-col gap-6">
+<!-- Knowledge Base -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+<h3 class="text-[#111318] dark:text-white text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">menu_book</span>
+                                Artigos Relacionados
+                            </h3>
+<div class="flex flex-col gap-4">
+<a class="group" href="#">
+<p class="text-sm font-medium text-[#111318] dark:text-gray-200 group-hover:text-primary transition-colors">Como funciona a mediação de conflitos?</p>
+<p class="text-xs text-gray-500 mt-1">Entenda o papel da PropDirect como mediadora digital.</p>
+</a>
+<a class="group border-t border-gray-100 dark:border-gray-800 pt-4" href="#">
+<p class="text-sm font-medium text-[#111318] dark:text-gray-200 group-hover:text-primary transition-colors">Prazos e Resoluções</p>
+<p class="text-xs text-gray-500 mt-1">Quanto tempo leva para meu chamado ser atendido?</p>
+</a>
+<a class="group border-t border-gray-100 dark:border-gray-800 pt-4" href="#">
+<p class="text-sm font-medium text-[#111318] dark:text-gray-200 group-hover:text-primary transition-colors">Documentação Necessária</p>
+<p class="text-xs text-gray-500 mt-1">Quais evidências são aceitas para disputas de vistoria?</p>
+</a>
+<a class="group border-t border-gray-100 dark:border-gray-800 pt-4" href="#">
+<p class="text-sm font-medium text-[#111318] dark:text-gray-200 group-hover:text-primary transition-colors">Mediação Extrajudicial</p>
+<p class="text-xs text-gray-500 mt-1">O valor legal dos acordos firmados na plataforma.</p>
+</a>
+</div>
+<button class="w-full mt-6 py-2 text-primary border border-primary/20 bg-primary/5 rounded-lg text-sm font-bold hover:bg-primary/10 transition-colors">
+                                Ver Central de Ajuda Completa
+                            </button>
+</div>
+<!-- Mediation Process Card -->
+<div class="bg-primary text-white rounded-xl p-6 shadow-sm overflow-hidden relative">
+<div class="relative z-10">
+<h3 class="text-lg font-bold mb-2">Segurança Garantida</h3>
+<p class="text-white/80 text-sm leading-relaxed mb-4">
+                                    Nossa equipe jurídica analisa imparcialmente todas as evidências enviadas para garantir um desfecho justo para ambas as partes.
+                                </p>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-white/50">verified_user</span>
+<span class="text-xs font-semibold uppercase tracking-wider text-white/70">Ambiente Seguro</span>
+</div>
+</div>
+<div class="absolute -bottom-8 -right-8 opacity-10">
+<span class="material-symbols-outlined text-[120px]">gavel</span>
+</div>
+</div>
+<!-- Need more help? -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+<h3 class="text-[#111318] dark:text-white text-lg font-bold mb-2">Precisa de ajuda imediata?</h3>
+<p class="text-sm text-gray-500 mb-4">Fale com nosso suporte via chat em tempo real para dúvidas técnicas.</p>
+<button class="w-full py-2.5 flex items-center justify-center gap-2 bg-gray-900 dark:bg-primary text-white rounded-lg text-sm font-bold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+                                Iniciar Chat ao Vivo
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Info -->
+<footer class="mt-12 py-8 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-900">
+<div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-gray-500 text-sm">© 2023 PropDirect - Tecnologia para Aluguéis Diretos. Todos os direitos reservados.</p>
+<div class="flex gap-6">
+<a class="text-sm text-gray-400 hover:text-gray-600" href="#">Termos de Uso</a>
+<a class="text-sm text-gray-400 hover:text-gray-600" href="#">Privacidade</a>
+<a class="text-sm text-gray-400 hover:text-gray-600" href="#">Regras de Mediação</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

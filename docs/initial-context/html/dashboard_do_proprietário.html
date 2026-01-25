@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard do Proprietário | DirectRental SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dcdfe5] bg-white dark:bg-background-dark px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#111318] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">DirectRental</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-9">
+<a class="text-[#111318] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Imóveis</a>
+<a class="text-[#111318] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-[#111318] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Pagamentos</a>
+<a class="text-[#111318] dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Mensagens</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6">
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#636f88] flex border-none bg-[#f0f2f4] dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111318] dark:text-white focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] dark:bg-slate-800 focus:border-none h-full placeholder:text-[#636f88] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Pesquisar..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111318] dark:text-white hover:bg-[#e2e4e8] transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111318] dark:text-white hover:bg-[#e2e4e8] transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200" data-alt="Foto de perfil do proprietário sorrindo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFvTRBv3LUIEHHhhuDaMorJbXfGzucsExjj4vnG_SfWBWcHEVrXfomEYy_6SmCy4TUlkF5cuKAZ7wzx_wLwKeOvh4-4EFFXIqGSk2aXCRUPFJCqEUTuJt3POn7EGs_-I90ClVBGSpMtKuCVbANXuKbGEGiwB31JQ1H21dOh0tZI8gmuOmD6nwa36G5dirQ2t68tpvBzbQAydMa-4oILzlezhQB-jFkmssjetlmdQH2iFc901S7Ro1poBtRAQPX2P-odQWaPM-T0IY");'></div>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1 px-4 md:px-10">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between gap-3 mb-6">
+<div class="flex min-w-72 flex-col gap-1">
+<h1 class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Dashboard do Proprietário</h1>
+<p class="text-[#636f88] dark:text-slate-400 text-base font-normal leading-normal">Bem-vindo de volta, Ricardo. Aqui está o resumo do seu portfólio.</p>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#dcdfe5] dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">real_estate_agent</span>
+<p class="text-[#636f88] dark:text-slate-400 text-sm font-medium leading-normal uppercase tracking-wider">Imóveis Ativos</p>
+</div>
+<p class="text-[#111318] dark:text-white tracking-light text-3xl font-bold leading-tight mt-1">12</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#dcdfe5] dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-amber-500">pending_actions</span>
+<p class="text-[#636f88] dark:text-slate-400 text-sm font-medium leading-normal uppercase tracking-wider">Pendências Documentais</p>
+</div>
+<p class="text-[#111318] dark:text-white tracking-light text-3xl font-bold leading-tight mt-1">3</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#dcdfe5] dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-emerald-500">payments</span>
+<p class="text-[#636f88] dark:text-slate-400 text-sm font-medium leading-normal uppercase tracking-wider">Próximos Recebimentos</p>
+</div>
+<p class="text-[#111318] dark:text-white tracking-light text-3xl font-bold leading-tight mt-1">R$ 15.400,00</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left/Main Column: Properties List -->
+<div class="lg:col-span-2 flex flex-col">
+<div class="flex items-center justify-between px-4 pb-4">
+<h2 class="text-[#111318] dark:text-white text-[20px] font-bold leading-tight">Meus Imóveis</h2>
+<button class="text-primary text-sm font-semibold hover:underline">Ver todos</button>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead class="bg-[#f8f9fb] dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-4 text-xs font-semibold text-[#636f88] uppercase tracking-wider">Imóvel</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#636f88] uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#636f88] uppercase tracking-wider">Locatário</th>
+<th class="px-6 py-4 text-xs font-semibold text-[#636f88] uppercase tracking-wider text-right">Valor</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dcdfe5] dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-cover bg-center shrink-0 border border-slate-100" data-alt="Fachada moderna de edifício residencial" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAb4_1Cq_6jwsHi7vj2rPlMa8k74ya0uEVra6OkgVaxneZRD5SuhmTMqUI7YZ8uwWinvg0FfatL5dj4R3cPGoP3wa5HBw-NR2q9FPpgCQVG4CGdELQ-qXKEdLSJHfkcC7Rk5ysk60hr_G4WxE4Mb3rN2vLb_VkN3VGBpugVmkqK5yyk6oBQlbF5oGBp-q3FYKxIUCjRDAVD_xfNABUQ_f1ZlTOc1z1O-lAltVdV26AwUpculaOnCgrFAE7lH1TIRjdxuyT6FS6638k");'></div>
+<span class="text-[#111318] dark:text-white font-medium text-sm">Edifício Horizonte</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">
+                                                    Alugado
+                                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-[#636f88] dark:text-slate-400">João Silva</td>
+<td class="px-6 py-4 text-sm text-[#111318] dark:text-white font-semibold text-right">R$ 3.500,00</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-cover bg-center shrink-0 border border-slate-100" data-alt="Casa de luxo em bairro residencial" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBzpfd0sB0KEskmzwUT-u1KrbAmFtP_Jy5Z4Gt5z0orSFOGm2YPqAOI7rlUoOYyVHETFCg_laq9Joi2HJ7E0VF9KOdmppmFn0YBYs-AOS5gKz5poEkZm06HlnK2cdgRw_Juko0kE-tygWspt00IXY4o9Bxj6tfh7zo1vEBNf1TXGiAen5Dd47PhYdzJ-Jdsd1aOo6GJ8DbdDKOJ7hWHQ53McGZ0Giqo0IE3z4ib5qLUWbRwjbvTCKw0OHLffEyaaCI67aQMDBgQUdA");'></div>
+<span class="text-[#111318] dark:text-white font-medium text-sm">Casa Campo Belo</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/30 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">
+                                                    Disponível
+                                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-[#636f88] dark:text-slate-400">-</td>
+<td class="px-6 py-4 text-sm text-[#111318] dark:text-white font-semibold text-right">R$ 5.200,00</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors cursor-pointer">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-lg bg-cover bg-center shrink-0 border border-slate-100" data-alt="Apartamento estúdio minimalista" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCYMmiZZaq0GbHH9MFRvdWflkDkLgHeUBrTYk5zqOXplzwQw5QqHRI4Ozwl2bgRmqsEyiq8hJxfgR3Xl2QhEJ0e3zymvO-DaWOtEcD-bV1I93NLIIJpjA9tKTAZWV3HGYptkNfu-RPkgT66KMQEB9fvP-NmCLPLEujrd0Lc5zG1R5hW_xLjHSMYY9tv-8mHUVdAJZorTV2fIZGNW5k2zdLE2P7bZQCkY8Usnk9TgC9J5Us5vfpHRWCUnq7PWj8GbisWTEU41OqZ8aA");'></div>
+<span class="text-[#111318] dark:text-white font-medium text-sm">Studio Pinheiros</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/30 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400">
+                                                    Em Negociação
+                                                </span>
+</td>
+<td class="px-6 py-4 text-sm text-[#636f88] dark:text-slate-400">Maria Oliveira</td>
+<td class="px-6 py-4 text-sm text-[#111318] dark:text-white font-semibold text-right">R$ 2.800,00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Column: Priority Actions -->
+<div class="flex flex-col">
+<h2 class="text-[#111318] dark:text-white text-[20px] font-bold leading-tight px-4 pb-4">Ações Prioritárias</h2>
+<div class="flex flex-col gap-3">
+<!-- Action Item 1 -->
+<div class="flex flex-col gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start gap-3">
+<div class="flex items-center justify-center rounded-lg bg-primary/10 text-primary shrink-0 size-10">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-[#111318] dark:text-white text-sm font-bold leading-tight">Contrato pendente</p>
+<p class="text-[#636f88] dark:text-slate-400 text-xs font-normal leading-normal mt-1">Apartamento Jardins - Requer sua assinatura digital</p>
+</div>
+</div>
+<button class="w-full h-9 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
+                                        Assinar agora
+                                    </button>
+</div>
+<!-- Action Item 2 -->
+<div class="flex flex-col gap-3 rounded-xl border border-[#dcdfe5] dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start gap-3">
+<div class="flex items-center justify-center rounded-lg bg-amber-100 text-amber-600 shrink-0 size-10">
+<span class="material-symbols-outlined">fact_check</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-[#111318] dark:text-white text-sm font-bold leading-tight">Vistoria para revisar</p>
+<p class="text-[#636f88] dark:text-slate-400 text-xs font-normal leading-normal mt-1">Casa Vila Mariana - Vistoria de saída realizada ontem</p>
+</div>
+</div>
+<button class="w-full h-9 bg-[#f0f2f4] dark:bg-slate-800 text-[#111318] dark:text-white rounded-lg text-sm font-semibold hover:bg-[#e2e4e8] transition-colors">
+                                        Revisar Relatório
+                                    </button>
+</div>
+<!-- Action Item 3 (New Tenant App) -->
+<div class="flex flex-col gap-3 rounded-xl border border-[#dcdfe5] dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start gap-3">
+<div class="flex items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 shrink-0 size-10">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-[#111318] dark:text-white text-sm font-bold leading-tight">Nova Proposta</p>
+<p class="text-[#636f88] dark:text-slate-400 text-xs font-normal leading-normal mt-1">Apartamento Bela Vista - Interessado: Pedro Duarte</p>
+</div>
+</div>
+<button class="w-full h-9 bg-[#f0f2f4] dark:bg-slate-800 text-[#111318] dark:text-white rounded-lg text-sm font-semibold hover:bg-[#e2e4e8] transition-colors">
+                                        Analisar Perfil
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-auto border-t border-[#dcdfe5] dark:border-slate-800 bg-white dark:bg-background-dark px-10 py-6">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-sm text-[#636f88] dark:text-slate-400">© 2024 DirectRental SaaS. Todos os direitos reservados.</p>
+<div class="flex gap-6">
+<a class="text-sm text-[#636f88] dark:text-slate-400 hover:text-primary" href="#">Termos</a>
+<a class="text-sm text-[#636f88] dark:text-slate-400 hover:text-primary" href="#">Privacidade</a>
+<a class="text-sm text-[#636f88] dark:text-slate-400 hover:text-primary" href="#">Suporte</a>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

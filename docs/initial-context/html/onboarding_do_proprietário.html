@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding do Proprietário | DiretoAluguel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#111318] dark:text-white">
+<div class="flex flex-col min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-solid border-[#e5e7eb] dark:border-[#2d333d] bg-white dark:bg-[#1a212e] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">DiretoAluguel</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-gray-100 dark:bg-[#2d333d] hover:bg-gray-200 dark:hover:bg-[#3d4554]">
+<span class="material-symbols-outlined text-gray-700 dark:text-gray-200">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-gray-100 dark:bg-[#2d333d] hover:bg-gray-200 dark:hover:bg-[#3d4554]">
+<span class="material-symbols-outlined text-gray-700 dark:text-gray-200">settings</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD39QERXkTXhydcefzYzjzeHjkUZJCFafRT2KgfXpH-9JFeTOH4BQPB-ur_v6t8XdM1gFA2ihdpksmCr0bFPYoOiEXBTqiDxKHFNeKg2bHaNnNFxGkYqZMhFqkWmSZRCkZWl6ZYJeFXl4Y5NK7XY3T_rbJVSF9wSiZgLcXUKjaUZvWA6TVe3wAvPhojKFsO2Ws9UfLbugf6d-DVDDN1sJGP1-qf-JyVhFrBB91eN3j4qzwy07X5ZuZFILzaGcDYmc79yd5q2y3MZu4");'></div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 max-w-[960px] mx-auto w-full px-6 py-12">
+<!-- Welcome Header -->
+<div class="mb-12">
+<h1 class="text-[#111318] dark:text-white tracking-tight text-[36px] font-bold leading-tight text-center">
+                    Bem-vindo, Ricardo! Vamos configurar seu primeiro imóvel
+                </h1>
+<p class="text-gray-600 dark:text-gray-400 text-center mt-3 text-lg">Comece a alugar seu imóvel de forma direta e segura em poucos passos.</p>
+</div>
+<!-- Visual Roadmap (Stepper) -->
+<div class="bg-white dark:bg-[#1a212e] rounded-xl p-8 shadow-sm border border-[#f0f2f4] dark:border-[#2d333d] mb-10">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center">
+<div class="z-10 bg-primary text-white size-12 rounded-full flex items-center justify-center mb-4 ring-8 ring-blue-50 dark:ring-primary/10">
+<span class="material-symbols-outlined">home</span>
+</div>
+<h3 class="text-[#111318] dark:text-white text-lg font-bold">Cadastrar Imóvel</h3>
+<p class="text-[#636f88] dark:text-gray-400 mt-1">Detalhes e fotos da sua propriedade</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center relative">
+<!-- Horizontal connector for desktop -->
+<div class="hidden md:block absolute top-6 right-[65%] w-[70%] h-[2px] bg-gray-200 dark:bg-gray-700 -z-0"></div>
+<div class="z-10 bg-gray-100 dark:bg-[#2d333d] text-gray-500 dark:text-gray-400 size-12 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">description</span>
+</div>
+<h3 class="text-[#111318] dark:text-white text-lg font-bold">Anexar Documentos</h3>
+<p class="text-[#636f88] dark:text-gray-400 mt-1">Identidade e comprovação de posse</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center relative">
+<!-- Horizontal connector for desktop -->
+<div class="hidden md:block absolute top-6 right-[65%] w-[70%] h-[2px] bg-gray-200 dark:bg-gray-700 -z-0"></div>
+<div class="z-10 bg-gray-100 dark:bg-[#2d333d] text-gray-500 dark:text-gray-400 size-12 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<h3 class="text-[#111318] dark:text-white text-lg font-bold">Convidar Inquilino</h3>
+<p class="text-[#636f88] dark:text-gray-400 mt-1">Envie o convite para o contrato digital</p>
+</div>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="flex flex-col items-center py-6">
+<button class="flex min-w-[320px] items-center justify-center rounded-xl h-14 px-8 bg-primary hover:bg-primary/90 text-white gap-3 text-lg font-bold transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Cadastrar Primeiro Imóvel</span>
+</button>
+<p class="text-sm text-gray-500 mt-4">Leva apenas 5 minutos para começar</p>
+</div>
+<!-- Help Center Widget Section -->
+<div class="mt-20 border-t border-gray-200 dark:border-gray-800 pt-12">
+<div class="flex items-center justify-between mb-8 px-2">
+<h2 class="text-2xl font-bold">Central de Ajuda</h2>
+<a class="text-primary font-semibold flex items-center gap-1 hover:underline" href="#">
+                        Ver todos os guias
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 px-2">
+<!-- Video Tutorial Card -->
+<div class="group relative overflow-hidden rounded-xl bg-black aspect-video flex items-center justify-center cursor-pointer">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<div class="absolute inset-0 opacity-80 group-hover:opacity-100 transition-opacity bg-center bg-cover" data-alt="Modern apartment interior thumbnail for video" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCIHOMwmdtmzgabDaxdRkiA4wLj-orA6JevQwwdxzexraoTyFgORVLkeoJHVn-3yV8JsVR44ZxNsq1mLn0SAiq18Z_FO9uq0TtkE4mw0rBkjVZClO2IdH8LNbsqPvGU9FAoOMY2iiGGuvStpJTN8aaugTr5X8INM-d8AGWLTCkQkYhHtOa1v07M-oY87B1AyDKGK2rCyUcLiMsFX4D-_6waV0CO5N9ZXiKqbJyuAkr3szatt8s7yESEz2wxT-fiecFE6jCvgMjrkSM");'>
+</div>
+<div class="z-20 bg-white/20 backdrop-blur-md rounded-full size-16 flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-4xl fill-1">play_arrow</span>
+</div>
+<div class="absolute bottom-4 left-4 z-20">
+<p class="text-white font-bold text-lg">Como funciona o aluguel direto</p>
+<p class="text-white/80 text-sm">Tutorial em vídeo • 3 min</p>
+</div>
+</div>
+<!-- Quick Links/Faq -->
+<div class="flex flex-col gap-4">
+<div class="bg-white dark:bg-[#1a212e] p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors cursor-pointer flex items-center gap-4">
+<div class="bg-blue-50 dark:bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<h4 class="font-bold">Segurança e Contratos</h4>
+<p class="text-sm text-gray-500">Como garantimos a validade jurídica</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a212e] p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors cursor-pointer flex items-center gap-4">
+<div class="bg-blue-50 dark:bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<h4 class="font-bold">Recebimento de Aluguéis</h4>
+<p class="text-sm text-gray-500">Prazos e taxas de intermediação digital</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a212e] p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors cursor-pointer flex items-center gap-4">
+<div class="bg-blue-50 dark:bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<div>
+<h4 class="font-bold">Falar com Consultor</h4>
+<p class="text-sm text-gray-500">Suporte humano para tirar suas dúvidas</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Footer -->
+<footer class="mt-auto py-8 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a212e]">
+<div class="max-w-[960px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+<p>© 2024 DiretoAluguel - Tecnologia para Locação Residencial</p>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">Termos de Uso</a>
+<a class="hover:text-primary" href="#">Privacidade</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

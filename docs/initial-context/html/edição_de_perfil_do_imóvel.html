@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edição de Perfil do Imóvel - SaaS Locação</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            --checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e');
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col">
+<!-- Header / TopNavBar -->
+<header class="sticky top-0 z-50 w-full border-b border-[#f0f2f4] bg-white dark:bg-background-dark dark:border-gray-800 px-4 md:px-10 py-3">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-4 text-[#111318] dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">domain</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Apartamento Vila Nova</h2>
+<span class="hidden md:inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                    Publicado
+                </span>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span class="truncate">Preview do Site</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-white hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-white hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow max-w-[1440px] mx-auto w-full px-4 md:px-10 py-6">
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Editor Column -->
+<div class="flex-1 min-w-0">
+<!-- Navigation Tabs -->
+<div class="mb-6 border-b border-[#dcdfe5] dark:border-gray-700">
+<nav class="flex gap-8 overflow-x-auto">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#636f88] dark:text-gray-400 pb-[13px] pt-2 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Dados Gerais</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-primary pb-[13px] pt-2 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Comodidades</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#636f88] dark:text-gray-400 pb-[13px] pt-2 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Fotos</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#636f88] dark:text-gray-400 pb-[13px] pt-2 whitespace-nowrap" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Regras</p>
+</a>
+</nav>
+</div>
+<!-- Comodidades Content -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-[#dcdfe5] dark:border-gray-800 p-6 space-y-8">
+<!-- Section: Segurança -->
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">security</span>
+<h3 class="text-[#111318] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Segurança</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Portaria 24h</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Alarme monitorado</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Câmeras de vigilância</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Fechadura eletrônica</span>
+</label>
+</div>
+</div>
+<hr class="border-[#dcdfe5] dark:border-gray-800"/>
+<!-- Section: Lazer -->
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">pool</span>
+<h3 class="text-[#111318] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Lazer</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Piscina</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Academia</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Salão de festas</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Churrasqueira</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Playground</span>
+</label>
+</div>
+</div>
+<hr class="border-[#dcdfe5] dark:border-gray-800"/>
+<!-- Section: Infraestrutura -->
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">apartment</span>
+<h3 class="text-[#111318] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Infraestrutura</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Gás encanado</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Elevador</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input checked="" class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Garagem coberta</span>
+</label>
+<label class="flex items-center gap-x-3 py-2 cursor-pointer group">
+<input class="h-5 w-5 rounded border-[#dcdfe5] border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary focus:outline-none" type="checkbox"/>
+<span class="text-[#111318] dark:text-gray-300 text-base font-normal leading-normal group-hover:text-primary transition-colors">Acessibilidade</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Preview Column -->
+<aside class="w-full lg:w-[380px] space-y-4">
+<div class="sticky top-24">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-[#111318] dark:text-white font-bold text-lg">Preview do Imóvel</h3>
+<span class="text-xs text-gray-500 font-medium">Visualização ao vivo</span>
+</div>
+<!-- Preview Card -->
+<div class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden border border-[#dcdfe5] dark:border-gray-800 shadow-sm">
+<div class="relative h-48 w-full bg-gray-200">
+<img alt="Living room with large windows" class="w-full h-full object-cover" data-alt="Modern apartment interior with living room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm9HSDy8Hd0yn-VZyiGtPKzjYE2js1qMKEPIQ_y9qIDKGt9fesMmX0kzgLhZ6zRi1pTrpGkOPApTdPF3DlMl516L5jEWcn3pAzcmZMxpeMkyQBGP28BD3EUMhiEq6lPkchx6ins81GPAHFlCxHJzCGEGrndH5_99H3uv3ObKRhmpM9hWtbAG73cOKtG4ZpPLPpt9mweKBdq0UQL2Cdwm5C4CkU5fAVSHu6LzrdXvRsZaChjNsPZSOTk0nDYtwB4Mh9eIG5YayFEX4"/>
+<div class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider text-primary">
+                                Apartamento
+                            </div>
+</div>
+<div class="p-4">
+<h4 class="text-lg font-bold text-[#111318] dark:text-white mb-1">Apartamento Vila Nova</h4>
+<p class="text-sm text-gray-500 mb-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                Vila Nova Conceição, São Paulo
+                            </p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary/10 text-primary text-[11px] font-semibold px-2 py-1 rounded">2 Quartos</span>
+<span class="bg-primary/10 text-primary text-[11px] font-semibold px-2 py-1 rounded">75m²</span>
+<span class="bg-primary/10 text-primary text-[11px] font-semibold px-2 py-1 rounded">1 Vaga</span>
+</div>
+<div class="space-y-1 mb-4">
+<p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Destaques selecionados:</p>
+<ul class="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">check_circle</span> Portaria 24h</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">check_circle</span> Piscina &amp; Academia</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-[14px]">check_circle</span> Gás encanado</li>
+</ul>
+</div>
+<div class="border-t border-gray-100 dark:border-gray-800 pt-4 flex items-center justify-between">
+<div>
+<p class="text-xs text-gray-400">Aluguel mensal</p>
+<p class="text-xl font-bold text-primary">R$ 4.500</p>
+</div>
+<button class="rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2 text-xs font-bold text-[#111318] dark:text-white">
+                                    Ver Detalhes
+                                </button>
+</div>
+</div>
+</div>
+<div class="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/20">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-xs text-primary/80 leading-relaxed">
+                                Estas informações serão utilizadas para gerar o contrato digital automaticamente. Certifique-se de que os dados estão corretos.
+                            </p>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Sticky Footer -->
+<footer class="sticky bottom-0 w-full bg-white dark:bg-background-dark border-t border-[#f0f2f4] dark:border-gray-800 p-4 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+<div class="max-w-[1440px] mx-auto flex items-center justify-end gap-4 px-4 md:px-10">
+<button class="text-sm font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white transition-colors">
+                Descartar alterações
+            </button>
+<button class="flex min-w-[160px] items-center justify-center rounded-lg h-12 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all">
+                Salvar Alterações
+            </button>
+</div>
+</footer>
+</body></html>

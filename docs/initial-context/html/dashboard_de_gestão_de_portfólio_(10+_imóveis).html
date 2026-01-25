@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard de Gestão de Portfólio - ImobiSaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#111318] dark:text-gray-100">
+<div class="relative flex flex-col w-full min-h-screen">
+<!-- Header / Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a1f2e] px-8 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-xl font-bold leading-tight tracking-tight">ImobiSaaS</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-6 ml-4">
+<a class="text-primary text-sm font-semibold border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="text-gray-500 dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Propriedades</a>
+<a class="text-gray-500 dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-gray-500 dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Financeiro</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-1.5 w-64">
+<span class="material-symbols-outlined text-gray-400 text-lg">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-gray-500" placeholder="Buscar imóvel ou inquilino..." type="text"/>
+</label>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a1f2e]"></span>
+</button>
+<div class="size-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden">
+<img class="size-full object-cover" data-alt="Avatar do proprietário" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoIquuBE3uHF5C-__6OFD--S0GZP3h87gw4a8sEC-u31tPrhxxurSEaTbg0dA--alg00ae3Zl76ndk3kKicdFyIaK89NDGKMXeCBTFd90maI4-HL2BgDKfP7fGR0gKSzLWWbwIpi8NANJHRSljwBxwtPJrlNGEYzzRQVtMDbZxI82qwwep8d3dSW_Zo7hHL5cEbiwL6Ul35Hh9bEfQl_HMswnnPn_E8pTSD2UVT2M1Q0y5qjTSZ_41ldFZhicASbl77D6X5MvWhCg"/>
+</div>
+</div>
+</header>
+<main class="flex flex-1 p-6 gap-6 max-w-[1600px] mx-auto w-full">
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col gap-6 overflow-hidden">
+<!-- Page Title -->
+<div class="flex flex-col gap-1">
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard do Proprietário</h1>
+<p class="text-gray-500 text-sm">Visão geral do seu portfólio de 12 imóveis</p>
+</div>
+<!-- Aggregated Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-gray-500 text-sm font-medium">Vacância Total</span>
+<span class="material-symbols-outlined text-gray-400">door_front</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-gray-900 dark:text-white">15%</span>
+<span class="text-gray-400 text-sm">(3 unidades)</span>
+</div>
+<div class="flex items-center gap-1 text-green-600 dark:text-green-400 text-xs font-semibold">
+<span class="material-symbols-outlined text-xs">arrow_downward</span>
+<span>-2% este mês</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-gray-500 text-sm font-medium">Receita Mensal Consolidada</span>
+<span class="material-symbols-outlined text-gray-400">payments</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-gray-900 dark:text-white">R$ 45.200,00</span>
+</div>
+<div class="flex items-center gap-1 text-green-600 dark:text-green-400 text-xs font-semibold">
+<span class="material-symbols-outlined text-xs">arrow_upward</span>
+<span>+5% vs. período anterior</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-gray-500 text-sm font-medium">Reparos Pendentes</span>
+<span class="material-symbols-outlined text-gray-400">build</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-gray-900 dark:text-white">8 chamados</span>
+</div>
+<div class="flex items-center gap-1 text-red-600 dark:text-red-400 text-xs font-semibold">
+<span class="material-symbols-outlined text-xs">priority_high</span>
+<span>3 urgentes</span>
+</div>
+</div>
+</div>
+<!-- Table Filters -->
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col">
+<div class="p-4 border-b border-gray-100 dark:border-gray-800 flex flex-wrap items-center justify-between gap-4">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Gestão de Portfólio</h3>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined text-lg">filter_alt</span>
+                                Status: Todos
+                                <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                                Bairro: Todos
+                                <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+<button class="p-1.5 text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+</div>
+<!-- Portfolio Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-gray-800/50 text-gray-500 text-xs uppercase tracking-wider">
+<th class="px-6 py-4 font-semibold">Imóvel / Endereço</th>
+<th class="px-6 py-4 font-semibold">Status</th>
+<th class="px-6 py-4 font-semibold">Inquilino</th>
+<th class="px-6 py-4 font-semibold">Fim do Contrato</th>
+<th class="px-6 py-4 font-semibold">Próx. Pagamento</th>
+<th class="px-6 py-4 font-semibold text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-sm text-gray-900 dark:text-white">Edifício Mirante Apto 402</span>
+<span class="text-xs text-gray-500">Rua das Palmeiras, 123 - Jardins</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Alugado
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Ricardo Almeida</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-gray-700 dark:text-gray-300 font-medium">12 Mai 2025</span>
+<span class="text-[10px] text-gray-400 uppercase">Em 14 meses</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-gray-700 dark:text-gray-300 font-medium">05 Mar 2024</span>
+<span class="text-[10px] text-green-600 font-bold uppercase">Confirmado</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-sm text-gray-900 dark:text-white">Casa de Vila - Unidade B</span>
+<span class="text-xs text-gray-500">Av. Paulista, 2500 - Bela Vista</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
+                                            Vago
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-gray-400 italic">N/A</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-gray-400">-</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-gray-400">-</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-sm text-gray-900 dark:text-white">Studio Moderno 101</span>
+<span class="text-xs text-gray-500">Rua Augusta, 400 - Consolação</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                            Manutenção
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Ana Clara Silva</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-gray-700 dark:text-gray-300 font-medium">30 Set 2024</span>
+<span class="text-[10px] text-gray-400 uppercase">Em 6 meses</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-red-600 font-bold">01 Mar 2024</span>
+<span class="text-[10px] text-red-600 font-bold uppercase">Atrasado</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Repeated rows for density -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-sm text-gray-900 dark:text-white">Loft Industrial</span>
+<span class="text-xs text-gray-500">Rua Mourato Coelho, 88 - Pinheiros</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Alugado
+                                        </span>
+</td>
+<td class="px-6 py-4"><span class="text-sm font-medium text-gray-700 dark:text-gray-300">Bruno Fontes</span></td>
+<td class="px-6 py-4"><span class="text-sm text-gray-700 dark:text-gray-300 font-medium">10 Dez 2024</span></td>
+<td class="px-6 py-4"><span class="text-sm text-gray-700 dark:text-gray-300 font-medium">05 Mar 2024</span></td>
+<td class="px-6 py-4 text-right"><button class="text-gray-400 hover:text-primary"><span class="material-symbols-outlined text-lg">more_vert</span></button></td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="font-bold text-sm text-gray-900 dark:text-white">Cobertura Duplex</span>
+<span class="text-xs text-gray-500">Rua Oscar Freire, 1100 - Jardins</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Alugado
+                                        </span>
+</td>
+<td class="px-6 py-4"><span class="text-sm font-medium text-gray-700 dark:text-gray-300">Marcos Pereira</span></td>
+<td class="px-6 py-4"><span class="text-sm text-gray-700 dark:text-gray-300 font-medium">15 Jan 2026</span></td>
+<td class="px-6 py-4"><span class="text-sm text-gray-700 dark:text-gray-300 font-medium">10 Mar 2024</span></td>
+<td class="px-6 py-4 text-right"><button class="text-gray-400 hover:text-primary"><span class="material-symbols-outlined text-lg">more_vert</span></button></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+<span class="text-xs text-gray-500">Mostrando 5 de 12 propriedades</span>
+<div class="flex gap-1">
+<button class="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded text-xs font-medium hover:bg-gray-50">Anterior</button>
+<button class="px-3 py-1 bg-primary text-white border border-primary rounded text-xs font-medium">Próximo</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions Sidebar -->
+<aside class="w-80 flex flex-col gap-6 sticky top-24 h-fit">
+<!-- Quick Actions Panel -->
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col gap-4">
+<h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Ações Rápidas</h3>
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-white py-2.5 rounded-lg font-bold text-sm hover:bg-blue-700 transition-colors">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                        Adicionar Imóvel
+                    </button>
+<button class="w-full flex items-center justify-center gap-2 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 py-2.5 rounded-lg font-bold text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-lg">analytics</span>
+                        Gerar Relatório Consolidado
+                    </button>
+<hr class="border-gray-100 dark:border-gray-800"/>
+<a class="flex items-center justify-between group" href="#">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-gray-50 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-500 group-hover:text-primary group-hover:bg-primary/10 transition-all">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-gray-900 dark:text-white">Mensagens</span>
+<span class="text-xs text-gray-500">4 não lidas</span>
+</div>
+</div>
+<span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">4</span>
+</a>
+<a class="flex items-center justify-between group" href="#">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-gray-50 dark:bg-gray-800 rounded-lg flex items-center justify-center text-gray-500 group-hover:text-primary group-hover:bg-primary/10 transition-all">
+<span class="material-symbols-outlined">assignment_late</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-gray-900 dark:text-white">Vistorias Pendentes</span>
+<span class="text-xs text-gray-500">2 agendadas para hoje</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+</div>
+<!-- Recent Activity Feed (Mini) -->
+<div class="bg-white dark:bg-[#1a1f2e] p-5 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col gap-4">
+<h3 class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Atividade Recente</h3>
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-start">
+<div class="size-2 rounded-full bg-green-500 mt-1.5 shrink-0"></div>
+<div class="flex flex-col">
+<p class="text-xs font-medium text-gray-700 dark:text-gray-300">Pagamento recebido: Ed. Mirante 402</p>
+<span class="text-[10px] text-gray-400">Há 2 horas</span>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<div class="size-2 rounded-full bg-blue-500 mt-1.5 shrink-0"></div>
+<div class="flex flex-col">
+<p class="text-xs font-medium text-gray-700 dark:text-gray-300">Novo contrato assinado: Casa Vila B</p>
+<span class="text-[10px] text-gray-400">Há 5 horas</span>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<div class="size-2 rounded-full bg-orange-500 mt-1.5 shrink-0"></div>
+<div class="flex flex-col">
+<p class="text-xs font-medium text-gray-700 dark:text-gray-300">Solicitação de reparo: Loft Pinheiros</p>
+<span class="text-[10px] text-gray-400">Ontem às 14:30</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</body></html>

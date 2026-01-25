@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Relatórios Financeiros Detalhados | RentSaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark px-4 md:px-10 py-3">
+<div class="max-w-[1280px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+</svg>
+</div>
+<h1 class="text-xl font-black tracking-tight">RentSaaS</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Imóveis</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-sm font-medium text-primary" href="#">Relatórios</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Financeiro</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="hidden lg:flex items-center bg-[#f0f2f4] dark:bg-gray-800 rounded-lg px-3 py-1.5 w-64">
+<span class="material-symbols-outlined text-[#636f88] text-xl">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-[#636f88]" placeholder="Buscar transações..." type="text"/>
+</label>
+<button class="material-symbols-outlined p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">notifications</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border-2 border-primary" data-alt="Landlord user profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDY_y4S-rkPbhWa0Gt9gnQUkjdHj2Ys0u0xW_TQbFcZywF-wConf6zhTaqo8NZN8K3XPuMbJZTcvwbEOUo-opce3oSu_si6JLAYEHLwBUK--n7RvbZSYt-Nkw5V-cF0fR45hCGIBoO7cPSNsmXPiPxCB1PxTXHqetjeXjishxJbm-1_yT9OQQLjeN5XBIvckgu3Xod69w_Td7M9ffFpl-nSGH8nvRjIIlAvTLA2ysLnW6J5R_tOGB4NeDDsrc8LIV9rI61FcmgxQPA");'></div>
+</div>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-4 md:px-10 py-8 space-y-8">
+<!-- Page Heading & Filters -->
+<div class="flex flex-col gap-6">
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-3xl font-black tracking-tight">Relatórios Financeiros</h2>
+<p class="text-[#636f88] dark:text-gray-400">Acompanhe o desempenho financeiro e prepare sua declaração de IR.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 bg-[#f0f2f4] dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg font-bold text-sm transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Exportar CSV
+                    </button>
+<button class="flex items-center gap-2 bg-primary text-white hover:bg-blue-700 px-4 py-2 rounded-lg font-bold text-sm transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+                        Gerar PDF
+                    </button>
+</div>
+</div>
+<!-- Filters Bar -->
+<div class="flex flex-wrap items-center gap-3 bg-white dark:bg-background-dark p-3 rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-[#f0f2f4] dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined text-lg">home</span>
+<span class="text-sm font-medium">Imóvel: Todos os Imóveis</span>
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-[#f0f2f4] dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+<span class="text-sm font-medium">Ano: 2024</span>
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-[#f0f2f4] dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined text-lg">leaderboard</span>
+<span class="text-sm font-medium">Visualização: Mensal</span>
+<span class="material-symbols-outlined text-lg">expand_more</span>
+</div>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-background-dark p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 flex flex-col gap-2 shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-medium">Receita Bruta</p>
+<span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">+12.5%</span>
+</div>
+<p class="text-2xl font-black">R$ 124.500,00</p>
+<p class="text-[10px] text-[#636f88] uppercase font-bold tracking-wider">Total Acumulado</p>
+</div>
+<div class="bg-white dark:bg-background-dark p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 flex flex-col gap-2 shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-medium">Impostos (IPTU/IR)</p>
+<span class="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-0.5 rounded-full">Estimado</span>
+</div>
+<p class="text-2xl font-black text-orange-600">R$ 18.200,00</p>
+<p class="text-[10px] text-[#636f88] uppercase font-bold tracking-wider">Provisão Anual</p>
+</div>
+<div class="bg-white dark:bg-background-dark p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 flex flex-col gap-2 shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-medium">Manutenção</p>
+<span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded-full">-8.2%</span>
+</div>
+<p class="text-2xl font-black text-red-600">R$ 5.400,00</p>
+<p class="text-[10px] text-[#636f88] uppercase font-bold tracking-wider">Reparos e Taxas</p>
+</div>
+<div class="bg-white dark:bg-background-dark p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 flex flex-col gap-2 shadow-sm ring-2 ring-primary/20">
+<div class="flex justify-between items-start">
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-medium">Lucro Líquido</p>
+<span class="material-symbols-outlined text-primary">verified</span>
+</div>
+<p class="text-2xl font-black text-primary">R$ 100.900,00</p>
+<p class="text-[10px] text-[#636f88] uppercase font-bold tracking-wider">Rendimento Real</p>
+</div>
+</div>
+<!-- Chart Section & IR Summary -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Line Chart -->
+<div class="lg:col-span-2 bg-white dark:bg-background-dark p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-lg">Fluxo de Caixa (Receita vs. Despesas)</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<span class="size-3 rounded-full bg-primary"></span>
+<span class="text-xs font-medium text-[#636f88]">Receita</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="size-3 rounded-full bg-gray-300"></span>
+<span class="text-xs font-medium text-[#636f88]">Despesas</span>
+</div>
+</div>
+</div>
+<div class="relative h-[240px] w-full mt-4">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 472 150">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#1754cf" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#1754cf" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area -->
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V150H0Z" fill="url(#chartGradient)"></path>
+<!-- Main Line -->
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" fill="none" stroke="#1754cf" stroke-width="3"></path>
+<!-- Expense Line -->
+<path d="M0 130C50 120 100 135 150 110C200 85 250 120 300 125C350 130 400 100 472 115" fill="none" stroke="#94a3b8" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+<div class="flex justify-between mt-4">
+<p class="text-[#636f88] text-[11px] font-bold uppercase">Jan</p>
+<p class="text-[#636f88] text-[11px] font-bold uppercase">Mar</p>
+<p class="text-[#636f88] text-[11px] font-bold uppercase">Mai</p>
+<p class="text-[#636f88] text-[11px] font-bold uppercase">Jul</p>
+<p class="text-[#636f88] text-[11px] font-bold uppercase">Set</p>
+<p class="text-[#636f88] text-[11px] font-bold uppercase">Nov</p>
+</div>
+</div>
+</div>
+<!-- Tax Declaration Summary -->
+<div class="bg-primary text-white p-6 rounded-xl shadow-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined">assignment_ind</span>
+<h3 class="font-bold text-lg">Resumo para IR 2024</h3>
+</div>
+<p class="text-blue-100 text-sm mb-6 leading-relaxed">Dados consolidados para preenchimento do Carnê-Leão e Declaração Anual de Ajuste (DIRPF).</p>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-white/20 pb-2">
+<span class="text-xs font-medium opacity-80 uppercase">Rendimentos Tributáveis</span>
+<span class="font-bold">R$ 114.200,00</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/20 pb-2">
+<span class="text-xs font-medium opacity-80 uppercase">Deduções Admitidas</span>
+<span class="font-bold">R$ 8.450,00</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/20 pb-2">
+<span class="text-xs font-medium opacity-80 uppercase">Imposto Retido</span>
+<span class="font-bold">R$ 15.240,00</span>
+</div>
+</div>
+</div>
+<button class="mt-6 w-full py-3 bg-white text-primary font-black text-sm rounded-lg flex items-center justify-center gap-2 hover:bg-blue-50 transition-colors">
+<span class="material-symbols-outlined text-lg">content_copy</span>
+                    COPIAR DADOS PARA IR
+                </button>
+</div>
+</div>
+<!-- Transaction Ledger Table -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-[#dcdfe5] dark:border-gray-800 flex justify-between items-center">
+<h3 class="font-bold text-lg">Histórico de Transações</h3>
+<div class="flex items-center gap-2">
+<span class="text-xs text-[#636f88] font-medium">Exibindo 12 de 124 transações</span>
+<div class="flex gap-1">
+<button class="material-symbols-outlined p-1 border rounded hover:bg-gray-50 dark:hover:bg-gray-800 text-sm">chevron_left</button>
+<button class="material-symbols-outlined p-1 border rounded hover:bg-gray-50 dark:hover:bg-gray-800 text-sm">chevron_right</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-[#f8f9fa] dark:bg-gray-900 border-b border-[#dcdfe5] dark:border-gray-800">
+<th class="px-6 py-4 text-xs font-bold text-[#636f88] uppercase tracking-wider">Data</th>
+<th class="px-6 py-4 text-xs font-bold text-[#636f88] uppercase tracking-wider">Imóvel</th>
+<th class="px-6 py-4 text-xs font-bold text-[#636f88] uppercase tracking-wider">Categoria</th>
+<th class="px-6 py-4 text-xs font-bold text-[#636f88] uppercase tracking-wider">Valor</th>
+<th class="px-6 py-4 text-xs font-bold text-[#636f88] uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-bold text-[#636f88] uppercase tracking-wider">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dcdfe5] dark:divide-gray-800">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 text-sm whitespace-nowrap">05 Abr 2024</td>
+<td class="px-6 py-4 text-sm font-medium">Edifício Horizonte, Ap 402</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-md bg-blue-50 text-blue-700 text-[10px] font-bold uppercase">Aluguel Mensal</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-green-600">+ R$ 4.500,00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<span class="size-2 rounded-full bg-green-500"></span>
+<span class="text-sm font-medium">Recebido</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-[#636f88] hover:text-primary transition-colors">description</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 text-sm whitespace-nowrap">02 Abr 2024</td>
+<td class="px-6 py-4 text-sm font-medium">Casa Vila Mariana</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-md bg-red-50 text-red-700 text-[10px] font-bold uppercase">Reparo Hidráulico</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-red-600">- R$ 380,00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<span class="size-2 rounded-full bg-green-500"></span>
+<span class="text-sm font-medium">Pago</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-[#636f88] hover:text-primary transition-colors">description</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 text-sm whitespace-nowrap">28 Mar 2024</td>
+<td class="px-6 py-4 text-sm font-medium">Studio Pinheiros, 12C</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-md bg-blue-50 text-blue-700 text-[10px] font-bold uppercase">Aluguel Mensal</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-green-600">+ R$ 3.200,00</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<span class="size-2 rounded-full bg-green-500"></span>
+<span class="text-sm font-medium">Recebido</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-[#636f88] hover:text-primary transition-colors">description</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 text-sm whitespace-nowrap">15 Mar 2024</td>
+<td class="px-6 py-4 text-sm font-medium">Vários</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-md bg-orange-50 text-orange-700 text-[10px] font-bold uppercase">Taxa de Serviço</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-red-600">- R$ 124,50</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<span class="size-2 rounded-full bg-blue-500"></span>
+<span class="text-sm font-medium">Processando</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-[#636f88] hover:text-primary transition-colors">description</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-gray-50 dark:bg-gray-900 border-t border-[#dcdfe5] dark:border-gray-800 text-center">
+<button class="text-primary text-sm font-bold hover:underline transition-all">Ver todas as transações de 2024</button>
+</div>
+</div>
+</main>
+<!-- Support Help Button (Fixed) -->
+<div class="fixed bottom-6 right-6">
+<button class="size-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</body></html>

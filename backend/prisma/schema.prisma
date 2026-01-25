@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String     @id @default(cuid())
+  email            String     @unique
+  fullName         String
+  cpf              String?
+  passwordHash     String
+  role             String     // PROPRIETARIO | INQUILINO
+  profileCompleted Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  sessions         Session[]
+  properties       Property[]
+
+  @@map("users")
+}
+
+model Property {
+  id             String   @id @default(cuid())
+  ownerId        String
+  title          String
+  addressLine    String
+  type           String   // APARTAMENTO | CASA | STUDIO | COBERTURA
+  areaM2         Float?
+  rooms          Int?
+  parkingSpots   Int?
+  rentAmount     Float?
+  chargesAmount  Float?
+  status         String   @default("DISPONIVEL") // DISPONIVEL | EM_NEGOCIACAO | ALUGADO | ENCERRADO
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@map("properties")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard de Co-proprietários | Gestão Compartilhada</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "card-dark": "#1b2130",
+                        "border-dark": "#292e38"
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .chart-gradient { background: conic-gradient(#1754cf 0% 65%, #3b82f6 65% 85%, #93c5fd 85% 100%); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="w-64 border-r border-slate-200 dark:border-border-dark flex flex-col justify-between p-4 bg-white dark:bg-background-dark sticky top-0 h-screen">
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-3 px-2">
+<div class="bg-primary rounded-lg p-2 text-white">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-sm font-bold leading-tight uppercase tracking-wider">Gestão Aluguel</h1>
+<p class="text-slate-500 dark:text-[#9da6b8] text-xs">Infraestrutura Digital</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-card-dark transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-sm font-medium">Propriedades</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-card-dark transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm font-medium">Contratos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-card-dark transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-sm font-medium">Financeiro</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-card-dark transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<div class="p-3 rounded-xl bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-border-dark">
+<p class="text-[10px] uppercase font-bold text-slate-400 mb-2">Suporte 24h</p>
+<p class="text-xs text-slate-600 dark:text-slate-400">Precisa de ajuda com o rateio ou contratos?</p>
+<button class="mt-2 text-xs font-bold text-primary flex items-center gap-1 hover:underline">
+                        Falar com Consultor <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<button class="w-full py-2.5 bg-primary hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-all shadow-lg shadow-primary/20">
+                    Nova Propriedade
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+<!-- TopNavBar -->
+<header class="h-16 border-b border-slate-200 dark:border-border-dark bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-10 px-8 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+<h2 class="text-lg font-bold tracking-tight">Gestão Compartilhada</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white border-b-2 border-transparent hover:border-primary py-5" href="#">Visão Geral</a>
+<a class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white border-b-2 border-transparent hover:border-primary py-5" href="#">Relatórios</a>
+<a class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white border-b-2 border-transparent hover:border-primary py-5" href="#">Documentos</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-slate-100 dark:bg-card-dark border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary transition-all" placeholder="Buscar co-proprietário..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-xs font-bold hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+                            Gerenciar Permissões
+                        </button>
+<div class="h-8 w-[1px] bg-slate-200 dark:border-border-dark mx-1"></div>
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-card-dark border-2 border-white dark:border-border-dark bg-cover bg-center" data-alt="Avatar do usuário logado" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAEzrwW8_f5bd8CLau8pQY6emkg7Z439-KmrZLYlvYptwZfc-UEow2WSr0KPXbsm0XjpqnykhoWAkGOONcNh24DojpaJKX8mspqxbamhb4M33cCQCd2k6wrYih9M5_tqsq4dloZYoE70Z6fL4JizwRMdkuY94KpEIsYNuBByVNgVEOQO7p4m5S8AjHsSUmdqPFBcRaX9R13AVrI7vV_aGRtVSR3Xjk4SpdAMnM27EFC8S3FhG7GBazN5IpYC1-YQ92ercE7Cuu9ENo");'></div>
+<span class="text-xs font-semibold hidden sm:block">João Silva</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-[1280px] mx-auto w-full flex flex-col gap-8">
+<!-- Breadcrumbs & Heading -->
+<div class="flex flex-col gap-2">
+<nav class="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-[#9da6b8]">
+<a class="hover:text-primary" href="#">Propriedades</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white">Dashboard de Co-proprietários</span>
+</nav>
+<div class="flex items-end justify-between">
+<div>
+<h3 class="text-3xl font-black tracking-tight mb-1">Edifício Horizonte</h3>
+<p class="text-slate-500 dark:text-[#9da6b8] text-sm max-w-lg">Gestão colaborativa e divisão de receitas para a unidade 1204-B. Saldo disponível para repasse: <span class="text-emerald-500 font-bold">R$ 12.450,00</span></p>
+</div>
+<!-- Avatar Group / Co-owners List -->
+<div class="flex items-center gap-2">
+<div class="flex -space-x-3">
+<div class="size-10 rounded-full border-4 border-white dark:border-background-dark bg-cover bg-center ring-2 ring-emerald-500" data-alt="Avatar co-proprietário 1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVsmLw1M50l0YAjrC7f4Tbz4Ler3zUlgCLjYNxI82u94i7hm8cy80Fl8R_lQ8UE9h15lA4CEm6Zzt1UUC0YyOAesbLku_Lcl1IBjrpopZfV1ugSxxW3a698xNcmpGpgD62jAkjHlVN0EdspwOjAsI2nD4BZDxzyFrz4QjDudvppBtoD6T7y_ujFMhnB2CPIvD67aUqFU1x56b45R7KUttjP9T76jFLOCsMkNASOKy5wbuaI73sRZXxap_XpkA8tNdY8v6zwytL5Tg");'></div>
+<div class="size-10 rounded-full border-4 border-white dark:border-background-dark bg-cover bg-center" data-alt="Avatar co-proprietário 2" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKd1PJQe0AON4Q_1ymTgfNHy1PP1MYIylJ9MV6JC1vnNMqYoNYAaeIGdj1Hmsw91Cdbrr6_sz-GZjjNM3FJtxYT07sJq72tBo5jN2IDL6NhTZO0qLmmT6fhPAO7vPCX8M-QTKfIx3BIFsyq_shv2MEPKEKJ865vXoxXcDRnAl8he4hv9xJtwW4iMgvafRu2kVUbHmh9fzU3wUYlAy4rJ9NK0HCoG1KYEZx-lwkafDr341zjBk2h6hmmo0H3GljDvvqGSFF6JJuqkc");'></div>
+<div class="size-10 rounded-full border-4 border-white dark:border-background-dark bg-cover bg-center" data-alt="Avatar co-proprietário 3" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDa0BW14w-NZ3JHO34XdY8KK6jJVUkKr93p-MDaDJtnByRaaVk1OAB8R8KzMdvFaCoLhyexutdQOEkTDiPzJ1bWNXBSQlXNG2pG_zcr_wfLjQxQ15xZTZIXgIk-cGz5RpS5D34WdQSWer__yISmiZ4WX2kl_uLcq6wq40KViF01qyJIaz79Z5t_u8malGXLIR_RjD36yb_c9nOzazAz9KMin3najr7ITZ34RZ9PQbsq4_8PihN9n5gOX0fGGTkYoIuXFBxQsim5Zkg");'></div>
+<div class="size-10 rounded-full border-4 border-white dark:border-background-dark bg-slate-200 dark:bg-card-dark flex items-center justify-center text-[10px] font-bold">+2</div>
+</div>
+<div class="ml-4">
+<p class="text-[10px] uppercase font-bold text-slate-400">5 Co-proprietários ativos</p>
+<div class="flex gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold">1 Admin</span>
+<span class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-card-dark text-slate-500 text-[10px] font-bold">2 Financeiro</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- 1. Divisão de Receitas (Chart Section) -->
+<div class="bg-white dark:bg-card-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark flex flex-col gap-6 shadow-sm">
+<div class="flex items-center justify-between">
+<h4 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">pie_chart</span>
+                                Divisão de Receitas
+                            </h4>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">info</span>
+</div>
+<div class="flex items-center justify-center py-4">
+<div class="size-48 rounded-full chart-gradient relative flex items-center justify-center border-8 border-white dark:border-card-dark">
+<div class="size-32 bg-white dark:bg-card-dark rounded-full flex flex-col items-center justify-center shadow-inner">
+<span class="text-[10px] font-bold text-slate-400 uppercase">Total Net</span>
+<span class="text-xl font-black">100%</span>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-background-dark/50">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-primary"></div>
+<span class="text-sm font-medium">João Silva</span>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">65%</p>
+<p class="text-[10px] text-slate-400">R$ 8.092,50</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-blue-500"></div>
+<span class="text-sm font-medium">Maria Oliveira</span>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">20%</p>
+<p class="text-[10px] text-slate-400">R$ 2.490,00</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-blue-300"></div>
+<span class="text-sm font-medium">Outros (3)</span>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold">15%</p>
+<p class="text-[10px] text-slate-400">R$ 1.867,50</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Mural de Decisões -->
+<div class="bg-white dark:bg-card-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark flex flex-col gap-6 shadow-sm">
+<div class="flex items-center justify-between">
+<h4 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">how_to_vote</span>
+                                Mural de Decisões
+                            </h4>
+<span class="px-2 py-1 bg-amber-500/10 text-amber-500 rounded text-[10px] font-bold">2 Pendentes</span>
+</div>
+<div class="space-y-4">
+<!-- Decision Card 1 -->
+<div class="p-4 rounded-xl border-l-4 border-amber-500 bg-slate-50 dark:bg-background-dark/30 space-y-3">
+<div class="flex justify-between items-start">
+<h5 class="text-sm font-bold leading-tight">Conserto Infiltração Banheiro Social</h5>
+<span class="text-[10px] text-slate-400">Expira em 2d</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Orçamento: R$ 850,00. Reparo necessário para evitar danos ao vizinho.</p>
+<div class="flex items-center justify-between pt-2">
+<div class="flex -space-x-2">
+<span class="size-6 rounded-full bg-emerald-500 flex items-center justify-center text-white ring-2 ring-white dark:ring-card-dark"><span class="material-symbols-outlined text-[14px]">check</span></span>
+<span class="size-6 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center text-white ring-2 ring-white dark:ring-card-dark text-[8px]">?</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-white dark:bg-card-dark border border-slate-200 dark:border-border-dark rounded text-[10px] font-bold hover:bg-slate-100 transition-colors">Ver PDF</button>
+<button class="px-3 py-1 bg-primary text-white rounded text-[10px] font-bold shadow-md shadow-primary/20">Votar</button>
+</div>
+</div>
+</div>
+<!-- Decision Card 2 -->
+<div class="p-4 rounded-xl border-l-4 border-blue-500 bg-slate-50 dark:bg-background-dark/30 space-y-3">
+<div class="flex justify-between items-start">
+<h5 class="text-sm font-bold leading-tight">Renovação Contrato - Reajuste IPCA</h5>
+<span class="text-[10px] text-slate-400">Iniciado hoje</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Reajuste anual de 4.5% no aluguel do inquilino atual.</p>
+<div class="flex items-center justify-between pt-2">
+<div class="flex -space-x-2">
+<span class="size-6 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center text-white ring-2 ring-white dark:ring-card-dark text-[8px]">?</span>
+<span class="size-6 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center text-white ring-2 ring-white dark:ring-card-dark text-[8px]">?</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-primary text-white rounded text-[10px] font-bold shadow-md shadow-primary/20">Analisar</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. Resumo de Repasses -->
+<div class="bg-white dark:bg-card-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark flex flex-col gap-6 shadow-sm">
+<div class="flex items-center justify-between">
+<h4 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+                                Resumo de Repasses
+                            </h4>
+<span class="text-[10px] font-bold text-primary cursor-pointer hover:underline">Ver Histórico</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold truncate">João Silva</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center gap-1 text-[10px] text-emerald-500 font-bold bg-emerald-500/10 px-1.5 rounded">
+<span class="material-symbols-outlined text-[12px]">check_circle</span> Pago
+                                        </span>
+<span class="text-[10px] text-slate-400">Ref. 05/2024</span>
+</div>
+</div>
+<p class="text-sm font-black">R$ 8.092</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center">
+<span class="material-symbols-outlined">sync</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold truncate">Maria Oliveira</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center gap-1 text-[10px] text-amber-500 font-bold bg-amber-500/10 px-1.5 rounded">
+                                            Processando
+                                        </span>
+<span class="text-[10px] text-slate-400">Ref. 05/2024</span>
+</div>
+</div>
+<p class="text-sm font-black">R$ 2.490</p>
+</div>
+<div class="flex items-center gap-4 opacity-75">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-background-dark text-slate-500 flex items-center justify-center">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold truncate">Carlos Mendes</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center gap-1 text-[10px] text-slate-500 font-bold bg-slate-100 dark:bg-background-dark px-1.5 rounded">
+                                            Agendado
+                                        </span>
+<span class="text-[10px] text-slate-400">Prev. 12/06</span>
+</div>
+</div>
+<p class="text-sm font-black text-slate-500">R$ 933</p>
+</div>
+</div>
+<button class="w-full mt-2 py-3 border-2 border-dashed border-slate-200 dark:border-border-dark rounded-xl text-slate-400 text-xs font-bold hover:border-primary hover:text-primary transition-all">
+                            + Configurar Nova Conta Bancária
+                        </button>
+</div>
+<!-- 4. Atividades Recentes (Full Width Table) -->
+<div class="lg:col-span-3 bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden shadow-sm">
+<div class="p-6 border-b border-slate-200 dark:border-border-dark flex items-center justify-between">
+<h4 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                                Atividades Recentes
+                            </h4>
+<button class="text-xs font-bold text-slate-400 hover:text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">download</span> Exportar LOG
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-[10px] uppercase tracking-wider text-slate-400 bg-slate-50 dark:bg-background-dark/50">
+<th class="px-6 py-4 font-black">Data/Hora</th>
+<th class="px-6 py-4 font-black">Co-proprietário</th>
+<th class="px-6 py-4 font-black">Ação Realizada</th>
+<th class="px-6 py-4 font-black">Status do Sistema</th>
+<th class="px-6 py-4 font-black text-right">Documento</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-slate-100 dark:divide-border-dark">
+<tr class="hover:bg-slate-50 dark:hover:bg-background-dark/30 transition-colors">
+<td class="px-6 py-4 text-slate-500">Hoje, 14:20</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar João Silva" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBgAsuXhPPH51J-AymnKPozEiCIgGNjx57xBzC2jWnRZwa2_jD9eRfzDLCyKsQqSw-J5Dk7MWzdt-mU5qvRUv0TZD7vEuwdycyvUkPHk-tnMUjvuXVtsu5iUlyecS0caIqVoGld__Gi6Wv_2qDp3Xnqbvw0nqcI4jOOzkPuUI_zvDD11AbOWUShCDfwbtvp5fcnQhqPO9lHOxs3XnJdUi0MLa8AuZghJm3-0Xb6hh-uz4Mic7fr3L0cm4SPVMQGVp5kpptnUe_6QHM");'></div>
+<span class="font-medium">João Silva</span>
+<span class="text-[8px] bg-primary/10 text-primary px-1 rounded font-bold uppercase">Admin</span>
+</div>
+</td>
+<td class="px-6 py-4">Aprovou orçamento de reparo #850</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">Processado</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">receipt_long</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-background-dark/30 transition-colors">
+<td class="px-6 py-4 text-slate-500">Ontem, 09:15</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar Maria Oliveira" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCysGAZg0WxxZ9psLfTowVHUNS4OAnnUosqW_O64Gq5e77z8X8zL2wjP8xnPBr1vCRq8TCK7VJEZx2B1xnQENVMR_se9HpRZWP7isIlm9FolIsfiM8l7jZYqRUUWmSJF2xIJiFtPANjHiPH4J63Rt1UNrZCnKN9X8yUk60gV2k8yI2oxzT0l9WujJBpVELQr3MxsUJR_JVWHXS5h9SCtFZMJEhwdO1rQb6ZQT0yY6U4Hf7MEjqg4Gdm75s_8b1bGBy8Z0xjbLPVWBc");'></div>
+<span class="font-medium">Maria Oliveira</span>
+</div>
+</td>
+<td class="px-6 py-4">Confirmou recebimento de repasse Ref. 04/24</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 text-[10px] font-bold">Arquivado</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">receipt_long</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-background-dark/30 transition-colors">
+<td class="px-6 py-4 text-slate-500">28 Mai, 17:45</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="Avatar Sistema" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDi_yC-ppxeOg7qNhQSCybRrCHkZctBn26Fzk4CDe8lh19Ae3mCbzXPVBiHA_s5-tDUEIb2ArAVOqB-xwfsKdQOqzjX5LzN_53f_r1DToRmSy7Z7HrISdAJT7kBpU1THaT7_cSaqW5iANzTIMeHkOM5ZOBz3bheY75ePROLniBs1FwcOtEzjvvN0kGfYKAA4t_H_ZlKwXVceJSl7Zt30-gPNTFnZ09lNkHzldeNoMCeuwiDFM4SISyznH94p2r2uKBOu9wzbmCQtXU");'></div>
+<span class="font-medium">Sistema (Auto)</span>
+</div>
+</td>
+<td class="px-6 py-4">Gerou Nota Fiscal de Taxa de Administração</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold">Email Enviado</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">receipt_long</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-auto p-8 border-t border-slate-200 dark:border-border-dark flex justify-between items-center text-xs text-slate-400">
+<p>© 2024 Gestão de Aluguel S.A. Todos os direitos reservados.</p>
+<div class="flex gap-4">
+<a class="hover:text-primary" href="#">Políticas de Co-propriedade</a>
+<a class="hover:text-primary" href="#">Segurança</a>
+<a class="hover:text-primary" href="#">Termos de Uso</a>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Convidar Co-proprietário e Definir Permissões</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "surface-dark": "#1c222d",
+                        "border-dark": "#2d3545",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-slate-900 dark:text-slate-100">
+<div class="flex h-screen overflow-hidden">
+<!-- Side Navigation (Based on Component) -->
+<aside class="w-64 border-r border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark hidden lg:flex flex-col">
+<div class="p-6 flex flex-col gap-6">
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-normal">Gestão Digital</h1>
+<p class="text-slate-500 dark:text-[#9da6b8] text-sm font-normal leading-normal">Administração Imobiliária</p>
+</div>
+<nav class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-surface-dark rounded-lg transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-white">dashboard</span>
+<p class="text-sm font-medium">Visão Geral</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined fill-1">home</span>
+<p class="text-sm font-bold">Propriedades</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-surface-dark rounded-lg transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-white">account_balance_wallet</span>
+<p class="text-sm font-medium">Pagamentos</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-surface-dark rounded-lg transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-white">description</span>
+<p class="text-sm font-medium">Documentos</p>
+</div>
+</nav>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-y-auto">
+<!-- Top Navbar (Based on Component) -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-border-dark px-8 py-4 bg-white dark:bg-background-dark sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<div class="lg:hidden">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">Plataforma SaaS</h2>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Imóveis</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Financeiro</a>
+</nav>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="p-2 rounded-lg bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+</div>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-surface-dark overflow-hidden border border-slate-200 dark:border-border-dark">
+<img alt="Avatar do usuário" class="w-full h-full object-cover" data-alt="User profile portrait smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqbSV6dBApD1zemdttJ08_jLRmGCTViADtWo4ZLBF7dst3YfVcbz-N8lRUMsj1LYKiRCvyVcnq4NrZmkCJwYyN0yEMiFWQHwEmy2fKPnBYrnJinRuMV9F67SPpLdjAWVkL6sxn7Jk5W2WUtSONEI0gek_0Nri98-WdZuI1_qOf7cfGtDvXhttpF3NOoeBBa2K7WJriaX5VOxR3Bzv_QPitdcJAPYLv74F1JwrfgzH7Fd9pGyrvepf4TV5zAZw-fYpgVxq56qPyQQg"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 max-w-4xl mx-auto w-full">
+<!-- Page Heading (Based on Component) -->
+<div class="flex flex-col gap-3 mb-8">
+<h1 class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-tight">Convidar Co-proprietário</h1>
+<p class="text-slate-500 dark:text-[#9da6b8] text-base font-normal leading-normal">Adicione um parceiro para gerenciar este imóvel e definir a partilha de aluguéis de forma segura.</p>
+</div>
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm overflow-hidden">
+<form class="divide-y divide-slate-200 dark:divide-border-dark">
+<!-- Identification Section -->
+<div class="p-6">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">person_add</span>
+                                Dados de Identificação
+                            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- TextField Component Logic -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold">Nome Completo</label>
+<input class="w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-background-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Ex: João Silva" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold">E-mail</label>
+<input class="w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-background-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="joao@exemplo.com.br" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold">CPF</label>
+<input class="w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-background-dark text-slate-900 dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="000.000.000-00" type="text"/>
+</div>
+</div>
+</div>
+<!-- Access Level Section -->
+<div class="p-6">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">lock_open</span>
+                                Nível de Acesso
+                            </h2>
+<div class="grid grid-cols-1 gap-4">
+<!-- Option 1: Admin -->
+<label class="relative flex cursor-pointer rounded-xl border-2 border-primary bg-primary/5 p-4 focus:outline-none">
+<input checked="" class="sr-only" name="access_level" type="radio" value="admin"/>
+<div class="flex w-full items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<div>
+<p class="font-bold">Administrador</p>
+<p class="text-sm text-slate-500 dark:text-[#9da6b8]">Controle total sobre o imóvel, contratos e outros usuários.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+</label>
+<!-- Option 2: Finance -->
+<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark p-4 hover:border-primary/50 transition-colors">
+<input class="sr-only" name="access_level" type="radio" value="finance"/>
+<div class="flex w-full items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-slate-100 dark:bg-border-dark p-2 rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="font-bold">Financeiro</p>
+<p class="text-sm text-slate-500 dark:text-[#9da6b8]">Acesso apenas a pagamentos, repasses e relatórios financeiros.</p>
+</div>
+</div>
+</div>
+</label>
+<!-- Option 3: Viewer -->
+<label class="relative flex cursor-pointer rounded-xl border border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark p-4 hover:border-primary/50 transition-colors">
+<input class="sr-only" name="access_level" type="radio" value="viewer"/>
+<div class="flex w-full items-start justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-slate-100 dark:bg-border-dark p-2 rounded-lg">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<div>
+<p class="font-bold">Visualizador</p>
+<p class="text-sm text-slate-500 dark:text-[#9da6b8]">Acesso de apenas leitura às informações e documentos do imóvel.</p>
+</div>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Participation Section -->
+<div class="p-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex-1">
+<h2 class="text-lg font-bold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">pie_chart</span>
+                                        Percentual de Participação
+                                    </h2>
+<p class="text-sm text-slate-500 dark:text-[#9da6b8]">Defina a cota parte deste sócio no recebimento líquido do aluguel.</p>
+</div>
+<div class="w-full md:w-48">
+<div class="relative">
+<input class="w-full rounded-lg border border-slate-300 dark:border-border-dark bg-white dark:bg-background-dark text-slate-900 dark:text-white h-12 pl-4 pr-10 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-right font-bold" placeholder="50" type="number"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-slate-400">%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-6 bg-slate-50 dark:bg-background-dark/50 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-[#9da6b8]">
+<span class="material-symbols-outlined text-sm">shield</span>
+                                Dados processados conforme a LGPD.
+                            </div>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-6 py-3 rounded-lg border border-slate-300 dark:border-border-dark font-bold hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors" type="button">
+                                    Cancelar
+                                </button>
+<button class="flex-1 md:flex-none px-8 py-3 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2" type="submit">
+<span>Enviar Convite</span>
+<span class="material-symbols-outlined text-sm">send</span>
+</button>
+</div>
+</div>
+</form>
+</div>
+<!-- Help Section -->
+<div class="mt-8 p-4 rounded-lg bg-primary/5 border border-primary/10 flex gap-4">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-sm text-slate-600 dark:text-slate-300">
+                        O novo co-proprietário receberá um e-mail com as instruções para criar sua conta e aceitar o convite. Você poderá revogar o acesso a qualquer momento nas configurações do imóvel.
+                    </p>
+</div>
+</div>
+</main>
+</div>
+</body></html>

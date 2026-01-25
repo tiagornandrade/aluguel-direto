@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configurações de Notificações | SaaS Rental Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-size: 20px; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #1754cf; }
+        .toggle-checkbox:checked + .toggle-label::after { transform: translateX(100%); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-solid border-slate-200 dark:border-[#292e38] px-4 md:px-10 py-3 bg-white dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">RentalPro SaaS</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-slate-600 dark:text-[#9da6b8] hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-[#9da6b8] hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Imóveis</a>
+<a class="text-slate-600 dark:text-[#9da6b8] hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Contratos</a>
+<a class="text-slate-600 dark:text-[#9da6b8] hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Financeiro</a>
+</nav>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Profile avatar of the property manager" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMlrMud372qmLCm9Z-9-dTBr08XSaubW4qBKiOj8cjjNxvTUx4am1FrJLR63e5-sQWNCFLrPd6RtEU780PBUJCWlYS03abOQ5_0WmEISJ-ZQw3UI50Z9Vt9td9NbbOdZzVUUg1jY6DEdXImH9-nGt5Sd2yk4ulnkDNjS6UdhNF47W_ec8ssm426uzoGKt8SqBlSNAHINua_32zsU-4nZunwS0KVzh1Fvb105uzkodYN0znsmJc_L2DkNVH8du_wqNmGBXiV6QGWsY");'></div>
+</div>
+</header>
+<div class="flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1 px-4 md:px-10 gap-8">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-3">
+<div class="flex flex-col gap-2">
+<p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-tight">Configurações de Notificações</p>
+<p class="text-slate-600 dark:text-[#9da6b8] text-base font-normal max-w-2xl">
+                            Personalize como você deseja ser alertado sobre novos eventos, vistorias e pagamentos em sua conta.
+                        </p>
+</div>
+<div class="flex gap-3">
+<button class="flex h-10 px-4 items-center justify-center rounded-lg border border-slate-300 dark:border-[#3c4453] bg-transparent text-slate-700 dark:text-white text-sm font-medium">
+                            Restaurar Padrão
+                        </button>
+<button class="flex h-10 px-4 items-center justify-center rounded-lg bg-primary text-white text-sm font-medium shadow-lg shadow-primary/20">
+                            Salvar Alterações
+                        </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Sidebar (Settings Navigation) -->
+<div class="lg:col-span-3 flex flex-col gap-2">
+<div class="flex flex-col mb-4">
+<h1 class="text-slate-900 dark:text-white text-base font-bold">Menu de Ajustes</h1>
+<p class="text-slate-500 dark:text-[#9da6b8] text-xs">Gerencie suas preferências</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#292e38] rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-medium">Perfil</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg" href="#">
+<span class="material-symbols-outlined fill-[1]">notifications</span>
+<span class="text-sm font-bold">Notificações</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#292e38] rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="text-sm font-medium">Segurança</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#292e38] rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Faturamento</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#292e38] rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-sm font-medium">Integrações</span>
+</a>
+</div>
+<!-- Main Content -->
+<div class="lg:col-span-9 flex flex-col gap-8">
+<!-- WhatsApp Integration Action Panel -->
+<div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-slate-200 dark:border-[#3c4453] bg-white dark:bg-background-dark p-6 shadow-sm md:flex-row md:items-center">
+<div class="flex items-center gap-4">
+<div class="bg-[#25D366]/10 p-3 rounded-full">
+<svg class="size-8 text-[#25D366]" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.558 0 11.894-5.338 11.897-11.896a11.821 11.821 0 00-3.48-8.413z"></path>
+</svg>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<p class="text-slate-900 dark:text-white text-base font-bold">Integração WhatsApp Business</p>
+<span class="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-wider border border-emerald-500/20">Conectado</span>
+</div>
+<p class="text-slate-500 dark:text-[#9da6b8] text-sm">Seu número (11) 98765-4321 está pronto para receber notificações automáticas.</p>
+</div>
+</div>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-9 px-4 bg-red-500/10 hover:bg-red-500/20 text-red-500 text-sm font-semibold transition-colors">
+                                Desconectar
+                            </button>
+</div>
+<!-- Notification Matrix -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-slate-200 dark:border-[#3c4453] overflow-hidden">
+<!-- Matrix Header -->
+<div class="grid grid-cols-12 border-b border-slate-200 dark:border-[#292e38] bg-slate-50 dark:bg-[#1c2230] px-6 py-4">
+<div class="col-span-6 text-slate-400 text-xs font-bold uppercase tracking-wider">Evento de Notificação</div>
+<div class="col-span-2 text-center text-slate-400 text-xs font-bold uppercase tracking-wider">E-mail</div>
+<div class="col-span-2 text-center text-slate-400 text-xs font-bold uppercase tracking-wider">Push</div>
+<div class="col-span-2 text-center text-slate-400 text-xs font-bold uppercase tracking-wider">WhatsApp</div>
+</div>
+<!-- Category: Pagamentos -->
+<div class="px-6 pt-6 pb-2">
+<h3 class="text-primary text-sm font-bold uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined">payments</span>
+                                    Pagamentos e Cobranças
+                                </h3>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-[#292e38]">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 px-6 py-4 items-center hover:bg-slate-50 dark:hover:bg-[#1a202c] transition-colors">
+<div class="col-span-6 flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-white">Aluguel Vencido</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Enviado quando o prazo de pagamento expira</span>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 px-6 py-4 items-center hover:bg-slate-50 dark:hover:bg-[#1a202c] transition-colors">
+<div class="col-span-6 flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-white">Próximo Vencimento (3 dias)</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Lembrete amigável antes da data de vencimento</span>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Category: Contratos -->
+<div class="px-6 pt-6 pb-2">
+<h3 class="text-primary text-sm font-bold uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined">description</span>
+                                    Contratos e Assinaturas
+                                </h3>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-[#292e38]">
+<div class="grid grid-cols-12 px-6 py-4 items-center hover:bg-slate-50 dark:hover:bg-[#1a202c] transition-colors">
+<div class="col-span-6 flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-white">Contrato Assinado</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Notificar quando todas as partes assinarem</span>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Category: Vistorias -->
+<div class="px-6 pt-6 pb-2">
+<h3 class="text-primary text-sm font-bold uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined">fact_check</span>
+                                    Vistorias
+                                </h3>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-[#292e38]">
+<div class="grid grid-cols-12 px-6 py-4 items-center hover:bg-slate-50 dark:hover:bg-[#1a202c] transition-colors">
+<div class="col-span-6 flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-white">Laudo Finalizado</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">PDF do laudo disponível para visualização</span>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Category: Chat -->
+<div class="px-6 pt-6 pb-2">
+<h3 class="text-primary text-sm font-bold uppercase tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined">chat_bubble</span>
+                                    Mensagens do Chat
+                                </h3>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-[#292e38] pb-4">
+<div class="grid grid-cols-12 px-6 py-4 items-center hover:bg-slate-50 dark:hover:bg-[#1a202c] transition-colors">
+<div class="col-span-6 flex flex-col">
+<span class="text-sm font-semibold text-slate-800 dark:text-white">Novas Mensagens</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Quando um inquilino enviar uma mensagem direta</span>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+<div class="col-span-2 flex justify-center">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only toggle-checkbox" type="checkbox"/>
+<div class="w-10 h-5 bg-slate-200 dark:bg-[#3c4453] rounded-full toggle-label after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Info Alert -->
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-4 flex gap-4">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-sm text-slate-600 dark:text-[#9da6b8]">
+<strong class="text-slate-900 dark:text-white">Dica:</strong> Notificações via WhatsApp são entregues pela nossa conta oficial "RentalPro Business". Verifique se o número vinculado está ativo para não perder prazos importantes.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

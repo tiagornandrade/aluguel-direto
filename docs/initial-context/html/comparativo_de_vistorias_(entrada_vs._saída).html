@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Comparativo de Vistorias | RentalSaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-size: 20px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #292e38; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between border-b border-solid border-[#292e38] px-10 py-3 bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">RentalSaaS</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#9da6b8] flex border-none bg-[#292e38] items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-[#292e38] focus:border-none h-full placeholder:text-[#9da6b8] px-4 rounded-l-none pl-2 text-base font-normal" placeholder="Buscar vistorias..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-9">
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Propriedades</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Vistorias</a>
+</nav>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold">
+<span class="truncate">Meu Perfil</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-[#292e38]" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtF1H0d7OV_BWLuZzluXzW-qFIODP1YypKjbXLq8aZeVNvhI54_VJuiAmRDLwWL4PerKTBHUunne7J6O2wpbSRCkpDe6WHywzXccxuRWx5_4Se12hJb1MU49OPMbBFPnfEzyRT9uEtzggndrbUE-QrBI6tmBgEvOVS7OlS8U0BRdrN6PclSBaILMGq99x-d3NFCDNY7ojUud3GxZ8alo_-nBOSGJaWlvvH6qMgPrdGGuIb8XdFZky-N2NuyHbCIiu4fHTZG-NAojU");'></div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex flex-col border-r border-[#292e38] bg-background-dark p-4 shrink-0">
+<div class="flex flex-col mb-6">
+<h1 class="text-white text-base font-semibold">Cômodos</h1>
+<p class="text-[#9da6b8] text-xs font-normal">Selecione para comparar</p>
+</div>
+<div class="flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white cursor-pointer">
+<span class="material-symbols-outlined">chair</span>
+<p class="text-sm font-medium">Sala de Estar</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b8] hover:bg-[#292e38] hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined">soup_kitchen</span>
+<p class="text-sm font-medium">Cozinha</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b8] hover:bg-[#292e38] hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined">bed</span>
+<p class="text-sm font-medium">Quarto Principal</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b8] hover:bg-[#292e38] hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined">bathtub</span>
+<p class="text-sm font-medium">Banheiro</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b8] hover:bg-[#292e38] hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined">local_laundry_service</span>
+<p class="text-sm font-medium">Área de Serviço</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b8] hover:bg-[#292e38] hover:text-white cursor-pointer transition-all">
+<span class="material-symbols-outlined">balcony</span>
+<p class="text-sm font-medium">Varanda</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<section class="flex-1 flex flex-col overflow-y-auto custom-scrollbar bg-background-light dark:bg-background-dark">
+<!-- Breadcrumbs & Heading -->
+<div class="px-8 pt-6">
+<div class="flex flex-wrap gap-2 mb-2">
+<a class="text-[#9da6b8] text-xs font-medium hover:underline" href="#">Vistorias</a>
+<span class="text-[#9da6b8] text-xs font-medium">/</span>
+<a class="text-[#9da6b8] text-xs font-medium hover:underline" href="#">Comparativo</a>
+<span class="text-[#9da6b8] text-xs font-medium">/</span>
+<span class="text-primary text-xs font-medium">Apartamento 402 - Ed. Aurora</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-3 mb-6">
+<div class="flex flex-col gap-1">
+<h1 class="text-white text-3xl font-black tracking-tight">Comparativo de Vistorias</h1>
+<p class="text-[#9da6b8] text-sm font-normal">Contrato #8829 • Entrada: 12/01/2023 vs. Saída: 15/01/2024</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 bg-[#292e38] text-white rounded-lg text-sm font-bold hover:bg-[#3c4453] transition-colors">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+                            Exportar PDF
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-[#292e38] text-white rounded-lg text-sm font-bold hover:bg-[#3c4453] transition-colors">
+<span class="material-symbols-outlined">history</span>
+                            Histórico
+                        </button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="border-b border-[#3c4453] flex gap-8 mb-6">
+<a class="flex flex-col items-center border-b-[3px] border-primary text-white pb-3" href="#">
+<p class="text-sm font-bold">Visão Lado a Lado</p>
+</a>
+<a class="flex flex-col items-center border-b-[3px] border-transparent text-[#9da6b8] pb-3 hover:text-white" href="#">
+<p class="text-sm font-bold">Relatório de Reparos</p>
+</a>
+</div>
+</div>
+<!-- Side-by-Side Comparison -->
+<div class="px-8 flex flex-col gap-8 pb-32">
+<!-- Comparison Item 1 -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between border-l-4 border-danger pl-4">
+<h3 class="text-white text-lg font-bold">Paredes e Pintura</h3>
+<span class="bg-danger/20 text-danger text-[10px] font-black uppercase px-2 py-1 rounded tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined !text-[14px]">warning</span>
+                            Divergência Detectada
+                        </span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Entrada -->
+<div class="bg-[#1a202c] rounded-xl overflow-hidden border border-[#292e38]">
+<div class="p-3 border-b border-[#292e38] flex justify-between items-center bg-[#212836]">
+<span class="text-[10px] font-bold text-[#9da6b8] uppercase tracking-widest">Vistoria de Entrada</span>
+<span class="text-[10px] text-[#9da6b8]">12/01/2023 • 14:30</span>
+</div>
+<div class="p-4 flex gap-4">
+<div class="w-1/3 aspect-square rounded-lg bg-cover bg-center border border-[#3c4453]" data-alt="Original wall condition" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAfJD4uTuUKLikfAWHuKDwtuRJ8oG0s1CdDo8P1EXo6gdzWTMnpvYzuMXUL8UxPn2OQ1zez-gptb5hd-uVO7x1zNY6rEpOJF4IHrAZlUUEe8qMFFmoPNyOPesVBNw93tRuHdL5pW35SEVqPSWhZULGWtStqTkka94wDMd4MBiCKeiQkMqh1OZ-UdN3zQty7gX_yL0fO2vc6GsGh18AlJMXsruoVFCV-vtqtDq1-J8zyfrRYeWVt2fKGBpu2i3AdjVF7KPR2VV5StwU");'></div>
+<div class="flex-1">
+<p class="text-sm text-white font-medium mb-1">Estado: <span class="text-green-400">Excelente</span></p>
+<p class="text-xs text-[#9da6b8] leading-relaxed">Pintura nova em branco gelo, sem marcas ou furos. Rodapés limpos e fixados.</p>
+</div>
+</div>
+</div>
+<!-- Saída -->
+<div class="bg-[#1a202c] rounded-xl overflow-hidden border border-danger/50 ring-1 ring-danger/20">
+<div class="p-3 border-b border-[#292e38] flex justify-between items-center bg-[#212836]">
+<span class="text-[10px] font-bold text-danger uppercase tracking-widest">Vistoria de Saída</span>
+<span class="text-[10px] text-[#9da6b8]">15/01/2024 • 10:15</span>
+</div>
+<div class="p-4 flex gap-4">
+<div class="w-1/3 aspect-square rounded-lg bg-cover bg-center border border-[#3c4453]" data-alt="Current wall condition with scratches" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDXC2LivFTHrZ26BY_b_q62xOULJeNFOI548_j-LzIVnVi75Rv_zSFD1eJh_Af2qg3l_l-3GQFrTdIE_p7diJAPf0uLDM12C4-a75bLRrDRgGfUSp0U2iiml5IGBrzEQh8jZCX099lQT7dskBYfn74KakO1WnCaDYkZeZgM9QqrKRyvTshiXnXijEVYwaSorq4yaBlD_6-sO5DpnNrlVR8L27o7sGFKykAeFx_RUiQNTvJquvXEyOC2Tg_rSGGQcMduggkIx2TFV7I");'></div>
+<div class="flex-1">
+<p class="text-sm text-white font-medium mb-1">Estado: <span class="text-danger">Avariado</span></p>
+<p class="text-xs text-[#9da6b8] leading-relaxed">Presença de 4 furos de bucha 8mm e marcas de arranhão de móveis na parede lateral direita.</p>
+<div class="mt-3 bg-danger/10 p-2 rounded border border-danger/20">
+<p class="text-[10px] text-danger font-bold uppercase mb-1">Ação Sugerida</p>
+<p class="text-[11px] text-white">Pintura parcial da parede lateral + Massa corrida nos furos.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparison Item 2 -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between border-l-4 border-green-500 pl-4">
+<h3 class="text-white text-lg font-bold">Piso Laminado</h3>
+<span class="bg-green-500/20 text-green-500 text-[10px] font-black uppercase px-2 py-1 rounded tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined !text-[14px]">check_circle</span>
+                            Sem Alterações
+                        </span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Entrada -->
+<div class="bg-[#1a202c] rounded-xl overflow-hidden border border-[#292e38]">
+<div class="p-3 border-b border-[#292e38] flex justify-between items-center bg-[#212836]">
+<span class="text-[10px] font-bold text-[#9da6b8] uppercase tracking-widest">Vistoria de Entrada</span>
+<span class="text-[10px] text-[#9da6b8]">12/01/2023</span>
+</div>
+<div class="p-4 flex gap-4">
+<div class="w-1/3 aspect-square rounded-lg bg-cover bg-center border border-[#3c4453]" data-alt="Original floor condition" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQdRdmWTgD6ABwmUoQ6qh8RXKodF_E-NIhBaP5HQO2REBQ9hdFs4V5rPZuSVSYFRiMQxiPcRGyYi3385N5gsiWnnzYadNR06iATCbnYHi-JtsJQicN04gdh06-OFfXgSYe7XJoFBHSb10b-iWf_7rVbVuC_5-BIRMzHe_YRXHrpWNAfWKeqwxaN9M5AIpjkozSVdun3El35ktH8pK4sa6fWsSaEmKvBvRSvR7XB2JRL2OwFdKkwwVn0xILuJkLFLiv_bISwzcblis");'></div>
+<div class="flex-1">
+<p class="text-sm text-white font-medium mb-1">Estado: <span class="text-green-400">Excelente</span></p>
+<p class="text-xs text-[#9da6b8] leading-relaxed">Piso laminado carvalho, sem riscos ou estufamento. Limpo.</p>
+</div>
+</div>
+</div>
+<!-- Saída -->
+<div class="bg-[#1a202c] rounded-xl overflow-hidden border border-[#292e38]">
+<div class="p-3 border-b border-[#292e38] flex justify-between items-center bg-[#212836]">
+<span class="text-[10px] font-bold text-[#9da6b8] uppercase tracking-widest">Vistoria de Saída</span>
+<span class="text-[10px] text-[#9da6b8]">15/01/2024</span>
+</div>
+<div class="p-4 flex gap-4">
+<div class="w-1/3 aspect-square rounded-lg bg-cover bg-center border border-[#3c4453]" data-alt="Current floor condition" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCENCDixon5h_7WF5sUKD81Q70ItPP8Va6PPRhfAtLscvTwCYERGiBjSl2AU4Ov50UxLSkpDT2EcLTWkWAxexsd0RP342dRxsnL5GfCWBfsqD1FdywJaAf8fEJKQhlXB2_h6gArPnM1BMy1FyaCTkLVnu07eQp9R2tevAaKCxsC34-04vNDKcirUNXKjnFUGNbmmVzzlZ6rdmzDTUXzMx5EnGbnEypQtnrqPkn983dPAMtklX7ELqEJrTKJ-k2QC2KkKwBTpEmf4NM");'></div>
+<div class="flex-1">
+<p class="text-sm text-white font-medium mb-1">Estado: <span class="text-green-400">Mantido</span></p>
+<p class="text-xs text-[#9da6b8] leading-relaxed">Piso em conformidade com o estado inicial. Apenas desgaste natural de uso.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Repair Estimation Panel -->
+<div class="bg-[#1a202c] rounded-xl border border-[#3c4453] overflow-hidden mt-4">
+<div class="p-4 bg-[#212836] border-b border-[#3c4453] flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">handyman</span>
+<h3 class="text-white font-bold">Relatório de Reparos Necessários</h3>
+</div>
+<span class="text-xs text-[#9da6b8]">Valores estimados baseados no mercado local</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="text-[10px] font-black text-[#9da6b8] uppercase tracking-widest border-b border-[#292e38]">
+<tr>
+<th class="px-6 py-4">Item / Local</th>
+<th class="px-6 py-4">Descrição do Reparo</th>
+<th class="px-6 py-4">Custo Est. (R$)</th>
+<th class="px-6 py-4 text-center">Cobrar Inquilino?</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#292e38] text-sm">
+<tr>
+<td class="px-6 py-4 text-white font-medium">Paredes (Sala)</td>
+<td class="px-6 py-4 text-[#9da6b8]">Pintura de 1 parede + Reparo de furos</td>
+<td class="px-6 py-4">
+<input class="bg-[#292e38] border-none rounded text-white text-sm w-24 text-right px-2 py-1" type="text" value="350,00"/>
+</td>
+<td class="px-6 py-4 text-center">
+<input checked="" class="rounded border-gray-600 bg-gray-700 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-white font-medium">Limpeza Geral</td>
+<td class="px-6 py-4 text-[#9da6b8]">Limpeza pesada pós-mudança</td>
+<td class="px-6 py-4">
+<input class="bg-[#292e38] border-none rounded text-white text-sm w-24 text-right px-2 py-1" type="text" value="450,00"/>
+</td>
+<td class="px-6 py-4 text-center">
+<input checked="" class="rounded border-gray-600 bg-gray-700 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Sticky Footer -->
+<footer class="fixed bottom-0 left-0 right-0 bg-background-dark/95 backdrop-blur border-t border-[#3c4453] px-10 py-4 flex justify-between items-center z-50">
+<div class="flex items-center gap-10">
+<div class="flex flex-col">
+<span class="text-[10px] text-[#9da6b8] uppercase font-bold tracking-widest">Total de Reparos</span>
+<span class="text-xl text-white font-black">R$ 800,00</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-[#9da6b8] uppercase font-bold tracking-widest">Caução Disponível</span>
+<span class="text-xl text-green-400 font-black">R$ 4.200,00</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-6 h-12 bg-transparent border border-[#3c4453] text-white rounded-lg text-sm font-bold hover:bg-[#292e38] transition-colors">
+                Contestar Divergências
+            </button>
+<button class="flex items-center gap-2 px-8 h-12 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined">verified_user</span>
+                Aprovar e Liberar Caução
+            </button>
+</div>
+</footer>
+</body></html>

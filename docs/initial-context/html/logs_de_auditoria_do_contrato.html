@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Logs de Auditoria do Contrato | RentDirect SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "surface-dark": "#1a1f2b",
+                        "border-dark": "#2d3446",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .mono-text { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark px-10 py-3 bg-white dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined">shield_lock</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">RentDirect</h2>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Contratos</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Vistorias</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Pagamentos</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4">
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-slate-200 dark:border-border-dark bg-slate-50 dark:bg-surface-dark overflow-hidden">
+<div class="flex items-center justify-center pl-3 text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full border-none bg-transparent focus:ring-0 text-sm placeholder:text-slate-400" placeholder="Buscar logs..."/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg size-10 bg-slate-100 dark:bg-surface-dark text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-slate-100 dark:bg-surface-dark text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-border-dark transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDk_pw2DmHqqKYeR9THsLXk_mt9tuDheWJFHY9oIr51lpxtFEX73-wFE2Id4noZS6YGyUVVRUPHnFH35qNsggSMiDLKcnimHk9N170JI0_kNa6cqh8jNKef6ut7dH3hhM3n7yTVMjn1Wc-bwNm78ljXgHWMzuqc2OVLG9aS-bPC6le0awcrygexovBslb_x9y8x1o_mHTRVFocVqCvAAHNTPBixfm6mvf7tHLDYbH3j6uatuh9Nf63RvQZuFYFW9CQ6pc1pXWBzQNM");'></div>
+</div>
+</header>
+<main class="max-w-[1400px] mx-auto px-10 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex flex-wrap gap-2 mb-4 items-center">
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:underline" href="#">Home</a>
+<span class="text-slate-400 text-sm">/</span>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:underline" href="#">Contratos</a>
+<span class="text-slate-400 text-sm">/</span>
+<span class="text-slate-900 dark:text-white text-sm font-semibold tracking-tight">Audit Logs - Contrato #82910</span>
+</nav>
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h1 class="text-slate-900 dark:text-white text-3xl font-black leading-tight tracking-tight">Logs de Auditoria do Contrato</h1>
+<span class="bg-emerald-500/10 text-emerald-500 text-[11px] font-bold px-2.5 py-1 rounded-full border border-emerald-500/20 flex items-center gap-1 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">verified</span> Imutável
+                    </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-base max-w-2xl">Registro oficial de atividades, assinaturas e integridade do contrato de locação residencial #82910 (Unidade 402, Bloco B).</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 rounded-lg h-11 px-6 bg-slate-100 dark:bg-surface-dark text-slate-700 dark:text-white text-sm font-bold hover:bg-slate-200 dark:hover:bg-border-dark transition-all border border-slate-200 dark:border-border-dark">
+<span class="material-symbols-outlined text-[20px]">share</span>
+<span class="truncate">Compartilhar</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg h-11 px-6 bg-primary text-white text-sm font-bold hover:bg-blue-700 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+<span class="truncate">Exportar Trilhas (PDF)</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Sidebar Integridade -->
+<aside class="col-span-12 lg:col-span-3 space-y-6">
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden">
+<div class="p-5 border-b border-slate-200 dark:border-border-dark bg-slate-50/50 dark:bg-slate-800/20">
+<h3 class="text-slate-900 dark:text-white font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+                            Resumo da Integridade
+                        </h3>
+</div>
+<div class="p-5 space-y-6">
+<div class="space-y-2">
+<label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">SHA-256 Hash do Arquivo</label>
+<div class="bg-slate-50 dark:bg-background-dark p-3 rounded-lg border border-slate-200 dark:border-border-dark flex items-center gap-2 overflow-hidden">
+<span class="material-symbols-outlined text-slate-400 text-[18px] shrink-0">fingerprint</span>
+<code class="mono-text text-[12px] text-primary truncate">a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0</code>
+<button class="text-slate-400 hover:text-primary shrink-0"><span class="material-symbols-outlined text-[16px]">content_copy</span></button>
+</div>
+</div>
+<div class="space-y-3">
+<label class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Certificados Ativos</label>
+<div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-border-dark">
+<span class="material-symbols-outlined text-emerald-500">draw</span>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Assinatura Proprietário</p>
+<p class="text-[11px] text-slate-500">Verificado em 12/10/2023</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-border-dark">
+<span class="material-symbols-outlined text-emerald-500">draw</span>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Assinatura Inquilino</p>
+<p class="text-[11px] text-slate-500">Verificado em 13/10/2023</p>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t border-slate-200 dark:border-border-dark">
+<button class="w-full text-left text-sm font-medium text-primary hover:underline flex items-center justify-between">
+                                Ver detalhes técnicos <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Status Info -->
+<div class="bg-primary/5 rounded-xl border border-primary/20 p-5">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<p class="text-sm font-bold text-primary mb-1">Rastreamento Imutável</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Este log é registrado via blockchain digital e não pode ser alterado por nenhuma das partes envolvidas.</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Timeline Content -->
+<div class="col-span-12 lg:col-span-9 space-y-6">
+<!-- Filters Tabs -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="border-b border-slate-200 dark:border-border-dark px-6 flex items-center justify-between">
+<div class="flex gap-8">
+<a class="flex items-center border-b-2 border-primary text-primary py-4 px-1" href="#">
+<span class="text-sm font-bold">Todos os Eventos</span>
+<span class="ml-2 bg-primary/10 px-2 py-0.5 rounded text-[10px]">24</span>
+</a>
+<a class="flex items-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 py-4 px-1" href="#">
+<span class="text-sm font-bold">Segurança</span>
+</a>
+<a class="flex items-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 py-4 px-1" href="#">
+<span class="text-sm font-bold">Financeiro</span>
+</a>
+<a class="flex items-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 py-4 px-1" href="#">
+<span class="text-sm font-bold">Documentos</span>
+</a>
+</div>
+<div class="hidden md:flex items-center gap-2">
+<span class="text-xs text-slate-400 font-medium">Visualização:</span>
+<button class="p-1.5 rounded bg-slate-100 dark:bg-border-dark text-primary"><span class="material-symbols-outlined text-[20px]">view_list</span></button>
+<button class="p-1.5 rounded text-slate-400 hover:bg-slate-100 dark:hover:bg-border-dark"><span class="material-symbols-outlined text-[20px]">timeline</span></button>
+</div>
+</div>
+<!-- Timeline List -->
+<div class="divide-y divide-slate-100 dark:divide-border-dark">
+<!-- Entry 1 -->
+<div class="p-6 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-500/20">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Pagamento Confirmado</h4>
+<span class="text-xs font-medium text-slate-400 mono-text">14 Out 2023, 10:42:15</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                                        O aluguel referente ao mês de Outubro foi confirmado via Gateway de Pagamento.
+                                    </p>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px]">
+<div class="flex items-center gap-1.5 text-slate-500">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span class="font-semibold text-slate-700 dark:text-slate-300">Sistema (Automação Financeira)</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">public</span>
+<span class="mono-text">IP: 52.44.120.11</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">devices</span>
+<span>Cloud Service</span>
+</div>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</button>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="p-6 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/20">
+<span class="material-symbols-outlined text-[20px]">edit_document</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Contrato Assinado Digitalmente</h4>
+<span class="text-xs font-medium text-slate-400 mono-text">13 Out 2023, 15:20:04</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                                        O locatário <span class="text-slate-900 dark:text-white font-semibold">Carlos Alberto Silva</span> realizou a assinatura digital qualificada do contrato.
+                                    </p>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px]">
+<div class="flex items-center gap-1.5 text-slate-500">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span class="font-semibold text-slate-700 dark:text-slate-300">Carlos A. Silva (Inquilino)</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">public</span>
+<span class="mono-text">IP: 189.12.34.156</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">devices</span>
+<span>Chrome (macOS 13.5)</span>
+</div>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined">description</span>
+</button>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="p-6 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0 border border-amber-500/20">
+<span class="material-symbols-outlined text-[20px]">security</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Tentativa de Acesso Negada</h4>
+<span class="text-xs font-medium text-slate-400 mono-text">13 Out 2023, 14:15:33</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                                        Falha na autenticação multifator. O acesso foi bloqueado temporariamente por segurança.
+                                    </p>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px]">
+<div class="flex items-center gap-1.5 text-slate-500">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span class="font-semibold text-slate-700 dark:text-slate-300">Desconhecido</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">public</span>
+<span class="mono-text">IP: 45.230.1.12</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">devices</span>
+<span>Firefox (Windows 11)</span>
+</div>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+</div>
+<!-- Entry 4 -->
+<div class="p-6 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<div class="flex items-start gap-4">
+<div class="size-10 rounded-full bg-slate-500/10 text-slate-500 flex items-center justify-center shrink-0 border border-slate-500/20">
+<span class="material-symbols-outlined text-[20px]">upload_file</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Novo Documento Anexado</h4>
+<span class="text-xs font-medium text-slate-400 mono-text">12 Out 2023, 09:30:10</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                                        O arquivo <span class="text-primary hover:underline cursor-pointer">comprovante_renda_v1.pdf</span> foi adicionado aos anexos do contrato.
+                                    </p>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px]">
+<div class="flex items-center gap-1.5 text-slate-500">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span class="font-semibold text-slate-700 dark:text-slate-300">Carlos A. Silva (Inquilino)</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">public</span>
+<span class="mono-text">IP: 189.12.34.156</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">devices</span>
+<span>Mobile (iPhone 14)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Pagination -->
+<div class="p-4 border-t border-slate-100 dark:border-border-dark flex items-center justify-between">
+<p class="text-xs text-slate-500">Mostrando 1-10 de 24 eventos registrados</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-slate-200 dark:border-border-dark text-slate-500 text-xs font-bold hover:bg-slate-50 dark:hover:bg-border-dark disabled:opacity-50" disabled="">Anterior</button>
+<button class="px-3 py-1 rounded bg-primary text-white text-xs font-bold hover:bg-blue-700">Próxima</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Integrity Check Notification (Mockup Toast) -->
+<div class="fixed bottom-8 right-8 bg-surface-dark border border-emerald-500/30 rounded-lg shadow-2xl p-4 flex items-center gap-4 max-w-sm animate-pulse">
+<div class="size-10 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500">
+<span class="material-symbols-outlined">gpp_good</span>
+</div>
+<div>
+<p class="text-sm font-bold text-white">Integridade Verificada</p>
+<p class="text-xs text-slate-400">O sistema monitora alterações em tempo real via SHA-256.</p>
+</div>
+<button class="text-slate-500 hover:text-white"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+</body></html>

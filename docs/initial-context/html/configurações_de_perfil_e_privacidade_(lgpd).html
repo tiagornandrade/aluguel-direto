@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configurações de Perfil e Privacidade (LGPD)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen text-[#111318] dark:text-white">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-gray-900 px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<span class="material-symbols-outlined text-3xl">domain</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Aluguel Direto</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-9">
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Imóveis</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Contratos</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Mensagens</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-white px-3 hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200" data-alt="Avatar do usuário administrador da plataforma" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAkzLyJlOQSyRgYNv4IFu-pJa10MNsAr1T9sNMCa3BOZP3eEeOZDPtv1CynhW8DoxgAC0OBLLhRIFqmDBkeMG2-KVAYgTZzobiXlm_8P0Ew7TVoiS6VaRIPutL2F_Yni0Vubx7LK44vKOJbs9rNtqAk63yZULnAVp4UZwKg_-YXxEakAlRW9ee0IqjBxapnBLROgklngJZ0J4gUfberRUlI6wzoA_-K_9rlIjpiR5DnXjjJ_6FsYzdihR7tLUqSjJSNTaFSnCJEpM");'></div>
+</div>
+</div>
+</header>
+<div class="max-w-[1280px] mx-auto flex flex-col md:flex-row gap-8 px-10 py-8">
+<!-- Sidebar Navigation -->
+<aside class="w-full md:w-72 flex flex-col gap-6 shrink-0">
+<div class="flex flex-col bg-white dark:bg-gray-900 rounded-xl border border-[#dcdfe5] dark:border-gray-800 p-4 shadow-sm">
+<div class="mb-4 px-3">
+<h1 class="text-[#111318] dark:text-white text-lg font-bold">Configurações</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-xs">Gerencie sua conta e privacidade</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#111318] dark:text-gray-300 hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">person</span>
+<p class="text-sm font-medium">Informações Pessoais</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#111318] dark:text-gray-300 hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">security</span>
+<p class="text-sm font-medium">Segurança</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary text-white shadow-md" href="#">
+<span class="material-symbols-outlined text-xl">lock</span>
+<p class="text-sm font-medium">Privacidade e LGPD</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#111318] dark:text-gray-300 hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<p class="text-sm font-medium">Notificações</p>
+</a>
+</nav>
+<hr class="my-4 border-[#f0f2f4] dark:border-gray-800"/>
+<button class="flex items-center gap-3 px-3 py-3 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-xl">logout</span>
+<p class="text-sm font-medium">Sair da conta</p>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col gap-6">
+<!-- Page Heading -->
+<div class="flex flex-col gap-2">
+<h1 class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Privacidade e LGPD</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-base font-normal">Controle como seus dados são utilizados na plataforma de acordo com a Lei Geral de Proteção de Dados.</p>
+</div>
+<!-- Gestão de Dados Section -->
+<section class="bg-white dark:bg-gray-900 rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden shadow-sm">
+<div class="px-6 py-5 border-b border-[#f0f2f4] dark:border-gray-800">
+<h2 class="text-[#111318] dark:text-white text-lg font-bold">Gestão de Dados</h2>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<div class="flex flex-col @[480px]:flex-row @[480px]:items-center justify-between gap-4 p-5 rounded-lg border border-[#dcdfe5] dark:border-gray-800 bg-[#f8fafc] dark:bg-gray-800/50">
+<div class="flex flex-col gap-1">
+<p class="text-[#111318] dark:text-white text-base font-bold">Baixar meus dados</p>
+<p class="text-[#636f88] dark:text-gray-400 text-sm">Receba um arquivo ZIP contendo todas as suas informações pessoais e histórico de transações.</p>
+</div>
+<button class="flex min-w-[140px] items-center justify-center rounded-lg h-10 px-5 bg-primary text-white text-sm font-semibold hover:bg-[#1344a8] transition-colors">
+<span class="material-symbols-outlined mr-2 text-lg">download</span>
+                            Exportar JSON
+                        </button>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="text-[#636f88] dark:text-gray-400">Deseja remover seu perfil permanentemente?</span>
+<button class="text-red-600 dark:text-red-400 font-bold hover:underline">Solicitar exclusão de conta</button>
+</div>
+</div>
+</section>
+<!-- Consentimentos Section -->
+<section class="bg-white dark:bg-gray-900 rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden shadow-sm">
+<div class="px-6 py-5 border-b border-[#f0f2f4] dark:border-gray-800">
+<h2 class="text-[#111318] dark:text-white text-lg font-bold">Gerenciar Consentimentos</h2>
+</div>
+<div class="p-6 divide-y divide-[#f0f2f4] dark:divide-gray-800">
+<!-- Toggle Row 1 -->
+<div class="flex items-center justify-between py-4">
+<div class="flex flex-col gap-1 pr-8">
+<p class="text-[#111318] dark:text-white font-semibold">Compartilhamento com Seguradoras</p>
+<p class="text-[#636f88] dark:text-gray-400 text-sm leading-snug">Permite que enviemos seus dados básicos para parceiros de seguro fiança para agilizar sua aprovação.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle Row 2 -->
+<div class="flex items-center justify-between py-4">
+<div class="flex flex-col gap-1 pr-8">
+<p class="text-[#111318] dark:text-white font-semibold">Análise de Uso da Plataforma</p>
+<p class="text-[#636f88] dark:text-gray-400 text-sm leading-snug">Uso de dados anônimos para melhoria de experiência do usuário e otimização da busca de imóveis.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle Row 3 -->
+<div class="flex items-center justify-between py-4">
+<div class="flex flex-col gap-1 pr-8">
+<p class="text-[#111318] dark:text-white font-semibold">Notificações de Parceiros e Promoções</p>
+<p class="text-[#636f88] dark:text-gray-400 text-sm leading-snug">Receba ofertas exclusivas de empresas de mudanças e provedores de internet.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Histórico de Logs Section -->
+<section class="bg-white dark:bg-gray-900 rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden shadow-sm">
+<div class="px-6 py-5 border-b border-[#f0f2f4] dark:border-gray-800 flex justify-between items-center">
+<h2 class="text-[#111318] dark:text-white text-lg font-bold">Histórico de Segurança</h2>
+<span class="text-xs bg-[#f0f2f4] dark:bg-gray-800 px-2 py-1 rounded text-[#636f88] dark:text-gray-400">Últimos 30 dias</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-[#f8fafc] dark:bg-gray-800/30 text-[#636f88] dark:text-gray-400 text-xs uppercase tracking-wider">
+<tr>
+<th class="px-6 py-3 font-semibold">Data e Hora</th>
+<th class="px-6 py-3 font-semibold">Ação</th>
+<th class="px-6 py-3 font-semibold">IP</th>
+<th class="px-6 py-3 font-semibold">Dispositivo</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#f0f2f4] dark:divide-gray-800 text-sm">
+<tr>
+<td class="px-6 py-4 font-medium">12 Mai, 2024 - 14:25</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-[10px] font-bold">LOGIN SUCESSO</span></td>
+<td class="px-6 py-4 font-mono text-xs">187.54.12.201</td>
+<td class="px-6 py-4">Chrome / macOS</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-medium">11 Mai, 2024 - 09:12</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded text-[10px] font-bold">ALTERAÇÃO SENHA</span></td>
+<td class="px-6 py-4 font-mono text-xs">187.54.12.201</td>
+<td class="px-6 py-4">Safari / iPhone</td>
+</tr>
+<tr>
+<td class="px-6 py-4 font-medium">08 Mai, 2024 - 18:45</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-[10px] font-bold">LOGIN SUCESSO</span></td>
+<td class="px-6 py-4 font-mono text-xs">172.16.254.1</td>
+<td class="px-6 py-4">App Mobile / Android</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Documentos Legais Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+<a class="group p-5 bg-white dark:bg-gray-900 rounded-xl border border-[#dcdfe5] dark:border-gray-800 flex items-center justify-between hover:border-primary transition-all" href="#">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<p class="font-bold text-[#111318] dark:text-white">Termos de Uso</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Regras e obrigações do serviço</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#636f88] dark:text-gray-400 group-hover:text-primary">arrow_forward_ios</span>
+</a>
+<a class="group p-5 bg-white dark:bg-gray-900 rounded-xl border border-[#dcdfe5] dark:border-gray-800 flex items-center justify-between hover:border-primary transition-all" href="#">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<div>
+<p class="font-bold text-[#111318] dark:text-white">Política de Privacidade</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Como tratamos seus dados pessoais</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[#636f88] dark:text-gray-400 group-hover:text-primary">arrow_forward_ios</span>
+</a>
+</section>
+</main>
+</div>
+<!-- Floating Security Confirmation Toast (Implicit Representation) -->
+<div class="fixed bottom-6 right-6 flex items-center gap-3 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-2xl opacity-0 pointer-events-none transition-opacity duration-300">
+<span class="material-symbols-outlined text-green-400">check_circle</span>
+<p class="text-sm font-medium">Configuração salva com sucesso</p>
+</div>
+</body></html>

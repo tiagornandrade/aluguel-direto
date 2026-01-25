@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AluguelDireto - Infraestrutura Digital para Aluguel Residencial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white transition-colors duration-300">
+<!-- Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-[#dcdfe5] dark:border-gray-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="text-primary size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-black tracking-tight dark:text-white">AluguelDireto</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary dark:text-gray-300" href="#funcionalidades">Funcionalidades</a>
+<a class="text-sm font-medium hover:text-primary dark:text-gray-300" href="#como-funciona">Como Funciona</a>
+<a class="text-sm font-medium hover:text-primary dark:text-gray-300" href="#seguranca">Segurança</a>
+<div class="h-4 w-[1px] bg-gray-300 dark:bg-gray-700 mx-2"></div>
+<button class="text-sm font-bold px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">Login</button>
+<button class="bg-primary text-white text-sm font-bold px-6 py-2 rounded-lg hover:bg-primary/90 transition-all">Começar Agora</button>
+</nav>
+</div>
+</header>
+<main class="flex flex-col">
+<!-- Hero Section -->
+<section class="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
+<div class="@container">
+<div class="flex flex-col gap-12 @[864px]:flex-row items-center">
+<div class="flex flex-col gap-8 flex-1">
+<div class="flex flex-col gap-4">
+<span class="bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest py-1 px-3 rounded-full w-fit">Inovação Imobiliária</span>
+<h1 class="text-[#111318] dark:text-white text-4xl font-black leading-tight tracking-tight @[480px]:text-6xl">
+                                A infraestrutura completa para o seu aluguel direto
+                            </h1>
+<p class="text-[#636f88] dark:text-gray-400 text-lg md:text-xl font-normal leading-relaxed max-w-[540px]">
+                                Alugue sem imobiliárias com total segurança jurídica, gestão de contratos automatizados e pagamentos garantidos em uma única plataforma.
+                            </p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-primary text-white text-lg font-bold px-8 py-4 rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-all">
+                                Começar Agora
+                            </button>
+<button class="bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 text-[#111318] dark:text-white text-lg font-bold px-8 py-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
+                                Agendar Demonstração
+                            </button>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden" data-alt="Profile picture of a landlord using the platform">
+<img alt="User 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh1NMplS11LWSGPbHqiLkpSZFFSsZB3duZOOrJDLsSvvjpm2bsqij66GIh-2UCxvOghqyHYjwGe2Rhb8Eh69wRtsRpKJ4filKgLpIdwsPREbyUYSYJMl8tU-vs7KMotcf-yd_PGPpByiypXyLV5OF7MXttnh7Sf9yjBcDEXitjhgTjJM87dvA_snNrqsTvb5u7Z90voQ7p3kNLnZk5DLj0K6pZO1zB6mQACZAXZg2Mzbv7K399pksoZoHf3YXupKJ61fGMW5frevs"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden" data-alt="Profile picture of a tenant satisfied with service">
+<img alt="User 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-7oyWeowTnJGAnUkdGYRRz0PK5W2Dpm2E4esMohEHDbJUv6yCuIVjF8a_7ENdfe76uCi1EGM3CPSw2vyHjwXqIsqBQ7KPf7MNgxLUwspXpUW6h7SIJkHOLrYhqNx4iMQjgT4GLQGxdXRZ5zjeR0kuMGvibH8ipgjpMf4B7r-KcgPaqhhvzspe7s9mgCbFWY_ZMDoehexG8XGe3HP-VT0n847cuSMW21pV6xmEEEFZUCMdzzwAaYUpMdQW7jCt-xF5_GGPfFCeEhk"/>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden" data-alt="Another professional property owner">
+<img alt="User 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUF22Sxril06BknwLxLWj6gS3r5A9wK_OXoVJIDsdIEFNcO7l4WL2ubfIXKD1ayuj_5HsRcHnPxFcOewNg3bC1SaZM9-ceqOuGN-TjUApUb1NMdoeNPN_GpdXhrY0Sf9_QZWucRpin3Atzxes963rsNprJ9CHZcUdRe4oVOYN8a5YMFeAh-fQCf4yzdvmS84svm2i_mrfeKutC5dULen1pOscN9ErBYajww_-4sr4sNOceX6Ngw2eSvb0tUcXiq5WO8NWBKbsxvCs"/>
+</div>
+</div>
+<p class="text-sm text-[#636f88] dark:text-gray-400 font-medium">Confiado por +5.000 proprietários em todo o Brasil</p>
+</div>
+</div>
+<div class="flex-1 w-full relative">
+<div class="w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative z-10" data-alt="Modern minimalist living room with high quality furniture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsx-ifccgGLCp_tOeytUo21RkwAt-DUSB9TX0O9Tn5AWGFE3K1CI0XII3UO7NWhT37aVX3mD3RhZIFDE8vfPMJWg3oweWaH-_FnWDRQTy9UTD9XQKPbRfaD5GpnkFqsUl-LTVQ8D_6z6vs1LwuJ_DgSMD8eHwfQN0JFO-rAyjIju4THAEO9oQ3K1QBwnLUWuNw1nztn05wBLXauaKy1u_QzkMlIq5iSLFNx-ylrb_8vfb1EbDlntJWeBIhyjAFVxaTRQfkp7h57xI"); background-size: cover; background-position: center;'>
+</div>
+<!-- Abstract Trust Badge -->
+<div class="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl z-20 hidden @[480px]:flex items-center gap-4 border border-gray-100 dark:border-gray-700">
+<div class="bg-primary/10 p-3 rounded-full text-primary">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
+<div>
+<p class="text-sm font-bold">Garantia Jurídica</p>
+<p class="text-xs text-[#636f88]">100% em conformidade com a Lei do Inquilinato</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="bg-white dark:bg-background-dark/50 py-24" id="funcionalidades">
+<div class="max-w-[1200px] mx-auto px-6">
+<div class="flex flex-col gap-4 mb-16 text-center items-center">
+<h2 class="text-[#111318] dark:text-white text-3xl md:text-5xl font-black tracking-tight max-w-[720px]">
+                        Tudo o que você precisa para alugar com segurança
+                    </h2>
+<p class="text-[#636f88] dark:text-gray-400 text-lg font-normal max-w-[640px]">
+                        Eliminamos a burocracia e os custos excessivos das imobiliárias tradicionais com tecnologia de ponta e proteção jurídica.
+                    </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col gap-6 p-8 rounded-2xl border border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark hover:shadow-xl transition-all group">
+<div class="w-14 h-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">gavel</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-xl font-bold dark:text-white">Contratos Automatizados</h3>
+<p class="text-[#636f88] dark:text-gray-400 leading-relaxed">
+                                Geramos contratos customizados com inteligência jurídica, prontos para assinatura digital com validade legal em todo território nacional.
+                            </p>
+</div>
+</div>
+<div class="flex flex-col gap-6 p-8 rounded-2xl border border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark hover:shadow-xl transition-all group">
+<div class="w-14 h-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">photo_camera</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-xl font-bold dark:text-white">Vistorias Digitais</h3>
+<p class="text-[#636f88] dark:text-gray-400 leading-relaxed">
+                                Aplicativo exclusivo para vistorias fotográficas detalhadas, com checklist guiado para garantir o estado do imóvel no início e fim do contrato.
+                            </p>
+</div>
+</div>
+<div class="flex flex-col gap-6 p-8 rounded-2xl border border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark hover:shadow-xl transition-all group">
+<div class="w-14 h-14 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">payments</span>
+</div>
+<div class="flex flex-col gap-3">
+<h3 class="text-xl font-bold dark:text-white">Pagamentos Seguros</h3>
+<p class="text-[#636f88] dark:text-gray-400 leading-relaxed">
+                                Gestão automatizada de cobranças via PIX ou Boleto, com repasses imediatos para o proprietário e controle rigoroso de inadimplência.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works Section -->
+<section class="py-24 bg-background-light dark:bg-background-dark" id="como-funciona">
+<div class="max-w-[1200px] mx-auto px-6">
+<div class="flex flex-col gap-10 items-center">
+<div class="text-center">
+<h2 class="text-3xl md:text-4xl font-black mb-4 dark:text-white">Como funciona para você</h2>
+<p class="text-[#636f88] dark:text-gray-400 text-lg">Processos simplificados para quem quer alugar com agilidade.</p>
+</div>
+<!-- Tabs Component -->
+<div class="w-full max-w-[800px] bg-white dark:bg-gray-800 rounded-3xl p-2 shadow-sm border border-gray-200 dark:border-gray-700">
+<div class="flex gap-2">
+<button class="flex-1 py-4 text-sm font-bold text-white bg-primary rounded-2xl shadow-lg transition-all">
+                                Para Proprietários
+                            </button>
+<button class="flex-1 py-4 text-sm font-bold text-[#636f88] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-2xl transition-all">
+                                Para Inquilinos
+                            </button>
+</div>
+</div>
+<!-- Steps Content -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 w-full pt-10">
+<div class="flex flex-col items-center text-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-xl mb-2">1</div>
+<h4 class="font-bold text-lg dark:text-white">Anuncie Grátis</h4>
+<p class="text-sm text-[#636f88] dark:text-gray-400">Cadastre seu imóvel em minutos e publique nos principais portais.</p>
+</div>
+<div class="flex flex-col items-center text-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-xl mb-2">2</div>
+<h4 class="font-bold text-lg dark:text-white">Vistoria Digital</h4>
+<p class="text-sm text-[#636f88] dark:text-gray-400">Realize a vistoria guiada pelo app com proteção fotográfica.</p>
+</div>
+<div class="flex flex-col items-center text-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-xl mb-2">3</div>
+<h4 class="font-bold text-lg dark:text-white">Assinatura Digital</h4>
+<p class="text-sm text-[#636f88] dark:text-gray-400">Contrato assinado pelo celular com validade jurídica instantânea.</p>
+</div>
+<div class="flex flex-col items-center text-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-black text-xl mb-2">4</div>
+<h4 class="font-bold text-lg dark:text-white">Receba o Aluguel</h4>
+<p class="text-sm text-[#636f88] dark:text-gray-400">Pagamento garantido direto na sua conta todos os meses.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="max-w-[1200px] mx-auto px-6 py-20">
+<div class="bg-primary rounded-[2.5rem] p-12 md:p-24 text-center text-white relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
+<div class="relative z-10 flex flex-col items-center gap-8">
+<h2 class="text-3xl md:text-5xl font-black max-w-[800px] leading-tight">Pronto para modernizar a forma como você aluga seus imóveis?</h2>
+<p class="text-white/80 text-lg md:text-xl max-w-[600px]">Junte-se a milhares de brasileiros que já economizaram mais de R$ 15 milhões em taxas de corretagem.</p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="bg-white text-primary text-lg font-bold px-10 py-5 rounded-2xl hover:scale-105 transition-all shadow-xl">
+                            Começar agora gratuitamente
+                        </button>
+<button class="bg-primary border border-white/20 text-white text-lg font-bold px-10 py-5 rounded-2xl hover:bg-white/10 transition-all">
+                            Falar com consultor
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-background-dark border-t border-[#dcdfe5] dark:border-gray-800 py-16">
+<div class="max-w-[1200px] mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1 flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<div class="text-primary size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-black dark:text-white">AluguelDireto</h2>
+</div>
+<p class="text-sm text-[#636f88] dark:text-gray-400">A infraestrutura completa para aluguel direto, sem imobiliárias e com 100% de segurança jurídica.</p>
+</div>
+<div>
+<h5 class="font-bold mb-4 dark:text-white">Produto</h5>
+<ul class="flex flex-col gap-2 text-sm text-[#636f88] dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Funcionalidades</a></li>
+<li><a class="hover:text-primary" href="#">Segurança</a></li>
+<li><a class="hover:text-primary" href="#">Vistorias</a></li>
+<li><a class="hover:text-primary" href="#">Pagamentos</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-4 dark:text-white">Empresa</h5>
+<ul class="flex flex-col gap-2 text-sm text-[#636f88] dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Sobre Nós</a></li>
+<li><a class="hover:text-primary" href="#">Blog</a></li>
+<li><a class="hover:text-primary" href="#">Carreiras</a></li>
+<li><a class="hover:text-primary" href="#">Termos de Uso</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold mb-4 dark:text-white">Suporte</h5>
+<ul class="flex flex-col gap-2 text-sm text-[#636f88] dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Central de Ajuda</a></li>
+<li><a class="hover:text-primary" href="#">Contato</a></li>
+<li><a class="hover:text-primary" href="#">FAQ</a></li>
+<li><a class="hover:text-primary" href="#">Segurança de Dados</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-[#dcdfe5] dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-[#636f88] dark:text-gray-400">© 2024 AluguelDireto Tecnologia S.A. Todos os direitos reservados.</p>
+<div class="flex gap-6">
+<a class="text-[#636f88] hover:text-primary" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="text-[#636f88] hover:text-primary" href="#"><span class="material-symbols-outlined">policy</span></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

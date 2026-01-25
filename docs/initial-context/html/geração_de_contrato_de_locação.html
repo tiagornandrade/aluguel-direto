@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Geração de Contrato de Locação - AlugaDireto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active .icon-container {
+            background-color: #1754cf;
+            color: white;
+        }
+        .preview-paper {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            min-height: 800px;
+        }
+        .highlight-placeholder {
+            background-color: rgba(23, 84, 207, 0.1);
+            border-bottom: 2px solid #1754cf;
+            padding: 0 2px;
+            color: #111318;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-white">
+<div class="flex flex-col min-h-screen">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between border-b border-solid border-[#dcdfe5] dark:border-[#2a3142] bg-white dark:bg-[#111621] px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined">description</span>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-tight">AlugaDireto SaaS</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Meus Contratos</a>
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Imóveis</a>
+<a class="text-[#636f88] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">Pagamentos</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-[#2a3142] text-[#111318] dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-[#2a3142] text-[#111318] dark:text-white">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDjkzG9eaIu3sjpXHLtc8YowBsb86srzbG8X0UBvoHOjg-unwb-zaO0Y713guNQYHawYC421fW4ZZymbEsF5UuxK4FuXkVhZpax1s1DXpvqZT7Q2Re05-kbgxUXMKLLg0Ic_Unw2TLMLNKUFrHC3o4Y5aBBf--QnzUzrMPlbw_qntOmKQjcSCRFN7mG8XhGGHiI7sEu7FgTNyE5V-pd7RAp3ZR2lKQtapEpcejj7quTLNN_T3YuOr-yNiTM2dmejSRyhliFPFWfAkk");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar Navigation -->
+<aside class="w-72 bg-white dark:bg-[#111621] border-r border-[#dcdfe5] dark:border-[#2a3142] flex flex-col justify-between p-6">
+<div class="flex flex-col gap-8">
+<div class="flex flex-col">
+<h1 class="text-[#111318] dark:text-white text-lg font-bold">Novo Contrato</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-sm font-normal">Passo 2 de 4</p>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Step 1 Done -->
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#636f88]">
+<span class="material-symbols-outlined text-green-500" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="text-sm font-medium">Dados das Partes</p>
+</div>
+<!-- Step 2 Active -->
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 text-primary border-l-4 border-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<p class="text-sm font-bold">Condições do Aluguel</p>
+</div>
+<!-- Step 3 Pending -->
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#636f88] dark:text-gray-400 opacity-60">
+<span class="material-symbols-outlined">article</span>
+<p class="text-sm font-medium">Cláusulas Adicionais</p>
+</div>
+<!-- Step 4 Pending -->
+<div class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#636f88] dark:text-gray-400 opacity-60">
+<span class="material-symbols-outlined">visibility</span>
+<p class="text-sm font-medium">Revisão Final</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full flex items-center justify-center rounded-lg h-10 border border-[#dcdfe5] dark:border-[#2a3142] text-[#111318] dark:text-white text-sm font-bold transition-all hover:bg-gray-50">
+<span>Salvar Rascunho</span>
+</button>
+<button class="w-full flex items-center justify-center rounded-lg h-10 bg-red-50 dark:bg-red-900/20 text-red-600 text-sm font-bold">
+<span>Cancelar</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area (Form) -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+<div class="max-w-3xl mx-auto flex flex-col gap-8 pb-20">
+<div class="flex flex-col gap-2">
+<p class="text-primary font-bold text-sm tracking-wider uppercase">Configurações Financeiras</p>
+<h2 class="text-[#111318] dark:text-white text-3xl font-extrabold tracking-tight">Condições do Aluguel</h2>
+<p class="text-[#636f88] dark:text-gray-400 text-base">Defina os valores, prazos e garantias da locação residencial de forma clara e segura.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-[#111621] p-8 rounded-xl border border-[#dcdfe5] dark:border-[#2a3142]">
+<!-- Rent Value -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-bold flex items-center gap-1">
+                                Valor do Aluguel (R$)
+                                <span class="material-symbols-outlined text-xs text-[#636f88]">info</span>
+</label>
+<input class="flex w-full rounded-lg border border-[#dcdfe5] dark:border-[#2a3142] dark:bg-[#1a202c] p-4 text-lg font-bold text-primary focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="text" value="3.500,00"/>
+</div>
+<!-- Due Date -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-bold">Dia de Vencimento</label>
+<select class="flex w-full rounded-lg border border-[#dcdfe5] dark:border-[#2a3142] dark:bg-[#1a202c] p-4 text-base focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all">
+<option value="5">Dia 05</option>
+<option selected="" value="10">Dia 10</option>
+<option value="15">Dia 15</option>
+<option value="20">Dia 20</option>
+</select>
+</div>
+<!-- Duration -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-bold">Prazo do Contrato (Meses)</label>
+<input class="flex w-full rounded-lg border border-[#dcdfe5] dark:border-[#2a3142] dark:bg-[#1a202c] p-4 text-base focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="number" value="30"/>
+</div>
+<!-- Index -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111318] dark:text-white text-sm font-bold">Índice de Reajuste</label>
+<select class="flex w-full rounded-lg border border-[#dcdfe5] dark:border-[#2a3142] dark:bg-[#1a202c] p-4 text-base focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all">
+<option selected="" value="IPCA">IPCA (IBGE)</option>
+<option value="IGPM">IGP-M (FGV)</option>
+<option value="INPC">INPC</option>
+</select>
+</div>
+<!-- Security Deposit -->
+<div class="flex flex-col gap-4 col-span-1 md:col-span-2 mt-4">
+<label class="text-[#111318] dark:text-white text-sm font-bold">Garantia Locatícia</label>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<label class="cursor-pointer">
+<input checked="" class="sr-only peer" name="garantia" type="radio" value="caucao"/>
+<div class="p-4 border rounded-lg dark:border-[#2a3142] dark:bg-[#1a202c] transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+<p class="text-sm font-bold mb-1">Caução</p>
+<p class="text-xs text-[#636f88]">3 meses de aluguel</p>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="sr-only peer" name="garantia" type="radio" value="fianca"/>
+<div class="p-4 border rounded-lg dark:border-[#2a3142] dark:bg-[#1a202c] transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+<p class="text-sm font-bold mb-1">Seguro Fiança</p>
+<p class="text-xs text-[#636f88]">Taxa mensal seguradora</p>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="sr-only peer" name="garantia" type="radio" value="fiador"/>
+<div class="p-4 border rounded-lg dark:border-[#2a3142] dark:bg-[#1a202c] transition-all peer-checked:border-primary peer-checked:bg-primary/5">
+<p class="text-sm font-bold mb-1">Fiador</p>
+<p class="text-xs text-[#636f88]">Indicação de terceiro</p>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex items-center justify-between gap-4 mt-4">
+<button class="flex items-center gap-2 px-6 h-12 rounded-lg border border-[#dcdfe5] dark:border-[#2a3142] text-[#111318] dark:text-white font-bold transition-all hover:bg-white">
+<span class="material-symbols-outlined">arrow_back</span>
+                            Anterior
+                        </button>
+<button class="flex items-center gap-2 px-10 h-12 rounded-lg bg-primary text-white font-bold transition-all hover:bg-primary/90 shadow-lg shadow-primary/20">
+                            Salvar e Próximo
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Right Sidebar (Preview) -->
+<aside class="hidden lg:flex w-[480px] bg-[#f8f9fa] dark:bg-[#0e121b] border-l border-[#dcdfe5] dark:border-[#2a3142] flex-col p-6 overflow-y-auto">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-sm font-bold uppercase tracking-wider text-[#636f88]">Pré-visualização do Contrato</h3>
+<span class="px-2 py-1 rounded bg-amber-100 text-amber-700 text-[10px] font-bold uppercase">Rascunho em Tempo Real</span>
+</div>
+<div class="preview-paper bg-white dark:bg-[#1a202c] p-10 rounded-sm border border-gray-200 dark:border-gray-800 text-[#333] dark:text-gray-300 text-xs leading-relaxed">
+<div class="text-center mb-10">
+<h4 class="text-lg font-bold uppercase tracking-widest text-[#111318] dark:text-white">Instrumento Particular de Contrato de Locação Residencial</h4>
+</div>
+<p class="mb-4"><strong>LOCADOR:</strong> [Nome do Proprietário Selecionado no Passo 1]</p>
+<p class="mb-4"><strong>LOCATÁRIO:</strong> [Nome do Inquilino Selecionado no Passo 1]</p>
+<p class="mb-6">As partes acima qualificadas celebram entre si o presente contrato de locação, que se regerá pelas seguintes cláusulas e condições:</p>
+<h5 class="font-bold text-sm mb-3 uppercase dark:text-white border-b pb-1">Cláusula 1ª - Do Objeto e Valor</h5>
+<p class="mb-4">O presente contrato tem como objeto a locação do imóvel residencial situado na [Endereço do Imóvel].</p>
+<p class="mb-4">
+                        Pelo aluguel do imóvel, o LOCATÁRIO pagará mensalmente ao LOCADOR a quantia de 
+                        <span class="highlight-placeholder">R$ 3.500,00 (três mil e quinhentos reais)</span>, 
+                        com vencimento todo <span class="highlight-placeholder">dia 10</span> de cada mês.
+                    </p>
+<h5 class="font-bold text-sm mb-3 uppercase dark:text-white border-b pb-1">Cláusula 2ª - Do Prazo e Reajuste</h5>
+<p class="mb-4">
+                        A locação terá o prazo de <span class="highlight-placeholder">30 (trinta) meses</span>, 
+                        iniciando-se em [Data de Início] e encerrando-se em [Data de Fim].
+                    </p>
+<p class="mb-4">
+                        O valor do aluguel será reajustado anualmente pela variação acumulada do índice 
+                        <span class="highlight-placeholder">IPCA (IBGE)</span>, ou outro que venha a substituí-lo.
+                    </p>
+<h5 class="font-bold text-sm mb-3 uppercase dark:text-white border-b pb-1">Cláusula 3ª - Da Garantia</h5>
+<p class="mb-4">
+                        Como garantia do fiel cumprimento de todas as obrigações pactuadas, o LOCATÁRIO presta, nesta data, 
+                        <span class="highlight-placeholder">Caução</span> no valor correspondente a 3 (três) aluguéis vigentes.
+                    </p>
+<div class="mt-20 border-t border-dashed border-gray-300 pt-4 flex flex-col items-center gap-2 opacity-30 select-none">
+<div class="w-40 h-[1px] bg-gray-400"></div>
+<p class="text-[10px]">Assinatura Digital (Pendente)</p>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</body></html>

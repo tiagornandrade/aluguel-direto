@@ -1,0 +1,19 @@
+{
+  "name": "aluguel-direto",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev -w aluguel-direto-backend",
+    "dev:frontend": "npm run dev -w aluguel-direto-frontend",
+    "build:backend": "npm run build -w aluguel-direto-backend",
+    "build:frontend": "npm run build -w aluguel-direto-frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

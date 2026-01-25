@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard - Aluguel Direto SaaS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0b0f1a",
+                        "surface-dark": "#161c2c",
+                        "border-dark": "#292e38"
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #292e38;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-solid border-slate-200 dark:border-border-dark bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md px-4 lg:px-10 py-3">
+<div class="max-w-[1400px] mx-auto flex items-center justify-between gap-4">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined !text-xl">domain</span>
+</div>
+<h2 class="hidden md:block text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Admin Aluguel</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-primary text-sm font-semibold border-b-2 border-primary py-1" href="#">Métricas</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Usuários</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Contratos</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Financeiro</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Suporte</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="relative max-w-xs w-full hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 !text-lg">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary outline-none text-slate-200" placeholder="Pesquisar contrato ou usuário..." type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="relative flex items-center justify-center rounded-lg size-10 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-surface-dark"></span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-slate-200 dark:border-border-dark hidden md:block"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-slate-900 dark:text-white leading-none">Carlos Silva</p>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 uppercase mt-1">Super Admin</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border-2 border-primary/20" data-alt="Avatar image of the administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDEXAjLV7cm8QDWMXO5WUUL9lkXag0hfj-ggQK-4wKpNSeO1qoRXcM2ZysDIPeTpXsB4ffMIcX-CDrBFAl7XSRHCmdFJUyE1cG-mcvPNWKGDDjBhfn-e1EUmwPqz0WDclwEu6pAxwC8bma3W-pXpDAZVb2MQ_9vmMNuN5MnxcRaYIgxaDrOCacHs9N05SaM5uTG9n4QmBlCKmxU1mAQJCFjRQ_rWlkXIJvu3Ec_Mz96NrHtIYEAy0J6Z2G3UoB0dgNVRuI7dT5giOM");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1400px] mx-auto p-4 lg:p-8 space-y-8">
+<!-- KPI Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="size-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<span class="text-[#0bda5e] text-xs font-bold bg-[#0bda5e]/10 px-2 py-1 rounded">+5.2%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Contratos Ativos</p>
+<p class="text-2xl font-bold mt-1 text-slate-900 dark:text-white">1.240</p>
+</div>
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="size-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-red-500 text-xs font-bold bg-red-500/10 px-2 py-1 rounded">-2.1%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Volume Transacionado (GMV)</p>
+<p class="text-2xl font-bold mt-1 text-slate-900 dark:text-white">R$ 2.54M</p>
+</div>
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="size-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<span class="text-[#0bda5e] text-xs font-bold bg-[#0bda5e]/10 px-2 py-1 rounded">+15.8%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Novos Usuários (Mês)</p>
+<p class="text-2xl font-bold mt-1 text-slate-900 dark:text-white">342</p>
+</div>
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="size-10 rounded-lg bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 dark:text-rose-400">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-500/10 px-2 py-1 rounded">-0.5%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Taxa de Inadimplência</p>
+<p class="text-2xl font-bold mt-1 text-slate-900 dark:text-white">2.41%</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Growth Chart Section -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<div class="bg-white dark:bg-surface-dark p-6 rounded-xl border border-slate-200 dark:border-border-dark shadow-sm flex-1">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Crescimento de Contratos</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Evolução dos últimos 12 meses na plataforma</p>
+</div>
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+<button class="px-3 py-1 text-xs font-bold bg-white dark:bg-slate-700 shadow-sm rounded-md text-slate-900 dark:text-white">Linear</button>
+<button class="px-3 py-1 text-xs font-medium text-slate-500 dark:text-slate-400">Mensal</button>
+</div>
+</div>
+<div class="h-[280px] w-full relative">
+<!-- Simulated Chart Grid -->
+<div class="absolute inset-0 flex flex-col justify-between">
+<div class="border-t border-slate-100 dark:border-border-dark w-full h-[1px]"></div>
+<div class="border-t border-slate-100 dark:border-border-dark w-full h-[1px]"></div>
+<div class="border-t border-slate-100 dark:border-border-dark w-full h-[1px]"></div>
+<div class="border-t border-slate-100 dark:border-border-dark w-full h-[1px]"></div>
+<div class="border-t border-slate-100 dark:border-border-dark w-full h-[1px]"></div>
+</div>
+<svg class="w-full h-full relative z-10" fill="none" preserveaspectratio="none" viewbox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 250 Q 100 230 200 180 T 400 120 T 600 80 T 800 50 T 1000 20" fill="none" stroke="url(#lineGradient)" stroke-linecap="round" stroke-width="4"></path>
+<path d="M0 250 Q 100 230 200 180 T 400 120 T 600 80 T 800 50 T 1000 20 V 300 H 0 Z" fill="url(#areaGradient)"></path>
+<defs>
+<lineargradient id="lineGradient" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#1754cf"></stop>
+<stop offset="100%" stop-color="#60a5fa"></stop>
+</lineargradient>
+<lineargradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#1754cf" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#1754cf" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-between mt-4 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+<span>Jul 23</span>
+<span>Set 23</span>
+<span>Nov 23</span>
+<span>Jan 24</span>
+<span>Mar 24</span>
+<span>Mai 24</span>
+<span>Jul 24</span>
+</div>
+</div>
+</div>
+<!-- Recent Contracts Table -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-border-dark flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Contratos Recentes</h3>
+<button class="text-primary text-sm font-semibold hover:underline">Ver todos</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50">
+<th class="px-6 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">ID</th>
+<th class="px-6 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Partes</th>
+<th class="px-6 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Valor</th>
+<th class="px-6 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Status</th>
+<th class="px-6 py-3 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-border-dark">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-400">#CTR-8921</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Marcos Oliveira</span>
+<span class="text-xs text-slate-500">Locatário</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white">R$ 3.200,00</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 text-[10px] font-bold uppercase rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">Ativo</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary p-1">
+<span class="material-symbols-outlined !text-xl">history</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-400">#CTR-8920</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Ana Paula Souza</span>
+<span class="text-xs text-slate-500">Locatário</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white">R$ 1.850,00</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 text-[10px] font-bold uppercase rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">Em Análise</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary p-1">
+<span class="material-symbols-outlined !text-xl">history</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-slate-400">#CTR-8918</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Roberto Dias</span>
+<span class="text-xs text-slate-500">Locatário</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900 dark:text-white">R$ 4.500,00</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 text-[10px] font-bold uppercase rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">Pendente</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary p-1">
+<span class="material-symbols-outlined !text-xl">history</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Alerts & Tasks -->
+<div class="space-y-8">
+<!-- Fraud Alerts -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm overflow-hidden">
+<div class="px-6 py-4 bg-rose-50 dark:bg-rose-900/10 border-b border-rose-100 dark:border-rose-900/20 flex items-center justify-between">
+<div class="flex items-center gap-2 text-rose-600 dark:text-rose-400">
+<span class="material-symbols-outlined !text-lg">gpp_maybe</span>
+<h3 class="text-sm font-bold uppercase tracking-wider">Alertas de Fraude</h3>
+</div>
+<span class="bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">03</span>
+</div>
+<div class="p-4 space-y-3">
+<div class="flex gap-3 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="size-2 mt-1.5 bg-rose-500 rounded-full shrink-0"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">CPF Divergente</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Usuário: Luiz Henrique M.</p>
+<p class="text-[10px] text-rose-500 font-bold mt-2">Risco: Alto</p>
+</div>
+</div>
+<div class="flex gap-3 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="size-2 mt-1.5 bg-amber-500 rounded-full shrink-0"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Multiplos Logins (IP)</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Usuário: Maria Clara F.</p>
+<p class="text-[10px] text-amber-500 font-bold mt-2">Risco: Médio</p>
+</div>
+</div>
+<div class="flex gap-3 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors">
+<div class="size-2 mt-1.5 bg-rose-500 rounded-full shrink-0"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Doc. Digitalmente Adulterado</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Usuário: Jefferson Silva</p>
+<p class="text-[10px] text-rose-500 font-bold mt-2">Risco: Alto</p>
+</div>
+</div>
+</div>
+<div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/50 text-center">
+<button class="text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">Investigar todos os casos</button>
+</div>
+</div>
+<!-- Validation Tasks -->
+<div class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-border-dark shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-border-dark">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider">Validação Pendente</h3>
+</div>
+<div class="max-h-[300px] overflow-y-auto custom-scrollbar">
+<div class="p-2 space-y-1">
+<div class="p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg flex items-center justify-between group transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined !text-lg text-slate-500">description</span>
+</div>
+<div>
+<p class="text-xs font-bold text-slate-900 dark:text-white">RG Frente/Verso</p>
+<p class="text-[10px] text-slate-500">Rodrigo G. • 12min atrás</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded transition-all">Validar</button>
+</div>
+<div class="p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg flex items-center justify-between group transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined !text-lg text-slate-500">receipt_long</span>
+</div>
+<div>
+<p class="text-xs font-bold text-slate-900 dark:text-white">Comprovante de Renda</p>
+<p class="text-[10px] text-slate-500">Fernanda M. • 45min atrás</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded transition-all">Validar</button>
+</div>
+<div class="p-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-lg flex items-center justify-between group transition-colors">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined !text-lg text-slate-500">location_on</span>
+</div>
+<div>
+<p class="text-xs font-bold text-slate-900 dark:text-white">Comprovante de Residência</p>
+<p class="text-[10px] text-slate-500">Tiago L. • 2h atrás</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 bg-primary text-white text-[10px] font-bold px-3 py-1.5 rounded transition-all">Validar</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
