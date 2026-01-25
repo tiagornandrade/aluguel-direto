@@ -181,9 +181,15 @@ export default function LandingPage() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
                   href="/criar-conta"
-                  className="bg-white text-accent text-lg font-bold px-10 py-5 rounded-2xl hover:scale-105 transition-all shadow-xl text-center"
+                  className="bg-white text-primary text-lg font-bold px-10 py-5 rounded-2xl hover:scale-105 transition-all shadow-xl text-center"
                 >
                   Começar agora gratuitamente
+                </Link>
+                <Link
+                  href="#contato"
+                  className="bg-transparent border-2 border-white text-white text-lg font-bold px-10 py-5 rounded-2xl hover:bg-white/10 transition-all text-center"
+                >
+                  Falar com consultor
                 </Link>
               </div>
             </div>
@@ -257,6 +263,11 @@ export default function LandingPage() {
                 <li>
                   <a className="hover:text-primary" href="#">
                     Central de Ajuda
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:text-primary" href="#">
+                    Suporte
                   </a>
                 </li>
                 <li>
