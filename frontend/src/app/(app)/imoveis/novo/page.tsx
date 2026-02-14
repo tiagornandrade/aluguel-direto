@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { propertiesApi } from "@/lib/api-client";
+import { fetchByCep, formatCep } from "@/lib/viacep";
 
 const STEPS = [
   { id: 1, label: "Informações Básicas" },
@@ -26,16 +27,55 @@ export default function ImovelNovoPage() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     title: "",
-    addressLine: "",
     type: "APARTAMENTO",
     areaM2: "" as string | number,
+    cep: "",
+    logradouro: "",
+    numero: "",
+    bairro: "",
+    localidade: "",
+    uf: "",
   });
+  const [cepLoading, setCepLoading] = useState(false);
+  const [cepError, setCepError] = useState<string | null>(null);
+
+  const addressLine = [form.logradouro, form.numero && `nº ${form.numero}`, form.bairro, [form.localidade, form.uf].filter(Boolean).join("/")]
+    .filter(Boolean)
+    .join(", ");
+
+  const handleCepBlur = useCallback(async () => {
+    const digits = form.cep.replace(/\D/g, "");
+    if (digits.length !== 8) {
+      if (form.cep.trim()) setCepError("CEP deve ter 8 dígitos.");
+      return;
+    }
+    setCepError(null);
+    setCepLoading(true);
+    try {
+      const data = await fetchByCep(form.cep);
+      if (data) {
+        setForm((f) => ({
+          ...f,
+          logradouro: data.logradouro,
+          bairro: data.bairro,
+          localidade: data.localidade,
+          uf: data.uf,
+        }));
+      } else {
+        setCepError("CEP não encontrado.");
+      }
+    } catch {
+      setCepError("Erro ao buscar CEP. Tente novamente.");
+    } finally {
+      setCepLoading(false);
+    }
+  }, [form.cep]);
 
   const progress = (step / 4) * 100;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.title.trim() || !form.addressLine.trim()) {
+    if (!form.title.trim() || !addressLine.trim()) {
       setError("Preencha o título e o endereço do imóvel.");
       return;
     }
@@ -44,7 +84,7 @@ export default function ImovelNovoPage() {
     try {
       await propertiesApi.create({
         title: form.title.trim(),
-        addressLine: form.addressLine.trim(),
+        addressLine: addressLine.trim(),
         type: form.type as "APARTAMENTO" | "CASA" | "STUDIO" | "COBERTURA",
         areaM2: form.areaM2 === "" ? null : Number(form.areaM2),
       });
@@ -63,6 +103,7 @@ export default function ImovelNovoPage() {
 
   const checklist = [
     { done: !!form.title?.trim(), label: "Título Criativo", tip: "Destaque o principal benefício." },
+    { done: !!addressLine?.trim(), label: "Endereço Completo", tip: "Informe o CEP para preencher automaticamente." },
     { done: false, label: "Fotos Profissionais", tip: "Luz natural faz toda a diferença." },
     { done: false, label: "Preço de Mercado", tip: "Pesquise valores na sua região." },
     { done: false, label: "Descrição Detalhada", tip: "Conte sobre a vizinhança." },
@@ -147,19 +188,95 @@ export default function ImovelNovoPage() {
                       />
                     </label>
                   </div>
+                  <div>
+                    <label className="flex flex-col gap-2">
+                      <span className="text-[#111318] dark:text-white text-base font-semibold">CEP</span>
+                      <div className="relative">
+                        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted text-xl">pin_drop</span>
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          maxLength={9}
+                          className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 pl-11 pr-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                          placeholder="00000-000"
+                          value={formatCep(form.cep)}
+                          onChange={(e) => {
+                          setCepError(null);
+                          setForm((f) => ({ ...f, cep: e.target.value.replace(/\D/g, "") }));
+                        }}
+                          onBlur={handleCepBlur}
+                        />
+                        {cepLoading && (
+                          <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-muted text-xl animate-spin">progress_activity</span>
+                        )}
+                      </div>
+                      {cepError && <span className="text-xs text-red-600 dark:text-red-400">{cepError}</span>}
+                      <span className="text-xs text-gray-400">Digite o CEP e saia do campo para preencher automaticamente.</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label className="flex flex-col gap-2">
+                      <span className="text-[#111318] dark:text-white text-base font-semibold">Número</span>
+                      <input
+                        type="text"
+                        className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                        placeholder="Ex: 123"
+                        value={form.numero}
+                        onChange={(e) => setForm((f) => ({ ...f, numero: e.target.value }))}
+                      />
+                    </label>
+                  </div>
                   <div className="md:col-span-2">
                     <label className="flex flex-col gap-2">
-                      <span className="text-[#111318] dark:text-white text-base font-semibold">Endereço Completo</span>
-                      <div className="relative">
-                        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-muted text-xl">location_on</span>
-                        <input
-                          className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 pl-11 pr-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
-                          placeholder="Comece a digitar o endereço..."
-                          value={form.addressLine}
-                          onChange={(e) => setForm((f) => ({ ...f, addressLine: e.target.value }))}
-                          required
-                        />
-                      </div>
+                      <span className="text-[#111318] dark:text-white text-base font-semibold">Logradouro</span>
+                      <input
+                        type="text"
+                        className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                        placeholder="Rua, Avenida..."
+                        value={form.logradouro}
+                        onChange={(e) => setForm((f) => ({ ...f, logradouro: e.target.value }))}
+                        required
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label className="flex flex-col gap-2">
+                      <span className="text-[#111318] dark:text-white text-base font-semibold">Bairro</span>
+                      <input
+                        type="text"
+                        className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                        placeholder="Bairro"
+                        value={form.bairro}
+                        onChange={(e) => setForm((f) => ({ ...f, bairro: e.target.value }))}
+                        required
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label className="flex flex-col gap-2">
+                      <span className="text-[#111318] dark:text-white text-base font-semibold">Cidade</span>
+                      <input
+                        type="text"
+                        className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                        placeholder="Cidade"
+                        value={form.localidade}
+                        onChange={(e) => setForm((f) => ({ ...f, localidade: e.target.value }))}
+                        required
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label className="flex flex-col gap-2">
+                      <span className="text-[#111318] dark:text-white text-base font-semibold">UF</span>
+                      <input
+                        type="text"
+                        maxLength={2}
+                        className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary uppercase"
+                        placeholder="SP"
+                        value={form.uf}
+                        onChange={(e) => setForm((f) => ({ ...f, uf: e.target.value.toUpperCase() }))}
+                        required
+                      />
                     </label>
                   </div>
                   <div className="md:col-span-2">

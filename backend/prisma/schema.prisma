@@ -4,43 +4,106 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model User {
-  id               String     @id @default(cuid())
-  email            String     @unique
+  id               String        @id @default(cuid())
+  email            String        @unique
   fullName         String
   cpf              String?
+  rg               String?
+  nacionalidade    String?
+  estadoCivil      String?
+  profissao        String?
+  endereco         String?
   passwordHash     String
-  role             String     // PROPRIETARIO | INQUILINO
-  profileCompleted Boolean    @default(false)
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  role             String        // PROPRIETARIO | INQUILINO
+  profileCompleted Boolean       @default(false)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
   sessions         Session[]
   properties       Property[]
+  contractsAsTenant Contract[]   @relation("TenantContracts")
+  contractsAsOwner  Contract[]   @relation("OwnerContracts")
+  notificationsReceived Notification[] @relation("NotificationsReceived")
+  notificationsSent   Notification[] @relation("NotificationsSent")
 
   @@map("users")
 }
 
 model Property {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   ownerId        String
   title          String
   addressLine    String
-  type           String   // APARTAMENTO | CASA | STUDIO | COBERTURA
+  type           String    // APARTAMENTO | CASA | STUDIO | COBERTURA
   areaM2         Float?
   rooms          Int?
   parkingSpots   Int?
   rentAmount     Float?
   chargesAmount  Float?
-  status         String   @default("DISPONIVEL") // DISPONIVEL | EM_NEGOCIACAO | ALUGADO | ENCERRADO
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  status         String    @default("DISPONIVEL") // DISPONIVEL | EM_NEGOCIACAO | ALUGADO | ENCERRADO
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner         User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  contracts     Contract[]
+  notifications Notification[]
 
   @@map("properties")
+}
+
+model Contract {
+  id               String    @id @default(cuid())
+  propertyId       String
+  tenantId         String
+  ownerId          String
+  startDate        DateTime
+  endDate          DateTime
+  rentAmount       Float
+  chargesAmount    Float     @default(0)
+  dueDay           Int       // 1-28
+  status           String    @default("PENDENTE_ASSINATURA") // PENDENTE_ASSINATURA | ATIVO | ENCERRADO
+  paymentMethod    String?   // PIX, Transferência, Boleto, etc.
+  lateFeePercent   Float?   // multa %
+  interestPercent  Float?   // juros % ao mês
+  adjustmentIndex  String?  // IGPM, IPCA, etc.
+  guaranteeType    String?   // CAUCAO | FIADOR | SEGURO_FIANCA
+  guaranteeAmount  Float?   // valor caução R$
+  foroComarca      String?
+  contractCity     String?
+  contractDate     DateTime?
+  tenantSignedAt      DateTime?  // data/hora em que o locatário assinou
+  tenantSignedIp      String?   // IP no momento da assinatura (comprovação)
+  tenantSignedUserAgent String? // User-Agent no momento da assinatura (comprovação)
+  ownerSignedAt       DateTime?
+  ownerSignedIp       String?
+  ownerSignedUserAgent String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  tenant   User     @relation("TenantContracts", fields: [tenantId], references: [id], onDelete: Cascade)
+  owner    User     @relation("OwnerContracts", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@map("contracts")
+}
+
+model Notification {
+  id          String    @id @default(cuid())
+  recipientId String
+  senderId    String
+  type        String    // CONTACT_REQUEST | ...
+  propertyId  String?
+  message     String?
+  read        Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  recipient User     @relation("NotificationsReceived", fields: [recipientId], references: [id], onDelete: Cascade)
+  sender    User     @relation("NotificationsSent", fields: [senderId], references: [id], onDelete: Cascade)
+  property  Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+
+  @@map("notifications")
 }
 
 model Session {

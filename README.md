@@ -21,11 +21,22 @@ A aplicação é composta por **backend** e **frontend** (monorepo com npm works
 2. **Configurar variáveis de ambiente** (em `backend/` e `frontend/`):
 
    - Copie `backend/.env.example` → `backend/.env`
-   - Copie `frontend/.env.example` → `frontend/.env`
+   - Copie `frontend/.env.example` → `frontend/.env.local`
 
-3. **Subir o backend** (porta 4000) e o **frontend** (porta 3000), em terminais separados:
+3. **Preparar o banco** (backend):
 
    ```bash
+   npm run db:generate -w aluguel-direto-backend
+   npm run db:push -w aluguel-direto-backend
+   npm run db:seed -w aluguel-direto-backend   # obrigatório para modo dev criar imóveis
+   ```
+
+4. **Subir o backend** (porta 4000) e o **frontend** (porta 3000):
+
+
+   ```bash
+   npm run dev            # sobe backend + frontend
+   # ou em terminais separados:
    npm run dev:backend    # backend: http://localhost:4000
    npm run dev:frontend   # frontend: http://localhost:3000
    ```
@@ -37,7 +48,7 @@ A aplicação é composta por **backend** e **frontend** (monorepo com npm works
    npm run build:frontend
    ```
 
-4. **Modo desenvolvimento (opcional):** com o frontend rodando localmente (`npm run dev` ou `npm run dev:frontend`), o *dev mode* é ativado automaticamente quando `NODE_ENV=development` (o padrão de `npm run dev`). Você pode acessar o SaaS sem login real: na landing ou no login, use os botões **“Entrar como Proprietário”** ou **“Entrar como Inquilino”** do banner “Modo desenvolvimento”. Dentro do app, o header exibe um seletor **Dev: Proprietário | Inquilino** para trocar de persona. O backend não é chamado no login em dev; chamadas de API com o usuário dev podem retornar 401 se o backend não conhecer o usuário.  
+5. **Modo desenvolvimento (opcional):** com o frontend rodando localmente (`npm run dev` ou `npm run dev:frontend`), o *dev mode* é ativado automaticamente quando `NODE_ENV=development` (o padrão de `npm run dev`). Você pode acessar o SaaS sem login real: na landing ou no login, use os botões **“Entrar como Proprietário”** ou **“Entrar como Inquilino”** do banner “Modo desenvolvimento”. Dentro do app, o header exibe um seletor **Dev: Proprietário | Inquilino** para trocar de persona. O backend não é chamado no login em dev. Com o seed executado (passo 3), o usuário dev pode criar imóveis normalmente.  
    - **Se os botões "Entrar como…" deixarem você na tela de login:** em `frontend/.env` ou `frontend/.env.local` defina `NEXTAUTH_SECRET` (ex.: `openssl rand -base64 32`) e `NEXTAUTH_URL=http://localhost:3000`. Se ainda falhar, adicione `DEV_MODE=true` e reinicie o frontend.
 
 ## Estrutura do repositório

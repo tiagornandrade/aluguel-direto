@@ -2,8 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const appPaths = ["/dashboard-proprietario", "/dashboard-inquilino", "/imoveis", "/contratos", "/pagamentos", "/mensagens", "/solicitacoes", "/documentos", "/notificacoes", "/configuracoes", "/onboarding-proprietario", "/onboarding-inquilino"];
-// Admin: /dashboard and /inadimplencia only (not /dashboard-proprietario)
+const appPaths = ["/dashboard-proprietario", "/dashboard-inquilino", "/imoveis", "/buscar-imoveis", "/contratos", "/perfil", "/pagamentos", "/mensagens", "/solicitacoes", "/documentos", "/notificacoes", "/configuracoes", "/onboarding-proprietario", "/onboarding-inquilino"];
 function isAdmin(path: string) {
   return path === "/dashboard" || path.startsWith("/dashboard/") || path === "/inadimplencia" || path.startsWith("/inadimplencia/");
 }
@@ -35,6 +34,8 @@ export const config = {
     "/dashboard-inquilino",
     "/imoveis",
     "/imoveis/:path*",
+    "/buscar-imoveis",
+    "/buscar-imoveis/:path*",
     "/contratos",
     "/contratos/:path*",
     "/pagamentos",

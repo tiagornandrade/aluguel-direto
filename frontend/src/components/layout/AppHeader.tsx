@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Logo } from "@/components/brand/Logo";
+import { NotificationBell } from "@/components/layout/NotificationBell";
 import { DEV_EMAIL, DEV_PASSWORD, isDevModeClient, isDevUser } from "@/lib/dev-mode";
 
 export function AppHeader() {
@@ -74,6 +75,7 @@ export function AppHeader() {
           {isInquilino && (
             <>
               <Link href="/dashboard-inquilino" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Meu Aluguel</Link>
+              <Link href="/buscar-imoveis" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Buscar imóveis</Link>
               <Link href="/pagamentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Pagamentos</Link>
               <Link href="#" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Solicitações</Link>
               <Link href="#" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Documentos</Link>
@@ -88,14 +90,10 @@ export function AppHeader() {
           )}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="#" className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-muted dark:text-gray-400" title="Notificações" aria-label="Notificações">
-            <span className="material-symbols-outlined">notifications</span>
+          <NotificationBell />
+          <Link href="/perfil" className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-muted dark:text-gray-400" title="Meus dados (contrato)" aria-label="Meus dados">
+            <span className="material-symbols-outlined">person</span>
           </Link>
-          {isProprietario && (
-            <Link href="#" className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-muted dark:text-gray-400" title="Configurações" aria-label="Configurações">
-              <span className="material-symbols-outlined">settings</span>
-            </Link>
-          )}
           <div className="relative shrink-0" title={session?.user?.name ?? "Usuário"}>
             <div className="w-9 h-9 rounded-full border-2 border-sky-300 dark:border-sky-600 bg-white dark:bg-transparent text-gray-700 dark:text-gray-300 flex items-center justify-center text-sm font-bold">
               {initials}
