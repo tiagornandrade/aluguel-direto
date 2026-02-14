@@ -12,7 +12,12 @@ export function NotificationBell() {
     notificationsApi
       .unreadCount()
       .then((data) => {
-        if (!cancelled) setUnreadCount(data.unreadCount);
+        if (cancelled) return;
+
+        const count =
+          typeof data?.unreadCount === "number" ? data.unreadCount : 0;
+
+        setUnreadCount(count);
       })
       .catch(() => {
         if (!cancelled) setUnreadCount(0);
