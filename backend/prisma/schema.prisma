@@ -3,7 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -27,6 +28,9 @@ model User {
   contractsAsOwner  Contract[]   @relation("OwnerContracts")
   notificationsReceived Notification[] @relation("NotificationsReceived")
   notificationsSent   Notification[] @relation("NotificationsSent")
+  conversationsAsOwner    Conversation[] @relation("ConversationOwner")
+  conversationsAsOther    Conversation[] @relation("ConversationOther")
+  messagesSent            Message[]
 
   @@map("users")
 }
@@ -43,14 +47,29 @@ model Property {
   rentAmount     Float?
   chargesAmount  Float?
   status         String    @default("DISPONIVEL") // DISPONIVEL | EM_NEGOCIACAO | ALUGADO | ENCERRADO
+  photos         String[]  @default([])           // IDs de PropertyPhoto (upload) ou URLs externas
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
   owner         User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   contracts     Contract[]
   notifications Notification[]
+  conversations Conversation[]
+  photoBlobs    PropertyPhoto[]
 
   @@map("properties")
+}
+
+model PropertyPhoto {
+  id          String   @id @default(cuid())
+  propertyId  String
+  contentType String   // image/jpeg, image/png, etc.
+  data        Bytes    // conteúdo binário da imagem
+  createdAt   DateTime @default(now())
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@map("property_photos")
 }
 
 model Contract {
@@ -85,8 +104,27 @@ model Contract {
   property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   tenant   User     @relation("TenantContracts", fields: [tenantId], references: [id], onDelete: Cascade)
   owner    User     @relation("OwnerContracts", fields: [ownerId], references: [id], onDelete: Cascade)
+  installments RentInstallment[]
 
   @@map("contracts")
+}
+
+model RentInstallment {
+  id             String    @id @default(cuid())
+  contractId     String
+  referenceMonth Int       // 1-12
+  referenceYear  Int
+  amount         Float     // rentAmount + chargesAmount (pode variar com reajuste)
+  dueDate        DateTime  // dia do vencimento no mês/ano
+  status         String    @default("PENDENTE") // PENDENTE | PAGO | ATRASADO
+  paidAt         DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@unique([contractId, referenceMonth, referenceYear])
+  @@map("rent_installments")
 }
 
 model Notification {
@@ -104,6 +142,36 @@ model Notification {
   property  Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
 
   @@map("notifications")
+}
+
+model Conversation {
+  id                 String   @id @default(cuid())
+  propertyId         String
+  ownerId            String   // proprietário do imóvel
+  otherParticipantId String   // inquilino ou interessado
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  property       Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  owner          User      @relation("ConversationOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  otherParticipant User     @relation("ConversationOther", fields: [otherParticipantId], references: [id], onDelete: Cascade)
+  messages       Message[]
+
+  @@unique([propertyId, otherParticipantId])
+  @@map("conversations")
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  senderId       String
+  content        String   @db.Text
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
 }
 
 model Session {

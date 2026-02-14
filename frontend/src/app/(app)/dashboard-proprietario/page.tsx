@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getPropertiesForUser } from "@/lib/backend-server";
+import { getPropertiesForUser, getContractsForOwner, getInstallmentsForOwner, getNotificationsForUser } from "@/lib/backend-server";
 
 function formatCurrency(val: number | null) {
   if (val == null) return "—";
@@ -24,11 +24,58 @@ export default async function DashboardProprietarioPage() {
   if (!session?.user) redirect("/login");
 
   const name = (session.user as { name?: string }).name ?? "Proprietário";
-  const properties = await getPropertiesForUser();
+
+  let properties: Awaited<ReturnType<typeof getPropertiesForUser>> = [];
+  let ownerContracts: Awaited<ReturnType<typeof getContractsForOwner>> = [];
+  let installments: Awaited<ReturnType<typeof getInstallmentsForOwner>> = [];
+  let notifications: Awaited<ReturnType<typeof getNotificationsForUser>>["notifications"] = [];
+
+  try {
+    const [props, contracts, inst, notif] = await Promise.all([
+      getPropertiesForUser(),
+      getContractsForOwner(),
+      getInstallmentsForOwner(),
+      getNotificationsForUser(),
+    ]);
+    properties = props;
+    ownerContracts = contracts;
+    installments = inst;
+    notifications = notif.notifications;
+  } catch (err) {
+    return (
+      <div className="max-w-[1200px] mx-auto px-4 md:px-10 py-8">
+        <h1 className="text-3xl font-black dark:text-white mb-2">Dashboard do Proprietário</h1>
+        <p className="text-[#636f88] dark:text-gray-400 mb-4">Bem-vindo de volta, {name}.</p>
+        <div className="rounded-xl p-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
+          <p className="font-semibold text-amber-800 dark:text-amber-200">Não foi possível carregar os dados.</p>
+          <p className="text-sm text-amber-700 dark:text-amber-300/90 mt-1">
+            Verifique se o backend está rodando (ex.: <code className="bg-amber-100 dark:bg-amber-900/40 px-1 rounded">npm run dev</code> na pasta backend) e se <code className="bg-amber-100 dark:bg-amber-900/40 px-1 rounded">NEXT_PUBLIC_API_URL</code> no <code className="bg-amber-100 dark:bg-amber-900/40 px-1 rounded">.env.local</code> aponta para a URL correta (ex.: http://localhost:4000).
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const ativos = properties.length;
   const pendenciasDoc = 0;
-  const proximosReceb = properties.reduce((s, p) => s + (p.rentAmount ?? 0) + (p.chargesAmount ?? 0), 0);
+  const proximosReceb = installments
+    .filter((i) => i.installment.status !== "PAGO")
+    .reduce((s, i) => s + i.installment.amount, 0);
+
+  const activeByProperty = new Map<string, { tenantName: string; rentAmount: number }>();
+  for (const c of ownerContracts) {
+    if (c.contract.status === "ATIVO") {
+      activeByProperty.set(c.contract.propertyId, {
+        tenantName: c.tenant.fullName,
+        rentAmount: c.contract.rentAmount + c.contract.chargesAmount,
+      });
+    }
+  }
+
+  const pendingOwnerSignature = ownerContracts.filter(
+    (c) => c.contract.status === "PENDENTE_ASSINATURA" && !c.contract.ownerSignedAt
+  );
+  const contactRequests = notifications.filter((n) => n.notification.type === "CONTACT_REQUEST" && !n.notification.read);
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 md:px-10 py-8">
@@ -94,21 +141,24 @@ export default async function DashboardProprietarioPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {properties.slice(0, 5).map((p) => (
-                      <tr key={p.id} className="border-b border-[#dcdfe5] dark:border-slate-700/50 last:border-0 hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                        <td className="p-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center shrink-0">
-                              <span className="material-symbols-outlined text-gray-500">apartment</span>
+                    {properties.slice(0, 5).map((p) => {
+                      const active = activeByProperty.get(p.id);
+                      return (
+                        <tr key={p.id} className="border-b border-[#dcdfe5] dark:border-slate-700/50 last:border-0 hover:bg-gray-50 dark:hover:bg-slate-800/50">
+                          <td className="p-4">
+                            <div className="flex items-center gap-3">
+                              <div className="w-12 h-12 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center shrink-0">
+                                <span className="material-symbols-outlined text-gray-500">apartment</span>
+                              </div>
+                              <span className="font-medium text-ink dark:text-white">{p.title}</span>
                             </div>
-                            <span className="font-medium text-ink dark:text-white">{p.title}</span>
-                          </div>
-                        </td>
-                        <td className="p-4">{statusTag(p.status)}</td>
-                        <td className="p-4 text-muted dark:text-gray-400">—</td>
-                        <td className="p-4 font-medium dark:text-white">{formatCurrency(p.rentAmount ?? p.chargesAmount)}</td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td className="p-4">{statusTag(p.status)}</td>
+                          <td className="p-4 text-muted dark:text-gray-400">{active?.tenantName ?? "—"}</td>
+                          <td className="p-4 font-medium dark:text-white">{formatCurrency(active?.rentAmount ?? (p.rentAmount ?? p.chargesAmount))}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -119,42 +169,47 @@ export default async function DashboardProprietarioPage() {
         <div>
           <h2 className="text-xl font-bold dark:text-white mb-4">Ações Prioritárias</h2>
           <div className="space-y-4">
-            <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900">
-              <div className="flex gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-primary">edit_document</span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-bold dark:text-white">Contrato pendente</p>
-                  <p className="text-sm text-muted dark:text-gray-400">Apartamento Jardins - Requer sua assinatura digital</p>
-                  <Link href="/contratos" className="inline-block mt-2 text-sm font-semibold text-primary hover:underline">Assinar agora</Link>
-                </div>
-              </div>
-            </div>
-            <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900">
-              <div className="flex gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-amber-600 dark:text-amber-400">assignment</span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-bold dark:text-white">Vistoria para revisar</p>
-                  <p className="text-sm text-muted dark:text-gray-400">Casa Vila Mariana - Vistoria de saída realizada ontem</p>
-                  <button type="button" className="mt-2 text-sm font-semibold text-muted dark:text-gray-400 hover:text-primary">Revisar Relatório</button>
+            {pendingOwnerSignature.length > 0 && (
+              <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900">
+                <div className="flex gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-primary">edit_document</span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold dark:text-white">Contrato pendente</p>
+                    <p className="text-sm text-muted dark:text-gray-400">
+                      {pendingOwnerSignature[0].property.title} - Requer sua assinatura digital
+                    </p>
+                    <Link href={`/contratos/${pendingOwnerSignature[0].contract.id}`} className="inline-block mt-2 text-sm font-semibold text-primary hover:underline">
+                      Assinar agora
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900">
-              <div className="flex gap-3">
-                <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-green-600 dark:text-green-400">person_add</span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-bold dark:text-white">Nova Proposta</p>
-                  <p className="text-sm text-muted dark:text-gray-400">Apartamento Bela Vista - Interessado: Pedro Duarte</p>
-                  <button type="button" className="mt-2 text-sm font-semibold text-muted dark:text-gray-400 hover:text-primary">Analisar Perfil</button>
+            )}
+            {contactRequests.length > 0 && (
+              <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900">
+                <div className="flex gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-green-600 dark:text-green-400">person_add</span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold dark:text-white">Nova Proposta</p>
+                    <p className="text-sm text-muted dark:text-gray-400">
+                      {contactRequests[0].propertyTitle ?? "Imóvel"} - Interessado: {contactRequests[0].senderName}
+                    </p>
+                    <Link href={`/perfil-interessado/${contactRequests[0].notification.id}`} className="inline-block mt-2 text-sm font-semibold text-primary hover:underline">
+                      Analisar perfil
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
+            {pendingOwnerSignature.length === 0 && contactRequests.length === 0 && (
+              <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900 text-center">
+                <p className="text-muted dark:text-gray-400 text-sm">Nenhuma ação prioritária no momento.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -5,8 +5,10 @@ import { createContactRequest } from "../../application/notification/create-cont
 import { listNotificationsForUser } from "../../application/notification/list-notifications";
 import { markNotificationAsRead } from "../../application/notification/mark-notification-read";
 import { markAllNotificationsAsRead } from "../../application/notification/mark-all-notifications-read";
+import { getSenderProfileForContactRequest } from "../../application/notification/get-sender-profile-for-contact";
 import { PrismaNotificationRepository } from "../../infrastructure/persistence/PrismaNotificationRepository";
 import { PrismaPropertyRepository } from "../../infrastructure/persistence/PrismaPropertyRepository";
+import { prisma } from "../../lib/db";
 
 const notificationsRouter = Router();
 const notificationRepo = PrismaNotificationRepository;
@@ -68,6 +70,50 @@ notificationsRouter.post("/mark-all-read", async (req, res) => {
   try {
     const { markedCount } = await markAllNotificationsAsRead(notificationRepo, userId);
     res.json({ markedCount });
+  } catch (e) {
+    throw e;
+  }
+});
+
+notificationsRouter.get("/:id/sender-profile", async (req, res) => {
+  const userId = requireInternalAuth(req, res);
+  if (!userId) return;
+  const { id: notificationId } = req.params;
+  try {
+    const result = await getSenderProfileForContactRequest(
+      notificationRepo,
+      notificationId,
+      userId,
+      async (senderId) => {
+        const u = await prisma.user.findUnique({
+          where: { id: senderId },
+          select: { fullName: true, profissao: true, endereco: true, cpf: true, rg: true, nacionalidade: true, estadoCivil: true },
+        });
+        return u
+          ? {
+              fullName: u.fullName,
+              profissao: u.profissao ?? null,
+              endereco: u.endereco ?? null,
+              cpf: u.cpf ?? null,
+              rg: u.rg ?? null,
+              nacionalidade: u.nacionalidade ?? null,
+              estadoCivil: u.estadoCivil ?? null,
+            }
+          : null;
+      }
+    );
+    if (!result) return res.status(404).json({ error: "NOT_FOUND" });
+    let propertyTitle: string | null = null;
+    if (result.propertyId) {
+      const prop = await propertyRepo.findById(result.propertyId);
+      propertyTitle = prop?.title ?? null;
+    }
+    res.json({
+      profile: result.profile,
+      propertyId: result.propertyId,
+      propertyTitle,
+      message: result.message,
+    });
   } catch (e) {
     throw e;
   }

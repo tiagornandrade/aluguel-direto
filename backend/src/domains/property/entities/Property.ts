@@ -13,6 +13,7 @@ export interface Property {
   rentAmount: number | null;
   chargesAmount: number | null;
   status: PropertyStatus;
+  photos: string[];
   createdAt: Date;
   updatedAt: Date;
 }

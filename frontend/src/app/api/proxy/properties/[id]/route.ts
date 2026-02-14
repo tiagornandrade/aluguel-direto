@@ -33,3 +33,16 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   const data = await res.json().catch(() => ({}));
   return NextResponse.json(data, { status: res.status });
 }
+
+export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
+  if (!INTERNAL_KEY) return NextResponse.json({ error: "INTERNAL_ERROR" }, { status: 500 });
+  const res = await fetch(`${BACKEND}/api/v1/properties/${params.id}`, {
+    method: "DELETE",
+    headers: { "X-User-Id": session.user.id, "X-Api-Key": INTERNAL_KEY },
+  });
+  if (res.status === 204) return new NextResponse(null, { status: 204 });
+  const data = await res.json().catch(() => ({}));
+  return NextResponse.json(data, { status: res.status });
+}

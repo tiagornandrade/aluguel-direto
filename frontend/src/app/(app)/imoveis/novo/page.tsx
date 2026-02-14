@@ -13,6 +13,8 @@ const STEPS = [
   { id: 4, label: "Fotos" },
 ] as const;
 
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024; // 5 MB (igual ao backend)
+
 const TIPOS = [
   { value: "APARTAMENTO", label: "Apartamento" },
   { value: "CASA", label: "Casa" },
@@ -35,9 +37,15 @@ export default function ImovelNovoPage() {
     bairro: "",
     localidade: "",
     uf: "",
+    rooms: "" as string | number,
+    parkingSpots: "" as string | number,
+    rentAmount: "" as string | number,
+    chargesAmount: "" as string | number,
+    photos: [] as string[],
   });
   const [cepLoading, setCepLoading] = useState(false);
   const [cepError, setCepError] = useState<string | null>(null);
+  const [pendingFiles, setPendingFiles] = useState<File[]>([]);
 
   const addressLine = [form.logradouro, form.numero && `nº ${form.numero}`, form.bairro, [form.localidade, form.uf].filter(Boolean).join("/")]
     .filter(Boolean)
@@ -81,16 +89,52 @@ export default function ImovelNovoPage() {
     }
     setError(null);
     setLoading(true);
+    const toNum = (v: string | number): number | null => {
+      if (v === "") return null;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : null;
+    };
     try {
-      await propertiesApi.create({
+      const urlPhotos = form.photos.filter((u) => u.trim().length > 0 && u.startsWith("http"));
+      const { id } = await propertiesApi.create({
         title: form.title.trim(),
         addressLine: addressLine.trim(),
         type: form.type as "APARTAMENTO" | "CASA" | "STUDIO" | "COBERTURA",
-        areaM2: form.areaM2 === "" ? null : Number(form.areaM2),
+        areaM2: toNum(form.areaM2),
+        rooms: toNum(form.rooms),
+        parkingSpots: toNum(form.parkingSpots),
+        rentAmount: toNum(form.rentAmount),
+        chargesAmount: toNum(form.chargesAmount),
+        photos: urlPhotos,
       });
-      router.push("/imoveis");
+      const normalizeContentType = (t: string) => (t === "image/jpg" ? "image/jpeg" : t);
+      let uploadFailCount = 0;
+      for (const file of pendingFiles) {
+        let contentType = normalizeContentType(file.type || "image/jpeg");
+        if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(contentType)) contentType = "image/jpeg";
+        try {
+          const base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const result = reader.result as string;
+              resolve(result.split(",")[1] ?? result);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+          await propertiesApi.uploadPhoto(id, { contentType, data: base64 });
+        } catch {
+          uploadFailCount++;
+        }
+      }
+      if (uploadFailCount > 0) {
+        router.push("/imoveis?warn=fotos");
+      } else {
+        router.push("/imoveis");
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao cadastrar. Tente novamente.");
+      const msg = err instanceof Error ? err.message : "Erro ao cadastrar. Tente novamente.";
+      setError(msg.startsWith("HTTP 5") ? "Erro no servidor. Verifique se o backend está rodando e tente novamente." : msg);
     } finally {
       setLoading(false);
     }
@@ -101,12 +145,18 @@ export default function ImovelNovoPage() {
     setStep((s) => Math.min(s + 1, 4));
   }
 
+  function goBack() {
+    if (step <= 1) return;
+    setStep((s) => Math.max(s - 1, 1));
+  }
+
+  const hasRent = form.rentAmount !== "" && Number(form.rentAmount) > 0;
   const checklist = [
     { done: !!form.title?.trim(), label: "Título Criativo", tip: "Destaque o principal benefício." },
     { done: !!addressLine?.trim(), label: "Endereço Completo", tip: "Informe o CEP para preencher automaticamente." },
-    { done: false, label: "Fotos Profissionais", tip: "Luz natural faz toda a diferença." },
-    { done: false, label: "Preço de Mercado", tip: "Pesquise valores na sua região." },
-    { done: false, label: "Descrição Detalhada", tip: "Conte sobre a vizinhança." },
+    { done: form.photos.some((u) => u.trim().length > 0) || pendingFiles.length > 0, label: "Fotos Profissionais", tip: "Envie imagens ou adicione links no passo Fotos." },
+    { done: hasRent, label: "Preço de Mercado", tip: "Pesquise valores na sua região." },
+    { done: !!form.areaM2 && Number(form.areaM2) > 0, label: "Área e Comodidades", tip: "Área e quartos ajudam na decisão." },
   ];
 
   return (
@@ -280,35 +330,192 @@ export default function ImovelNovoPage() {
                     </label>
                   </div>
                   <div className="md:col-span-2">
-                    <div className="h-40 rounded-xl bg-gray-100 dark:bg-gray-700/50 border border-[#dcdfe5] dark:border-gray-600 flex flex-col items-center justify-center gap-2">
-                      <span className="material-symbols-outlined text-4xl text-muted">location_on</span>
-                      <p className="text-sm text-muted dark:text-gray-400">O mapa será atualizado com o endereço</p>
-                    </div>
+                    {addressLine.trim() ? (
+                      <div className="rounded-xl border border-[#dcdfe5] dark:border-gray-600 overflow-hidden bg-gray-100 dark:bg-gray-700/50">
+                        <div className="aspect-video min-h-[200px] w-full relative">
+                          <iframe
+                            title="Mapa do endereço"
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(addressLine)}&output=embed`}
+                            className="absolute inset-0 w-full h-full border-0"
+                            allowFullScreen
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                          />
+                        </div>
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressLine)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block py-2 text-center text-sm font-medium text-primary hover:underline bg-gray-50 dark:bg-gray-800/50"
+                        >
+                          Abrir no Google Maps
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="h-40 rounded-xl bg-gray-100 dark:bg-gray-700/50 border border-[#dcdfe5] dark:border-gray-600 flex flex-col items-center justify-center gap-2">
+                        <span className="material-symbols-outlined text-4xl text-muted">location_on</span>
+                        <p className="text-sm text-muted dark:text-gray-400">O mapa será carregado quando o endereço estiver preenchido</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </>
             )}
             {step === 2 && (
-              <div className="py-8 text-center text-muted dark:text-gray-400">
-                <p className="font-medium dark:text-white mb-2">Detalhes e Comodidades</p>
-                <p className="text-sm">Em breve. Avance para o próximo passo ou volte para editar as informações básicas.</p>
-              </div>
+              <>
+                <h3 className="text-xl font-bold mb-6 dark:text-white">Detalhes e Comodidades</h3>
+                <p className="text-sm text-muted dark:text-gray-400 mb-6">Informe características que ajudam o inquilino a decidir.</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[#111318] dark:text-white text-base font-semibold">Quartos</span>
+                    <input
+                      type="number"
+                      min="0"
+                      className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="0"
+                      value={form.rooms}
+                      onChange={(e) => setForm((f) => ({ ...f, rooms: e.target.value }))}
+                    />
+                  </label>
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[#111318] dark:text-white text-base font-semibold">Vagas de garagem</span>
+                    <input
+                      type="number"
+                      min="0"
+                      className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="0"
+                      value={form.parkingSpots}
+                      onChange={(e) => setForm((f) => ({ ...f, parkingSpots: e.target.value }))}
+                    />
+                  </label>
+                </div>
+              </>
             )}
             {step === 3 && (
-              <div className="py-8 text-center text-muted dark:text-gray-400">
-                <p className="font-medium dark:text-white mb-2">Financeiro</p>
-                <p className="text-sm">Em breve.</p>
-              </div>
+              <>
+                <h3 className="text-xl font-bold mb-6 dark:text-white">Financeiro</h3>
+                <p className="text-sm text-muted dark:text-gray-400 mb-6">Valores de referência para o anúncio. Podem ser ajustados no contrato.</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[#111318] dark:text-white text-base font-semibold">Aluguel (R$/mês)</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="0,00"
+                      value={form.rentAmount}
+                      onChange={(e) => setForm((f) => ({ ...f, rentAmount: e.target.value }))}
+                    />
+                  </label>
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[#111318] dark:text-white text-base font-semibold">Condomínio (R$/mês)</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                      placeholder="0,00"
+                      value={form.chargesAmount}
+                      onChange={(e) => setForm((f) => ({ ...f, chargesAmount: e.target.value }))}
+                    />
+                  </label>
+                </div>
+              </>
             )}
             {step === 4 && (
-              <div className="py-8 text-center text-muted dark:text-gray-400">
-                <p className="font-medium dark:text-white mb-2">Fotos</p>
-                <p className="text-sm">Em breve.</p>
-              </div>
+              <>
+                <h3 className="text-xl font-bold mb-2 dark:text-white">Fotos</h3>
+                <p className="text-sm text-muted dark:text-gray-400 mb-4">
+                  Envie imagens do seu computador (recomendado) ou adicione links. Formatos: JPG, PNG, WebP, GIF. Máximo 5 MB por foto.
+                </p>
+                <div className="mb-4">
+                  <label className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-primary/10 text-primary font-semibold cursor-pointer hover:bg-primary/20 transition-colors">
+                    <span className="material-symbols-outlined">upload_file</span>
+                    Enviar imagens do computador
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      multiple
+                      className="sr-only"
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files ?? []);
+                        const valid = files.filter((f) => f.size <= MAX_PHOTO_BYTES);
+                        const rejected = files.length - valid.length;
+                        if (rejected > 0) setError(`Algumas imagens passaram de 5 MB e foram ignoradas (${rejected}).`);
+                        else setError(null);
+                        setPendingFiles((prev) => [...prev, ...valid].slice(0, 20));
+                        e.target.value = "";
+                      }}
+                    />
+                  </label>
+                  {pendingFiles.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {pendingFiles.map((file, i) => (
+                        <div key={i} className="relative group">
+                          <div className="w-24 h-24 rounded-lg border border-[#dcdfe5] dark:border-gray-600 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                            <img src={URL.createObjectURL(file)} alt="" className="w-full h-full object-cover" />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setPendingFiles((p) => p.filter((_, j) => j !== i))}
+                            className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center opacity-90 group-hover:opacity-100"
+                            title="Remover"
+                          >
+                            <span className="material-symbols-outlined text-sm">close</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm text-muted dark:text-gray-500 mb-2">Ou adicione links de imagens:</p>
+                <div className="space-y-3">
+                  {[...form.photos, ""].map((url, i) => (
+                    <div key={i} className="flex gap-2 items-center">
+                      <input
+                        type="url"
+                        placeholder="https://exemplo.com/foto.jpg"
+                        className="flex-1 rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-11 px-4 text-base focus:ring-2 focus:ring-primary focus:border-primary"
+                        value={url}
+                        onChange={(e) => {
+                          const next = [...form.photos, ""];
+                          next[i] = e.target.value;
+                          setForm((f) => ({ ...f, photos: next.filter((s) => s.trim().length > 0) }));
+                        }}
+                      />
+                      {i < form.photos.length && (
+                        <button
+                          type="button"
+                          onClick={() => setForm((f) => ({ ...f, photos: f.photos.filter((_, j) => j !== i) }))}
+                          className="p-2 rounded-lg border border-[#dcdfe5] dark:border-gray-600 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                          title="Remover foto"
+                        >
+                          <span className="material-symbols-outlined">close</span>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {(form.photos.some((u) => u.trim()) || pendingFiles.length > 0) && (
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {pendingFiles.map((file, i) => (
+                      <div key={`file-${i}`} className="aspect-video rounded-lg border border-[#dcdfe5] dark:border-gray-600 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                        <img src={URL.createObjectURL(file)} alt="" className="w-full h-full object-cover" />
+                      </div>
+                    ))}
+                    {form.photos.filter((u) => u.trim().startsWith("http")).map((url, i) => (
+                      <div key={`url-${i}`} className="aspect-video rounded-lg border border-[#dcdfe5] dark:border-gray-600 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                        <img src={url} alt="" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
 
-          {error && <p className="text-red-600 dark:text-red-400 text-sm" role="alert">{error}</p>}
+          {error && <p className="text-red-600 dark:text-red-400 text-sm whitespace-pre-line" role="alert">{error}</p>}
         </form>
 
         {/* Checklist sidebar */}
@@ -346,17 +553,24 @@ export default function ImovelNovoPage() {
 
       <footer className="fixed bottom-0 left-0 right-0 border-t border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark py-4">
         <div className="max-w-[1200px] mx-auto px-4 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <button
-            type="button"
-            className="order-2 sm:order-1 px-6 py-2.5 rounded-lg border border-[#dcdfe5] dark:border-gray-600 text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-          >
-            Salvar Rascunho
-          </button>
-          <p className="order-1 sm:order-2 text-sm text-muted dark:text-gray-400 text-center">Todos os dados são salvos automaticamente.</p>
+          <div className="order-2 sm:order-1 flex gap-3">
+            {step > 1 ? (
+              <button
+                type="button"
+                onClick={goBack}
+                className="px-6 py-2.5 rounded-lg border border-[#dcdfe5] dark:border-gray-600 text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors inline-flex items-center gap-2"
+              >
+                <span className="material-symbols-outlined text-lg">arrow_back</span>
+                Voltar
+              </button>
+            ) : (
+              <Link href="/imoveis" className="px-6 py-2.5 rounded-lg border border-[#dcdfe5] dark:border-gray-600 text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                Cancelar
+              </Link>
+            )}
+          </div>
+          <p className="order-1 sm:order-2 text-sm text-muted dark:text-gray-400 text-center">Passo {step} de 4</p>
           <div className="order-3 flex gap-3">
-            <Link href="/imoveis" className="px-6 py-2.5 rounded-lg border border-[#dcdfe5] dark:border-gray-600 text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-              Cancelar
-            </Link>
             {step === 4 ? (
               <button
                 type="submit"

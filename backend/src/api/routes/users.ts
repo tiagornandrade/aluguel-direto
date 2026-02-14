@@ -27,6 +27,20 @@ const updateProfileBody = z.object({
   endereco: z.string().optional().nullable().transform((v) => v || null),
 });
 
+usersRouter.get("/lookup-tenant", async (req, res) => {
+  const _callerId = requireInternalAuth(req, res);
+  if (!_callerId) return;
+  const email = (req.query.email as string)?.trim()?.toLowerCase();
+  if (!email) return res.status(400).json({ error: "Missing query: email" });
+  try {
+    const user = await userRepo.findByEmail(email);
+    if (!user || user.role !== "INQUILINO") return res.status(404).json({ error: "NOT_FOUND" });
+    res.json({ id: user.id, fullName: user.fullName });
+  } catch (e) {
+    throw e;
+  }
+});
+
 usersRouter.get("/me", async (req, res) => {
   const userId = requireInternalAuth(req, res);
   if (!userId) return;

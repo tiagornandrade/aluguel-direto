@@ -1,17 +1,24 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { DEV_EMAIL, DEV_PASSWORD, isDevModeClient } from "@/lib/dev-mode";
+import { DEV_PASSWORD, DEV_LOCADOR_EMAIL, DEV_LOCATARIO_EMAIL, isDevModeClient } from "@/lib/dev-mode";
 
 export function DevModeBanner() {
   if (!isDevModeClient()) return null;
 
-  function enterAs(role: "PROPRIETARIO" | "INQUILINO") {
+  function enterAsLocador() {
     void signIn("credentials", {
-      email: DEV_EMAIL,
+      email: DEV_LOCADOR_EMAIL,
       password: DEV_PASSWORD,
-      role,
-      callbackUrl: role === "PROPRIETARIO" ? "/dashboard-proprietario" : "/dashboard-inquilino",
+      callbackUrl: "/dashboard-proprietario",
+    });
+  }
+
+  function enterAsLocatario() {
+    void signIn("credentials", {
+      email: DEV_LOCATARIO_EMAIL,
+      password: DEV_PASSWORD,
+      callbackUrl: "/dashboard-inquilino",
     });
   }
 
@@ -23,20 +30,21 @@ export function DevModeBanner() {
       <span className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
         Modo desenvolvimento
       </span>
-      <div className="flex gap-2">
+      <p className="text-xs text-amber-800 dark:text-amber-200">Dois usuários (senha: dev)</p>
+      <div className="flex gap-2 flex-wrap">
         <button
           type="button"
-          onClick={() => enterAs("PROPRIETARIO")}
+          onClick={enterAsLocador}
           className="rounded-lg bg-amber-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-amber-700"
         >
-          Entrar como Proprietário
+          Entrar como Locador
         </button>
         <button
           type="button"
-          onClick={() => enterAs("INQUILINO")}
+          onClick={enterAsLocatario}
           className="rounded-lg bg-amber-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-amber-700"
         >
-          Entrar como Inquilino
+          Entrar como Locatário
         </button>
       </div>
     </div>

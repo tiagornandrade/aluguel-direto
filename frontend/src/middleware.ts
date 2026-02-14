@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const appPaths = ["/dashboard-proprietario", "/dashboard-inquilino", "/imoveis", "/buscar-imoveis", "/contratos", "/perfil", "/pagamentos", "/mensagens", "/solicitacoes", "/documentos", "/notificacoes", "/configuracoes", "/onboarding-proprietario", "/onboarding-inquilino"];
+const appPaths = ["/dashboard-proprietario", "/dashboard-inquilino", "/imoveis", "/buscar-imoveis", "/contratos", "/perfil", "/perfil-interessado", "/pagamentos", "/mensagens", "/solicitacoes", "/documentos", "/notificacoes", "/configuracoes", "/onboarding-proprietario", "/onboarding-inquilino"];
 function isAdmin(path: string) {
   return path === "/dashboard" || path.startsWith("/dashboard/") || path === "/inadimplencia" || path.startsWith("/inadimplencia/");
 }
