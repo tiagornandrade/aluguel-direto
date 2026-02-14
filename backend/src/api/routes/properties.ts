@@ -2,7 +2,10 @@ import { Router, type Request, type Response } from "express";
 import { z } from "zod";
 import { env } from "../../lib/env";
 import { createProperty } from "../../application/property/create-property";
+import { updateProperty } from "../../application/property/update-property";
 import { listPropertiesByOwner } from "../../application/property/list-properties-by-owner";
+import { listAvailableProperties } from "../../application/property/list-available-properties";
+import { getAvailablePropertyWithOwner } from "../../application/property/get-available-property";
 import { PrismaPropertyRepository } from "../../infrastructure/persistence/PrismaPropertyRepository";
 
 const propertiesRouter = Router();
@@ -29,6 +32,10 @@ const createBody = z.object({
   chargesAmount: z.number().min(0).optional().nullable(),
 });
 
+const updateBody = createBody.partial().extend({
+  status: z.enum(["DISPONIVEL", "EM_NEGOCIACAO", "ALUGADO", "ENCERRADO"]).optional(),
+});
+
 propertiesRouter.get("/", async (req, res) => {
   const ownerId = requireInternalAuth(req, res);
   if (!ownerId) return;
@@ -38,6 +45,24 @@ propertiesRouter.get("/", async (req, res) => {
   } catch (e) {
     throw e;
   }
+});
+
+propertiesRouter.get("/available", async (req, res) => {
+  if (requireInternalAuth(req, res) == null) return;
+  try {
+    const { properties } = await listAvailableProperties(propertyRepo);
+    res.json({ properties });
+  } catch (e) {
+    throw e;
+  }
+});
+
+propertiesRouter.get("/available/:id", async (req, res) => {
+  if (requireInternalAuth(req, res) == null) return;
+  const { id } = req.params;
+  const prop = await getAvailablePropertyWithOwner(propertyRepo, id);
+  if (!prop) return res.status(404).json({ error: "NOT_FOUND" });
+  res.json(prop);
 });
 
 propertiesRouter.get("/:id", async (req, res) => {
@@ -57,6 +82,23 @@ propertiesRouter.post("/", async (req, res) => {
     const body = createBody.parse(req.body);
     const { property } = await createProperty(propertyRepo, { ...body, ownerId });
     res.status(201).json(property);
+  } catch (e) {
+    if (e instanceof z.ZodError) return res.status(400).json({ error: "VALIDATION_ERROR", details: e.errors });
+    throw e;
+  }
+});
+
+propertiesRouter.patch("/:id", async (req, res) => {
+  const ownerId = requireInternalAuth(req, res);
+  if (!ownerId) return;
+  const { id } = req.params;
+  const existing = await propertyRepo.findById(id);
+  if (!existing) return res.status(404).json({ error: "NOT_FOUND" });
+  if (existing.ownerId !== ownerId) return res.status(403).json({ error: "FORBIDDEN" });
+  try {
+    const body = updateBody.parse(req.body);
+    const property = await updateProperty(propertyRepo, id, body);
+    res.json(property);
   } catch (e) {
     if (e instanceof z.ZodError) return res.status(400).json({ error: "VALIDATION_ERROR", details: e.errors });
     throw e;

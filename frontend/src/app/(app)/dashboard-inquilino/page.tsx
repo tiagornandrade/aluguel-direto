@@ -2,108 +2,158 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getContractsForTenant } from "@/lib/backend-server";
+
+function formatCurrency(value: number): string {
+  return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
+}
+
+function getNextDueDate(dueDay: number): Date {
+  const today = new Date();
+  const day = Math.min(Math.max(1, dueDay), 28);
+  const next = new Date(today.getFullYear(), today.getMonth(), day);
+  if (next <= today) next.setMonth(next.getMonth() + 1);
+  return next;
+}
+
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" }).format(date);
+}
+
+function getContractMonths(startDate: Date, endDate: Date): { elapsed: number; total: number } {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const now = new Date();
+  const total = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  const elapsed = now < start ? 0 : Math.min((now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth()), total);
+  return { elapsed, total };
+}
 
 export default async function DashboardInquilinoPage() {
   const session = await getServerSession(authOptions);
   if (!session?.user) redirect("/login");
 
   const name = (session.user as { name?: string }).name ?? "Inquilino";
+  const contracts = await getContractsForTenant();
+  const active = contracts.find((c) => c.contract.status === "ATIVO"); // primeiro contrato ativo
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 md:px-10 py-8">
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold text-ink dark:text-white">Olá, {name}</h1>
-        <p className="mt-2 text-[#636f88] dark:text-gray-400">Bem-vindo ao seu dashboard de aluguel. Tudo parece em ordem.</p>
+        <p className="mt-2 text-[#636f88] dark:text-gray-400">
+          {active ? "Bem-vindo ao seu dashboard de aluguel. Tudo parece em ordem." : "Bem-vindo! Você ainda não possui um contrato ativo."}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           {/* Próximo Aluguel */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 overflow-hidden flex flex-col sm:flex-row">
-            <div className="sm:w-48 h-40 sm:h-auto sm:min-h-[180px] bg-gray-200 dark:bg-gray-700 shrink-0 flex items-center justify-center">
-              <span className="material-symbols-outlined text-4xl text-gray-400">apartment</span>
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted dark:text-gray-500">Próximo Aluguel</p>
-                <p className="text-2xl font-bold dark:text-white mt-1">R$ 2.500,00</p>
-                <p className="text-sm text-muted dark:text-gray-400 mt-1 flex items-center gap-1">
-                  <span className="material-symbols-outlined text-lg">event</span>
-                  Vencimento em 05/11/2023
-                </p>
+          {active ? (
+            <>
+              <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 overflow-hidden flex flex-col sm:flex-row">
+                <div className="sm:w-48 h-40 sm:h-auto sm:min-h-[180px] bg-gray-200 dark:bg-gray-700 shrink-0 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-4xl text-gray-400">apartment</span>
+                </div>
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted dark:text-gray-500">Próximo Aluguel</p>
+                    <p className="text-2xl font-bold dark:text-white mt-1">
+                      {formatCurrency(active.contract.rentAmount + active.contract.chargesAmount)}
+                    </p>
+                    <p className="text-sm text-muted dark:text-gray-400 mt-1 flex items-center gap-1">
+                      <span className="material-symbols-outlined text-lg">event</span>
+                      Vencimento em {formatDate(getNextDueDate(active.contract.dueDay))}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    <button type="button" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90">
+                      <span className="material-symbols-outlined text-lg">content_copy</span>
+                      Copiar Pix/Boleto
+                    </button>
+                    <Link
+                      href="/pagamentos"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#dcdfe5] dark:border-slate-600 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-slate-800"
+                    >
+                      Ver Detalhes
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2 mt-4">
-                <button type="button" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90">
-                  <span className="material-symbols-outlined text-lg">content_copy</span>
-                  Copiar Pix/Boleto
-                </button>
-                <Link href="/pagamentos" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#dcdfe5] dark:border-slate-600 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-slate-800">
-                  Ver Detalhes
-                </Link>
-              </div>
-            </div>
-          </div>
 
-          {/* Resumo do Imóvel */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
-            <h2 className="text-lg font-bold dark:text-white mb-4">Resumo do Imóvel</h2>
-            <div className="space-y-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex gap-3 min-w-0">
-                  <span className="material-symbols-outlined text-muted shrink-0">location_on</span>
-                  <div>
-                    <p className="font-medium dark:text-white">Rua das Flores, 123 - Apto 42</p>
-                    <p className="text-sm text-muted dark:text-gray-400">São Paulo, SP - CEP 01234-567</p>
+              {/* Resumo do Imóvel */}
+              <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
+                <h2 className="text-lg font-bold dark:text-white mb-4">Resumo do Imóvel</h2>
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex gap-3 min-w-0">
+                      <span className="material-symbols-outlined text-muted shrink-0">location_on</span>
+                      <div>
+                        <p className="font-medium dark:text-white">{active.property.title}</p>
+                        <p className="text-sm text-muted dark:text-gray-400">{active.property.addressLine}</p>
+                      </div>
+                    </div>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(active.property.addressLine)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#dcdfe5] dark:border-slate-600 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-800"
+                    >
+                      <span className="material-symbols-outlined text-lg">map</span>
+                      Mapa
+                    </a>
+                  </div>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex gap-3 min-w-0">
+                      <span className="material-symbols-outlined text-muted shrink-0">person</span>
+                      <div>
+                        <p className="font-medium dark:text-white">Proprietário: {active.owner.fullName}</p>
+                        <p className="text-sm text-muted dark:text-gray-400">
+                          Contrato iniciado em {formatDate(new Date(active.contract.startDate))}
+                        </p>
+                      </div>
+                    </div>
+                    <Link
+                      href="/contratos"
+                      className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#dcdfe5] dark:border-slate-600 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-800"
+                    >
+                      <span className="material-symbols-outlined text-lg">description</span>
+                      Ver Contrato
+                    </Link>
                   </div>
                 </div>
-                <button type="button" className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#dcdfe5] dark:border-slate-600 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-800">
-                  <span className="material-symbols-outlined text-lg">map</span>
-                  Mapa
-                </button>
               </div>
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex gap-3 min-w-0">
-                  <span className="material-symbols-outlined text-muted shrink-0">person</span>
-                  <div>
-                    <p className="font-medium dark:text-white">Proprietário: Carlos Alberto</p>
-                    <p className="text-sm text-muted dark:text-gray-400">Contrato iniciado em Jan 2023</p>
-                  </div>
-                </div>
-                <Link href="/contratos" className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#dcdfe5] dark:border-slate-600 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-800">
-                  <span className="material-symbols-outlined text-lg">description</span>
-                  Ver Contrato
-                </Link>
-              </div>
+            </>
+          ) : (
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-8 text-center">
+              <span className="material-symbols-outlined text-5xl text-muted mb-4 block">apartment</span>
+              <h2 className="text-lg font-bold dark:text-white mb-2">Nenhum contrato ativo</h2>
+              <p className="text-sm text-muted dark:text-gray-400 mb-4">
+                Quando você assinar um contrato de locação, as informações do imóvel e dos pagamentos aparecerão aqui.
+              </p>
+              <Link
+                href="/buscar-imoveis"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90"
+              >
+                Buscar imóveis
+                <span className="material-symbols-outlined text-lg">search</span>
+              </Link>
             </div>
-          </div>
+          )}
 
           {/* Solicitações Recentes */}
           <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold dark:text-white">Solicitações Recentes</h2>
-              <Link href="#" className="text-primary text-sm font-semibold hover:underline">Nova Solicitação</Link>
+              <Link href="/solicitacoes" className="text-primary text-sm font-semibold hover:underline">
+                Nova Solicitação
+              </Link>
             </div>
             <div className="space-y-3">
-              <div className="flex items-center gap-4 p-3 rounded-lg bg-gray-50 dark:bg-slate-800/50">
-                <span className="material-symbols-outlined text-amber-500">build</span>
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium dark:text-white">Reparo na infiltração (Banheiro)</p>
-                  <p className="text-sm text-muted dark:text-gray-400">Aberto em 24/10/2023</p>
-                </div>
-                <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300">Em andamento</span>
-              </div>
-              <div className="flex items-center gap-4 p-3 rounded-lg bg-gray-50 dark:bg-slate-800/50">
-                <span className="material-symbols-outlined text-green-500">key</span>
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium dark:text-white">Cópia extra de chaves (Portaria)</p>
-                  <p className="text-sm text-muted dark:text-gray-400">Finalizado em 15/10/2023</p>
-                </div>
-                <span className="shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300">Concluído</span>
-              </div>
+              <p className="text-sm text-muted dark:text-gray-400 text-center py-4">
+                Em breve. Você poderá abrir solicitações de reparos e acompanhar o status aqui.
+              </p>
             </div>
-            <p className="text-center mt-3">
-              <Link href="#" className="text-primary text-sm font-semibold hover:underline">Ver todas as solicitações</Link>
-            </p>
           </div>
         </div>
 
@@ -114,13 +164,17 @@ export default async function DashboardInquilinoPage() {
               <span className="material-symbols-outlined text-primary">help</span>
               Central de Ajuda
             </h2>
-            <p className="text-sm text-muted dark:text-gray-400 mb-4">Dúvidas sobre o seu contrato ou sobre o uso da plataforma?</p>
+            <p className="text-sm text-muted dark:text-gray-400 mb-4">
+              Dúvidas sobre o seu contrato ou sobre o uso da plataforma?
+            </p>
             <ul className="space-y-2">
               {["Como sair do imóvel", "Regras do contrato", "Vistorias e Danos", "Suporte 24h"].map((item) => (
                 <li key={item}>
                   <Link href="#" className="flex items-center justify-between py-2 text-sm font-medium text-ink dark:text-white hover:text-primary group">
                     {item}
-                    <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">
+                      arrow_forward
+                    </span>
                   </Link>
                 </li>
               ))}
@@ -128,12 +182,23 @@ export default async function DashboardInquilinoPage() {
           </div>
 
           {/* Tempo de Contrato */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
-            <h2 className="text-lg font-bold dark:text-white mb-3">Tempo de Contrato</h2>
-            <p className="text-sm text-muted dark:text-gray-400">
-              Você está há <strong className="text-primary">10 meses</strong> no imóvel de um contrato de 30 meses.
-            </p>
-          </div>
+          {active && (
+            <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
+              <h2 className="text-lg font-bold dark:text-white mb-3">Tempo de Contrato</h2>
+              {(() => {
+                const { elapsed, total } = getContractMonths(
+                  new Date(active.contract.startDate),
+                  new Date(active.contract.endDate)
+                );
+                return (
+                  <p className="text-sm text-muted dark:text-gray-400">
+                    Você está há <strong className="text-primary">{elapsed} meses</strong> no imóvel de um contrato de{" "}
+                    {total} meses.
+                  </p>
+                );
+              })()}
+            </div>
+          )}
         </div>
       </div>
     </div>

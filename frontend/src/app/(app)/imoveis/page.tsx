@@ -17,12 +17,21 @@ export default async function ImoveisPage() {
         ) : (
           <ul className="divide-y divide-[#dcdfe5] dark:divide-slate-700">
             {properties.map((p) => (
-              <li key={p.id} className="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800/50">
-                <div>
+              <li key={p.id} className="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800/50 gap-4">
+                <div className="min-w-0 flex-1">
                   <p className="font-semibold text-[#111318] dark:text-white">{p.title}</p>
                   <p className="text-sm text-[#636f88] dark:text-gray-400">{p.addressLine} · {p.type}</p>
                 </div>
-                <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium">{p.status}</span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-xs px-2 py-1 rounded bg-primary/10 text-primary font-medium">{p.status}</span>
+                  <Link
+                    href={`/imoveis/${p.id}/editar`}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#dcdfe5] dark:border-slate-600 text-sm font-medium hover:bg-gray-50 dark:hover:bg-slate-800"
+                  >
+                    <span className="material-symbols-outlined text-lg">edit</span>
+                    Editar
+                  </Link>
+                </div>
               </li>
             ))}
           </ul>

@@ -25,7 +25,6 @@ export const authApi = {
     }),
 };
 
-/** Same-origin fetch for BFF/proxy routes (sends NextAuth cookie). */
 async function proxyApi<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
     credentials: "include",
@@ -41,6 +40,70 @@ async function proxyApi<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const propertiesApi = {
   list: () => proxyApi<{ properties: Array<{ id: string; title: string; addressLine: string; type: string; status: string }> }>("/api/proxy/properties"),
+  get: (id: string) =>
+    proxyApi<{ id: string; ownerId: string; title: string; addressLine: string; type: string; status: string; areaM2: number | null; rooms: number | null; parkingSpots: number | null; rentAmount: number | null; chargesAmount: number | null; createdAt: string; updatedAt: string }>(
+      `/api/proxy/properties/${id}`
+    ),
   create: (body: { title: string; addressLine: string; type: string; areaM2?: number | null; rooms?: number | null; parkingSpots?: number | null; rentAmount?: number | null; chargesAmount?: number | null }) =>
     proxyApi<{ id: string }>("/api/proxy/properties", { method: "POST", body: JSON.stringify(body) }),
+  update: (id: string, body: Partial<{ title: string; addressLine: string; type: string; areaM2: number | null; rooms: number | null; parkingSpots: number | null; rentAmount: number | null; chargesAmount: number | null; status: string }>) =>
+    proxyApi<{ id: string }>(`/api/proxy/properties/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+};
+
+export const notificationsApi = {
+  list: () =>
+    proxyApi<{
+      notifications: Array<{
+        notification: { id: string; type: string; propertyId: string | null; message: string | null; read: boolean; createdAt: string };
+        senderName: string;
+        propertyTitle: string | null;
+      }>;
+      unreadCount: number;
+    }>("/api/proxy/notifications"),
+  unreadCount: () => proxyApi<{ unreadCount: number }>("/api/proxy/notifications/unread-count"),
+  sendContactRequest: (body: { propertyId: string; message?: string | null }) =>
+    proxyApi<{ id: string }>("/api/proxy/notifications/contact-request", { method: "POST", body: JSON.stringify(body) }),
+  markAsRead: (id: string) =>
+    proxyApi<{ ok: boolean }>(`/api/proxy/notifications/${id}/read`, { method: "PATCH" }),
+  markAllAsRead: () =>
+    proxyApi<{ markedCount: number }>("/api/proxy/notifications/mark-all-read", { method: "POST" }),
+};
+
+export const usersApi = {
+  getMe: () => proxyApi<{ id: string; email: string; fullName: string; cpf: string | null; rg: string | null; nacionalidade: string | null; estadoCivil: string | null; profissao: string | null; endereco: string | null; role: string }>("/api/proxy/users/me"),
+  updateProfile: (body: { fullName?: string; cpf?: string | null; rg?: string | null; nacionalidade?: string | null; estadoCivil?: string | null; profissao?: string | null; endereco?: string | null }) =>
+    proxyApi<{ id: string }>("/api/proxy/users/me", { method: "PATCH", body: JSON.stringify(body) }),
+};
+
+export type CreateContractBody = {
+  propertyId: string;
+  tenantId: string;
+  startDate: string;
+  endDate: string;
+  rentAmount: number;
+  chargesAmount?: number;
+  dueDay: number;
+  paymentMethod?: string | null;
+  lateFeePercent?: number | null;
+  interestPercent?: number | null;
+  adjustmentIndex?: string | null;
+  guaranteeType?: string | null;
+  guaranteeAmount?: number | null;
+  foroComarca?: string | null;
+  contractCity?: string | null;
+  contractDate?: string | null;
+};
+
+export const contractsApi = {
+  listAsTenant: () => proxyApi<{ contracts: unknown[] }>("/api/proxy/contracts"),
+  listAsOwner: () => proxyApi<{ contracts: unknown[] }>("/api/proxy/contracts/as-owner"),
+  create: (body: CreateContractBody) =>
+    proxyApi<{ id: string }>("/api/proxy/contracts", { method: "POST", body: JSON.stringify(body) }),
+  sign: (contractId: string, asRole?: "owner" | "tenant") =>
+    proxyApi<{ contract: unknown }>(`/api/proxy/contracts/${contractId}/sign`, {
+      method: "PATCH",
+      ...(asRole && { body: JSON.stringify({ as: asRole }) }),
+    }),
+  end: (contractId: string) =>
+    proxyApi<{ contract: unknown }>(`/api/proxy/contracts/${contractId}/end`, { method: "PATCH" }),
 };
