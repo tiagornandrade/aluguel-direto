@@ -21,15 +21,20 @@ export async function POST(req: Request) {
   if (!session?.user?.id) return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
   if (!INTERNAL_KEY) return NextResponse.json({ error: "INTERNAL_ERROR" }, { status: 500 });
   const body = await req.json().catch(() => ({}));
-  const res = await fetch(`${BACKEND}/api/v1/properties`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-User-Id": session.user.id,
-      "X-Api-Key": INTERNAL_KEY,
-    },
-    body: JSON.stringify(body),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${BACKEND}/api/v1/properties`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-User-Id": session.user.id,
+        "X-Api-Key": INTERNAL_KEY,
+      },
+      body: JSON.stringify(body),
+    });
+  } catch {
+    return NextResponse.json({ error: "Falha de conexão com o servidor. Verifique se o backend está rodando." }, { status: 502 });
+  }
   const data = await res.json().catch(() => ({}));
   return NextResponse.json(data, { status: res.status });
 }

@@ -14,6 +14,7 @@ function toProperty(r: {
   rentAmount: number | null;
   chargesAmount: number | null;
   status: string;
+  photos: string[];
   createdAt: Date;
   updatedAt: Date;
 }): Property {
@@ -29,6 +30,7 @@ function toProperty(r: {
     rentAmount: r.rentAmount,
     chargesAmount: r.chargesAmount,
     status: r.status as Property["status"],
+    photos: r.photos ?? [],
     createdAt: r.createdAt,
     updatedAt: r.updatedAt,
   };
@@ -47,6 +49,7 @@ export const PrismaPropertyRepository: IPropertyRepository = {
         parkingSpots: data.parkingSpots ?? null,
         rentAmount: data.rentAmount ?? null,
         chargesAmount: data.chargesAmount ?? null,
+        photos: data.photos ?? [],
       },
     });
     return toProperty(r);
@@ -65,9 +68,14 @@ export const PrismaPropertyRepository: IPropertyRepository = {
         ...(data.rentAmount !== undefined && { rentAmount: data.rentAmount }),
         ...(data.chargesAmount !== undefined && { chargesAmount: data.chargesAmount }),
         ...(data.status != null && { status: data.status }),
+        ...(data.photos !== undefined && { photos: data.photos }),
       },
     });
     return toProperty(r);
+  },
+
+  async delete(id: string): Promise<void> {
+    await prisma.property.delete({ where: { id } });
   },
 
   async findById(id: string): Promise<Property | null> {

@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { isDevMode, DEV_EMAIL, DEV_PASSWORD } from "./dev-mode";
+import { isDevMode, DEV_EMAIL, DEV_PASSWORD, DEV_LOCADOR_EMAIL, DEV_LOCATARIO_EMAIL } from "./dev-mode";
 import { authApi } from "./api-client";
 
 export const authOptions: NextAuthOptions = {
@@ -15,14 +15,21 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        if (isDevMode() && credentials.email === DEV_EMAIL && credentials.password === DEV_PASSWORD) {
-          const role = credentials.role === "INQUILINO" ? "INQUILINO" : "PROPRIETARIO";
-          return {
-            id: "dev-1",
-            email: DEV_EMAIL,
-            name: role === "INQUILINO" ? "Dev (Inquilino)" : "Dev (Proprietário)",
-            role,
-          };
+        if (isDevMode() && credentials.password === DEV_PASSWORD) {
+          const email = credentials.email.trim().toLowerCase();
+          if (email === DEV_LOCADOR_EMAIL) {
+            return { id: "dev-2", email: DEV_LOCADOR_EMAIL, name: "Carlos Alberto (Locador)", role: "PROPRIETARIO" };
+          }
+          if (email === DEV_LOCATARIO_EMAIL) {
+            return { id: "dev-1", email: DEV_LOCATARIO_EMAIL, name: "Maria Silva (Locatária)", role: "INQUILINO" };
+          }
+          if (email === DEV_EMAIL) {
+            const role = credentials.role === "INQUILINO" ? "INQUILINO" : "PROPRIETARIO";
+            if (role === "PROPRIETARIO") {
+              return { id: "dev-2", email: DEV_EMAIL, name: "Carlos Alberto (Locador)", role: "PROPRIETARIO" };
+            }
+            return { id: "dev-1", email: DEV_EMAIL, name: "Maria Silva (Locatária)", role: "INQUILINO" };
+          }
         }
 
         try {

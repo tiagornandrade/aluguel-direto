@@ -81,15 +81,33 @@ export default async function NotificacoesPage() {
                           {notification.message}
                         </p>
                       )}
-                      {notification.propertyId && (
+                      <div className="flex flex-wrap gap-3 mt-2">
                         <Link
-                          href={`/contratos/novo?propertyId=${encodeURIComponent(notification.propertyId)}&tenantId=${encodeURIComponent(notification.senderId)}&tenantName=${encodeURIComponent(senderName)}`}
-                          className="inline-flex items-center gap-1 mt-2 text-sm font-medium text-primary hover:underline"
+                          href={`/perfil-interessado/${notification.id}`}
+                          className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
                         >
-                          <span className="material-symbols-outlined text-base">play_circle</span>
-                          Iniciar locação
+                          <span className="material-symbols-outlined text-base">person</span>
+                          Analisar perfil
                         </Link>
-                      )}
+                        {notification.propertyId && (
+                          <>
+                            <Link
+                              href={`/mensagens/nova?propertyId=${encodeURIComponent(notification.propertyId)}&otherParticipantId=${encodeURIComponent(notification.senderId)}`}
+                              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                            >
+                              <span className="material-symbols-outlined text-base">chat_bubble</span>
+                              Enviar mensagem
+                            </Link>
+                            <Link
+                              href={`/contratos/novo?propertyId=${encodeURIComponent(notification.propertyId)}&tenantId=${encodeURIComponent(notification.senderId)}&tenantName=${encodeURIComponent(senderName)}`}
+                              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                            >
+                              <span className="material-symbols-outlined text-base">play_circle</span>
+                              Iniciar locação
+                            </Link>
+                          </>
+                        )}
+                      </div>
                     </>
                   )}
                   <p className="text-xs text-muted dark:text-gray-500 mt-2">{formatDate(notification.createdAt)}</p>

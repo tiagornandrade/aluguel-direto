@@ -16,6 +16,7 @@ export interface NotificationWithSender {
 
 export interface INotificationRepository {
   create(data: CreateNotificationInput): Promise<Notification>;
+  findById(id: string): Promise<Notification | null>;
   findByRecipient(recipientId: string): Promise<NotificationWithSender[]>;
   markAsRead(id: string, recipientId: string): Promise<boolean>;
   markAllAsRead(recipientId: string): Promise<number>;

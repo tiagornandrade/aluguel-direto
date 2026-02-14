@@ -20,6 +20,8 @@ const STATUS = [
   { value: "ENCERRADO", label: "Encerrado" },
 ] as const;
 
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024; // 5 MB
+
 export function ImovelEditarForm({ property }: { property: Property }) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +36,9 @@ export function ImovelEditarForm({ property }: { property: Property }) {
     rentAmount: property.rentAmount ?? "" as string | number,
     chargesAmount: property.chargesAmount ?? "" as string | number,
     status: property.status,
+    photos: (property as { photos?: string[] }).photos ?? [],
   });
+  const [pendingFiles, setPendingFiles] = useState<File[]>([]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -45,6 +49,7 @@ export function ImovelEditarForm({ property }: { property: Property }) {
     setError(null);
     setLoading(true);
     try {
+      const urlPhotos = form.photos.filter((u) => u.trim().length > 0);
       await propertiesApi.update(property.id, {
         title: form.title.trim(),
         addressLine: form.addressLine.trim(),
@@ -55,7 +60,20 @@ export function ImovelEditarForm({ property }: { property: Property }) {
         rentAmount: form.rentAmount === "" ? null : Number(form.rentAmount),
         chargesAmount: form.chargesAmount === "" ? null : Number(form.chargesAmount),
         status: form.status,
+        photos: urlPhotos,
       });
+      const normalizeContentType = (t: string) => (t === "image/jpg" ? "image/jpeg" : t);
+      for (const file of pendingFiles) {
+        let contentType = normalizeContentType(file.type || "image/jpeg");
+        if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(contentType)) contentType = "image/jpeg";
+        const base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => { const r = reader.result as string; resolve(r.split(",")[1] ?? r); };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        await propertiesApi.uploadPhoto(property.id, { contentType, data: base64 });
+      }
       router.push("/imoveis");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro ao salvar. Tente novamente.");
@@ -183,6 +201,74 @@ export function ImovelEditarForm({ property }: { property: Property }) {
               onChange={(e) => setForm((f) => ({ ...f, chargesAmount: e.target.value }))}
             />
           </label>
+        </div>
+        <div className="md:col-span-2">
+          <span className="text-[#111318] dark:text-white text-base font-semibold block mb-2">Fotos</span>
+          <p className="text-sm text-muted dark:text-gray-400 mb-2">Envie novas imagens (JPG, PNG, WebP, GIF — máx. 5 MB cada) ou edite os links.</p>
+          <div className="mb-3">
+            <label className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-primary/10 text-primary font-medium cursor-pointer hover:bg-primary/20 text-sm">
+              <span className="material-symbols-outlined text-lg">upload_file</span>
+              Enviar imagens
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                multiple
+                className="sr-only"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files ?? []);
+                  const valid = files.filter((f) => f.size <= MAX_PHOTO_BYTES);
+                  const rejected = files.length - valid.length;
+                  if (rejected > 0) setError(`Algumas imagens passaram de 5 MB e foram ignoradas (${rejected}).`);
+                  setPendingFiles((prev) => [...prev, ...valid].slice(0, 20));
+                  e.target.value = "";
+                }}
+              />
+            </label>
+            {pendingFiles.length > 0 && (
+              <span className="ml-2 text-sm text-muted dark:text-gray-500">{pendingFiles.length} nova(s) foto(s) serão enviadas ao salvar.</span>
+            )}
+          </div>
+          <div className="space-y-2">
+            {[...form.photos, ""].map((url, i) => (
+              <div key={i} className="flex gap-2 items-center">
+                <input
+                  type="url"
+                  placeholder="https://exemplo.com/foto.jpg"
+                  className="flex-1 rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-11 px-4 text-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  value={url}
+                  onChange={(e) => {
+                    const next = [...form.photos, ""];
+                    next[i] = e.target.value;
+                    setForm((f) => ({ ...f, photos: next.filter((s) => s.trim().length > 0) }));
+                  }}
+                />
+                {i < form.photos.length && (
+                  <button
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, photos: f.photos.filter((_, j) => j !== i) }))}
+                    className="p-2 rounded-lg border border-[#dcdfe5] dark:border-gray-600 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    title="Remover foto"
+                  >
+                    <span className="material-symbols-outlined text-lg">close</span>
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+          {form.photos.some((u) => u.trim()) && (
+            <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {form.photos.filter((u) => u.trim()).map((u, j) => (
+                <div key={j} className="aspect-video rounded-lg border border-[#dcdfe5] dark:border-gray-600 overflow-hidden bg-gray-100 dark:bg-gray-700">
+                  <img
+                    src={u.startsWith("http") ? u : propertiesApi.photoUrl(property.id, u)}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

@@ -29,6 +29,13 @@ function toNotification(r: {
 }
 
 export const PrismaNotificationRepository: INotificationRepository = {
+  async findById(id: string): Promise<Notification | null> {
+    const r = await prisma.notification.findUnique({
+      where: { id },
+    });
+    return r ? toNotification(r) : null;
+  },
+
   async create(data: CreateNotificationInput): Promise<Notification> {
     const r = await prisma.notification.create({
       data: {

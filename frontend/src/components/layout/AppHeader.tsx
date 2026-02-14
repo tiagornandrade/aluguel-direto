@@ -9,6 +9,7 @@ import { DEV_EMAIL, DEV_PASSWORD, isDevModeClient, isDevUser } from "@/lib/dev-m
 export function AppHeader() {
   const { data: session } = useSession();
   const devMode = isDevModeClient() && isDevUser(session?.user?.email);
+  const canSwitchPersona = devMode && session?.user?.email === DEV_EMAIL;
   const role = (session?.user as { role?: string })?.role as string | undefined;
   const isProprietario = role === "PROPRIETARIO";
   const isInquilino = role === "INQUILINO";
@@ -38,6 +39,7 @@ export function AppHeader() {
               <span className="px-2.5 py-1 text-[10px] font-bold uppercase rounded-md bg-yellow-300 dark:bg-yellow-500/80 text-gray-700 dark:text-gray-900">
                 DEV
               </span>
+              {canSwitchPersona && (
               <div className="inline-flex rounded-lg border border-amber-200/80 dark:border-amber-700/50 overflow-hidden">
                 <button
                   type="button"
@@ -62,6 +64,7 @@ export function AppHeader() {
                   Inquilino
                 </button>
               </div>
+              )}
             </div>
           )}
           {isProprietario && (
@@ -69,7 +72,7 @@ export function AppHeader() {
               <Link href="/imoveis" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Imóveis</Link>
               <Link href="/contratos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Contratos</Link>
               <Link href="/pagamentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Pagamentos</Link>
-              <Link href="#" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Mensagens</Link>
+              <Link href="/mensagens" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Mensagens</Link>
             </>
           )}
           {isInquilino && (
@@ -77,8 +80,9 @@ export function AppHeader() {
               <Link href="/dashboard-inquilino" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Meu Aluguel</Link>
               <Link href="/buscar-imoveis" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Buscar imóveis</Link>
               <Link href="/pagamentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Pagamentos</Link>
-              <Link href="#" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Solicitações</Link>
-              <Link href="#" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Documentos</Link>
+              <Link href="/mensagens" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Mensagens</Link>
+              <Link href="/solicitacoes" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Solicitações</Link>
+              <Link href="/documentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Documentos</Link>
             </>
           )}
           {!isProprietario && !isInquilino && (

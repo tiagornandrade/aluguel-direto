@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    serverActions: { bodySizeLimit: "10mb" },
+  },
   env: {
     NEXT_PUBLIC_DEV_MODE:
       process.env.DEV_MODE ||

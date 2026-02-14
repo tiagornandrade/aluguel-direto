@@ -10,6 +10,7 @@ export interface CreatePropertyInput {
   parkingSpots?: number | null;
   rentAmount?: number | null;
   chargesAmount?: number | null;
+  photos?: string[];
 }
 
 export interface UpdatePropertyInput {
@@ -22,11 +23,13 @@ export interface UpdatePropertyInput {
   rentAmount?: number | null;
   chargesAmount?: number | null;
   status?: Property["status"];
+  photos?: string[];
 }
 
 export interface IPropertyRepository {
   create(data: CreatePropertyInput): Promise<Property>;
   update(id: string, data: UpdatePropertyInput): Promise<Property>;
+  delete(id: string): Promise<void>;
   findById(id: string): Promise<Property | null>;
   findByOwner(ownerId: string): Promise<Property[]>;
   findAvailable(): Promise<Property[]>;

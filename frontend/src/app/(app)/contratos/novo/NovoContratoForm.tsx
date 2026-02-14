@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { contractsApi, propertiesApi } from "@/lib/api-client";
+import { contractsApi, propertiesApi, usersApi } from "@/lib/api-client";
 
 type Props = {
   propertyId?: string;
@@ -18,6 +18,8 @@ export function NovoContratoForm({ propertyId, propertyTitle, tenantId, tenantNa
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [tenantLookupLoading, setTenantLookupLoading] = useState(false);
+  const [tenantLookupError, setTenantLookupError] = useState<string | null>(null);
   const [properties, setProperties] = useState<Array<{ id: string; title: string; addressLine: string }>>([]);
   const [form, setForm] = useState({
     propertyId: propertyId ?? "",
@@ -44,6 +46,24 @@ export function NovoContratoForm({ propertyId, propertyTitle, tenantId, tenantNa
       propertiesApi.list().then((r) => setProperties(r.properties.map((p) => ({ id: p.id, title: p.title, addressLine: p.addressLine }))));
     }
   }, [propertyId]);
+
+  async function handleTenantLookup() {
+    const email = (form.tenantName as string)?.trim();
+    if (!email || !email.includes("@")) {
+      setTenantLookupError("Digite o e-mail do inquilino.");
+      return;
+    }
+    setTenantLookupError(null);
+    setTenantLookupLoading(true);
+    try {
+      const data = await usersApi.lookupTenant(email);
+      setForm((f) => ({ ...f, tenantId: data.id, tenantName: data.fullName }));
+    } catch {
+      setTenantLookupError("Inquilino não encontrado. Verifique o e-mail.");
+    } finally {
+      setTenantLookupLoading(false);
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -116,17 +136,47 @@ export function NovoContratoForm({ propertyId, propertyTitle, tenantId, tenantNa
         </div>
         <div className="md:col-span-2">
           <label className="flex flex-col gap-2">
-            <span className="text-[#111318] dark:text-white font-semibold">ID do inquilino</span>
-            <input
-              type="text"
-              className="w-full rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4"
-              placeholder="ID do usuário inquilino (ex.: dev-1)"
-              value={form.tenantId}
-              onChange={(e) => setForm((f) => ({ ...f, tenantId: e.target.value }))}
-              readOnly={!!tenantId}
-              required
-            />
-            {tenantName && <p className="text-sm text-muted dark:text-gray-400">Interessado: {tenantName}</p>}
+            <span className="text-[#111318] dark:text-white font-semibold">Inquilino</span>
+            {form.tenantId ? (
+              <div className="flex items-center gap-3 flex-wrap">
+                <p className="py-2 px-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-[#111318] dark:text-white font-medium">
+                  {form.tenantName || "Inquilino selecionado"}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setForm((f) => ({ ...f, tenantId: "", tenantName: "" }))}
+                  className="text-sm text-primary font-medium hover:underline"
+                >
+                  Trocar inquilino
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    className="flex-1 rounded-lg border border-[#dcdfe5] dark:border-gray-600 bg-white dark:bg-gray-700 h-12 px-4"
+                    placeholder="E-mail do inquilino (ex.: inquilino@email.com)"
+                    value={form.tenantName}
+                    onChange={(e) => {
+                      setTenantLookupError(null);
+                      setForm((f) => ({ ...f, tenantName: e.target.value }));
+                    }}
+                    onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleTenantLookup())}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleTenantLookup}
+                    disabled={tenantLookupLoading}
+                    className="px-4 py-2 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 disabled:opacity-60 shrink-0"
+                  >
+                    {tenantLookupLoading ? "Buscando…" : "Buscar"}
+                  </button>
+                </div>
+                {tenantLookupError && <p className="text-sm text-red-600 dark:text-red-400">{tenantLookupError}</p>}
+                <p className="text-xs text-muted dark:text-gray-400">Se você recebeu um link de solicitação, o inquilino já foi definido acima.</p>
+              </>
+            )}
           </label>
         </div>
         <div>

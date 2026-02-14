@@ -9,6 +9,7 @@ export async function createProperty(repo: IPropertyRepository, input: CreatePro
     parkingSpots: input.parkingSpots ?? null,
     rentAmount: input.rentAmount ?? null,
     chargesAmount: input.chargesAmount ?? null,
+    photos: input.photos ?? [],
   });
   return { property };
 }

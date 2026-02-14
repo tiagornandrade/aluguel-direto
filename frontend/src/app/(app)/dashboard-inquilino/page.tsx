@@ -141,46 +141,9 @@ export default async function DashboardInquilinoPage() {
             </div>
           )}
 
-          {/* Solicitações Recentes */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold dark:text-white">Solicitações Recentes</h2>
-              <Link href="/solicitacoes" className="text-primary text-sm font-semibold hover:underline">
-                Nova Solicitação
-              </Link>
-            </div>
-            <div className="space-y-3">
-              <p className="text-sm text-muted dark:text-gray-400 text-center py-4">
-                Em breve. Você poderá abrir solicitações de reparos e acompanhar o status aqui.
-              </p>
-            </div>
-          </div>
         </div>
 
         <div className="space-y-6">
-          {/* Central de Ajuda */}
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
-            <h2 className="text-lg font-bold dark:text-white flex items-center gap-2 mb-2">
-              <span className="material-symbols-outlined text-primary">help</span>
-              Central de Ajuda
-            </h2>
-            <p className="text-sm text-muted dark:text-gray-400 mb-4">
-              Dúvidas sobre o seu contrato ou sobre o uso da plataforma?
-            </p>
-            <ul className="space-y-2">
-              {["Como sair do imóvel", "Regras do contrato", "Vistorias e Danos", "Suporte 24h"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="flex items-center justify-between py-2 text-sm font-medium text-ink dark:text-white hover:text-primary group">
-                    {item}
-                    <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">
-                      arrow_forward
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Tempo de Contrato */}
           {active && (
             <div className="bg-white dark:bg-slate-900 rounded-xl border border-[#dcdfe5] dark:border-slate-800 p-5">
