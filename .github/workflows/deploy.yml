@@ -33,6 +33,18 @@ jobs:
         with:
           project_id: ${{ env.GCP_PROJECT_ID }}
 
+      - name: Create backend env file for Cloud Run
+        run: |
+          printf 'DATABASE_URL_PROD: "%s"\n' "$DATABASE_URL_PROD" > backend/env.cloud.yaml
+          printf 'CORS_ORIGINS: "%s"\n' "$CORS_ORIGINS" >> backend/env.cloud.yaml
+          printf 'INTERNAL_API_KEY: "%s"\n' "$INTERNAL_API_KEY" >> backend/env.cloud.yaml
+          [ -n "$OPENAI_API_KEY" ] && printf 'OPENAI_API_KEY: "%s"\n' "$OPENAI_API_KEY" >> backend/env.cloud.yaml
+        env:
+          DATABASE_URL_PROD: ${{ secrets.DATABASE_URL_PROD }}
+          CORS_ORIGINS: ${{ secrets.CORS_ORIGINS }}
+          INTERNAL_API_KEY: ${{ secrets.INTERNAL_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
       - name: Deploy Backend to Cloud Run
         run: make deploy-backend
         env:
@@ -58,6 +70,18 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ env.GCP_PROJECT_ID }}
+
+      - name: Create frontend env file for Cloud Run
+        run: |
+          printf 'NEXT_PUBLIC_API_URL: "%s"\n' "$NEXT_PUBLIC_API_URL" > frontend/env.cloud.yaml
+          printf 'NEXTAUTH_URL: "%s"\n' "$NEXTAUTH_URL" >> frontend/env.cloud.yaml
+          printf 'NEXTAUTH_SECRET: "%s"\n' "$NEXTAUTH_SECRET" >> frontend/env.cloud.yaml
+          printf 'INTERNAL_API_KEY: "%s"\n' "$INTERNAL_API_KEY" >> frontend/env.cloud.yaml
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          INTERNAL_API_KEY: ${{ secrets.INTERNAL_API_KEY }}
 
       - name: Deploy Frontend to Cloud Run
         run: make deploy-frontend
