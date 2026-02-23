@@ -12,6 +12,8 @@ FROM base AS builder
 WORKDIR /app
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+# Fail fast if NEXT_PUBLIC_API_URL is not provided at build time
+RUN test -n "$NEXT_PUBLIC_API_URL"
 COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .
