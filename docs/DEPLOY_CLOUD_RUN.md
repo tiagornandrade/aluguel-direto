@@ -157,8 +157,18 @@ Em **Settings → Secrets and variables → Actions** crie:
 | Secret | Descrição |
 |--------|-----------|
 | `GCP_SA_KEY` | JSON da chave da service account usada para deploy (veja abaixo) |
+| **Backend (deploy-backend)** | |
+| `DATABASE_URL_PROD` | URL do PostgreSQL em produção (ex.: Neon) |
+| `CORS_ORIGINS` | URL do frontend no Cloud Run (ex.: `https://aluguel-direto-xxx.run.app`) |
+| `INTERNAL_API_KEY` | Chave compartilhada com o frontend (ex.: `openssl rand -base64 32`) |
+| `OPENAI_API_KEY` | (opcional) Chave da OpenAI para análise de documentos |
+| **Frontend (deploy-frontend)** | |
+| `NEXT_PUBLIC_API_URL` | URL do backend no Cloud Run (ex.: `https://aluguel-direto-api-xxx.run.app`) |
+| `NEXTAUTH_URL` | URL do frontend no Cloud Run (ex.: `https://aluguel-direto-xxx.run.app`) |
+| `NEXTAUTH_SECRET` | Segredo do NextAuth (ex.: `openssl rand -base64 32`) |
+| `INTERNAL_API_KEY` | Mesmo valor configurado no backend |
 
-O workflow usa por padrão o projeto **intendra-deployments** e a service account **github-actions-sa@intendra-deployments.iam.gserviceaccount.com**. Para outro projeto, adicione o secret `GCP_PROJECT_ID`.
+O workflow gera `backend/env.cloud.yaml` e `frontend/env.cloud.yaml` a partir desses secrets em cada deploy, então o container recebe as variáveis no Cloud Run. O workflow usa por padrão o projeto **intendra-deployments** e a service account **github-actions-sa@intendra-deployments.iam.gserviceaccount.com**. Para outro projeto, adicione o secret `GCP_PROJECT_ID`.
 
 ### Repositório Artifact Registry (uma vez)
 
@@ -182,7 +192,7 @@ O deploy está configurado para usar o projeto **intendra-deployments** e a serv
 1. No projeto **intendra-deployments**, a service account `github-actions-sa` deve ter as roles: **Cloud Run Admin**, **Service Account User** e **Artifact Registry Writer**. (Se o repositório `cloud-run-source-deploy` ainda não existir e você não quiser criá-lo manualmente, use **Artifact Registry Administrator** em vez de Writer.)
 2. Crie uma chave JSON para essa service account e coloque o conteúdo no secret **GCP_SA_KEY** no GitHub.
 
-As **variáveis de ambiente** do backend e do frontend (DATABASE_URL, CORS_ORIGINS, NEXTAUTH_URL, etc.) não são definidas pelo workflow: configure-as uma vez no console do Cloud Run (ou no primeiro deploy manual). O CD apenas atualiza a imagem do serviço e mantém as env já configuradas.
+As **variáveis de ambiente** do backend e do frontend vêm dos **secrets do GitHub** listados acima. O workflow monta os arquivos YAML e passa com `--env-vars-file` para o `gcloud run deploy`, então cada revisão recebe as env atualizadas.
 
 Para usar **Workload Identity Federation** (sem chave JSON), veja a [documentação do Google](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform) e altere o passo "Authenticate to Google Cloud" no `deploy.yml` para usar `workload_identity_provider` e `service_account`.
 
