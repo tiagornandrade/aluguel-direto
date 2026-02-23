@@ -61,7 +61,16 @@ export const notificationsApi = {
   list: () =>
     proxyApi<{
       notifications: Array<{
-        notification: { id: string; type: string; propertyId: string | null; message: string | null; read: boolean; createdAt: string };
+        notification: {
+          id: string;
+          type: string;
+          propertyId: string | null;
+          contractId?: string | null;
+          conversationId?: string | null;
+          message: string | null;
+          read: boolean;
+          createdAt: string;
+        };
         senderName: string;
         propertyTitle: string | null;
       }>;

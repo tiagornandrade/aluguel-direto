@@ -8,3 +8,7 @@ node_modules
 .zed
 .mcp.json
 .opencode.json
+
+# Cloud Run env (valores reais; os .example são versionados)
+backend/env.cloud.yaml
+frontend/env.cloud.yaml

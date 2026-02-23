@@ -3,6 +3,8 @@ import type {
   INotificationRepository,
   CreateNotificationInput,
   NotificationWithSender,
+  SentContactRequestItem,
+  SentRequestItem,
 } from "../../domains/notification/repositories/INotificationRepository";
 import type { Notification } from "../../domains/notification/entities/Notification";
 
@@ -12,6 +14,8 @@ function toNotification(r: {
   senderId: string;
   type: string;
   propertyId: string | null;
+  contractId?: string | null;
+  conversationId?: string | null;
   message: string | null;
   read: boolean;
   createdAt: Date;
@@ -22,6 +26,8 @@ function toNotification(r: {
     senderId: r.senderId,
     type: r.type,
     propertyId: r.propertyId,
+    contractId: r.contractId ?? null,
+    conversationId: r.conversationId ?? null,
     message: r.message,
     read: r.read,
     createdAt: r.createdAt,
@@ -43,6 +49,8 @@ export const PrismaNotificationRepository: INotificationRepository = {
         senderId: data.senderId,
         type: data.type,
         propertyId: data.propertyId ?? null,
+        contractId: data.contractId ?? null,
+        conversationId: data.conversationId ?? null,
         message: data.message ?? null,
       },
     });
@@ -61,6 +69,41 @@ export const PrismaNotificationRepository: INotificationRepository = {
     return rows.map((r) => ({
       notification: toNotification(r),
       senderName: r.sender.fullName,
+      propertyTitle: r.property?.title ?? null,
+    }));
+  },
+
+  async findSentContactRequests(senderId: string): Promise<SentContactRequestItem[]> {
+    const rows = await prisma.notification.findMany({
+      where: { senderId, type: "CONTACT_REQUEST" },
+      include: {
+        recipient: { select: { fullName: true } },
+        property: { select: { title: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return rows.map((r) => ({
+      notification: toNotification(r),
+      recipientName: r.recipient.fullName,
+      propertyTitle: r.property?.title ?? null,
+    }));
+  },
+
+  async findSentRequests(senderId: string): Promise<SentRequestItem[]> {
+    const rows = await prisma.notification.findMany({
+      where: {
+        senderId,
+        type: { in: ["CONTACT_REQUEST", "PEDIDO_REPARO", "PEDIDO_TROCA", "PEDIDO_RESCISAO"] },
+      },
+      include: {
+        recipient: { select: { fullName: true } },
+        property: { select: { title: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return rows.map((r) => ({
+      notification: toNotification(r),
+      recipientName: r.recipient.fullName,
       propertyTitle: r.property?.title ?? null,
     }));
   },

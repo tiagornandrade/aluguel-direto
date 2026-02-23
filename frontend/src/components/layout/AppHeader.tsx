@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Logo } from "@/components/brand/Logo";
+import { CentralDropdown } from "@/components/layout/CentralDropdown";
 import { NotificationBell } from "@/components/layout/NotificationBell";
 import { DEV_EMAIL, DEV_PASSWORD, isDevModeClient, isDevUser } from "@/lib/dev-mode";
 
@@ -72,7 +73,7 @@ export function AppHeader() {
               <Link href="/imoveis" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Imóveis</Link>
               <Link href="/contratos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Contratos</Link>
               <Link href="/pagamentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Pagamentos</Link>
-              <Link href="/mensagens" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Mensagens</Link>
+              <CentralDropdown isInquilino={false} />
             </>
           )}
           {isInquilino && (
@@ -80,9 +81,7 @@ export function AppHeader() {
               <Link href="/dashboard-inquilino" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Meu Aluguel</Link>
               <Link href="/buscar-imoveis" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Buscar imóveis</Link>
               <Link href="/pagamentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Pagamentos</Link>
-              <Link href="/mensagens" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Mensagens</Link>
-              <Link href="/solicitacoes" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Solicitações</Link>
-              <Link href="/documentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Documentos</Link>
+              <CentralDropdown isInquilino={true} />
             </>
           )}
           {!isProprietario && !isInquilino && (
@@ -90,6 +89,7 @@ export function AppHeader() {
               <Link href="/imoveis" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Imóveis</Link>
               <Link href="/contratos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Contratos</Link>
               <Link href="/pagamentos" className="text-sm font-medium text-muted dark:text-gray-400 hover:text-primary">Pagamentos</Link>
+              <CentralDropdown isInquilino={false} />
             </>
           )}
         </nav>
