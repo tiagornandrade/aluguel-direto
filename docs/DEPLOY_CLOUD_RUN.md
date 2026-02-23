@@ -192,7 +192,7 @@ O deploy está configurado para usar o projeto **intendra-deployments** e a serv
 1. No projeto **intendra-deployments**, a service account `github-actions-sa` deve ter as roles: **Cloud Run Admin**, **Service Account User** e **Artifact Registry Writer**. (Se o repositório `cloud-run-source-deploy` ainda não existir e você não quiser criá-lo manualmente, use **Artifact Registry Administrator** em vez de Writer.)
 2. Crie uma chave JSON para essa service account e coloque o conteúdo no secret **GCP_SA_KEY** no GitHub.
 
-As **variáveis de ambiente** do backend e do frontend vêm dos **secrets do GitHub** listados acima. O workflow monta os arquivos YAML e passa com `--env-vars-file` para o `gcloud run deploy`, então cada revisão recebe as env atualizadas.
+As **variáveis de ambiente** do backend e do frontend vêm dos **secrets do GitHub** listados acima. O backend usa `--env-vars-file` no deploy. O **frontend** é construído no CI com `NEXT_PUBLIC_API_URL` como build arg (para o Next.js embutir a URL do backend no bundle); as demais (NEXTAUTH_URL, NEXTAUTH_SECRET, INTERNAL_API_KEY) são passadas em runtime com `--env-vars-file`.
 
 Para usar **Workload Identity Federation** (sem chave JSON), veja a [documentação do Google](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform) e altere o passo "Authenticate to Google Cloud" no `deploy.yml` para usar `workload_identity_provider` e `service_account`.
 

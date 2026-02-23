@@ -7,9 +7,11 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install --omit=dev
 
-# Build
+# Build (NEXT_PUBLIC_* must be set at build time - they are inlined into the client bundle)
 FROM base AS builder
 WORKDIR /app
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .

@@ -72,20 +72,32 @@ jobs:
         with:
           project_id: ${{ env.GCP_PROJECT_ID }}
 
-      - name: Create frontend env file for Cloud Run
+      - name: Create frontend env file for Cloud Run (runtime)
         run: |
-          printf 'NEXT_PUBLIC_API_URL: "%s"\n' "$NEXT_PUBLIC_API_URL" > frontend/env.cloud.yaml
-          printf 'NEXTAUTH_URL: "%s"\n' "$NEXTAUTH_URL" >> frontend/env.cloud.yaml
+          printf 'NEXTAUTH_URL: "%s"\n' "$NEXTAUTH_URL" > frontend/env.cloud.yaml
           printf 'NEXTAUTH_SECRET: "%s"\n' "$NEXTAUTH_SECRET" >> frontend/env.cloud.yaml
           printf 'INTERNAL_API_KEY: "%s"\n' "$INTERNAL_API_KEY" >> frontend/env.cloud.yaml
         env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           INTERNAL_API_KEY: ${{ secrets.INTERNAL_API_KEY }}
 
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev --quiet
+
+      - name: Build and push frontend image
+        run: |
+          IMAGE="${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/cloud-run-source-deploy/${{ env.FRONTEND_SERVICE }}:latest"
+          docker build \
+            --build-arg NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
+            -t "$IMAGE" ./frontend
+          docker push "$IMAGE"
+
       - name: Deploy Frontend to Cloud Run
-        run: make deploy-frontend
-        env:
-          GCP_REGION: ${{ env.GCP_REGION }}
-          FRONTEND_SERVICE: ${{ env.FRONTEND_SERVICE }}
+        run: |
+          IMAGE="${{ env.GCP_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/cloud-run-source-deploy/${{ env.FRONTEND_SERVICE }}:latest"
+          gcloud run deploy ${{ env.FRONTEND_SERVICE }} \
+            --image "$IMAGE" \
+            --region ${{ env.GCP_REGION }} \
+            --allow-unauthenticated \
+            --env-vars-file frontend/env.cloud.yaml
