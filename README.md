@@ -48,6 +48,8 @@ A aplicação é composta por **backend** e **frontend** (monorepo com npm works
    npm run build:frontend
    ```
 
+   **Se aparecer `ERR_CONNECTION_REFUSED` em `localhost:4000`** (ex.: ao registrar ou fazer login): o frontend está tentando falar com o backend na porta 4000 e nada está escutando. Suba o backend com `npm run dev` (backend + frontend) ou, em outro terminal, `npm run dev:backend`. Se quiser usar a API em produção com o frontend local, defina `NEXT_PUBLIC_API_URL` no `frontend/.env.local` com a URL do backend no Cloud Run.
+
 5. **Modo desenvolvimento (opcional):** com o frontend rodando localmente (`npm run dev` ou `npm run dev:frontend`), o *dev mode* é ativado automaticamente quando `NODE_ENV=development` (o padrão de `npm run dev`). Você pode acessar o SaaS sem login real: na landing ou no login, use os botões **“Entrar como Proprietário”** ou **“Entrar como Inquilino”** do banner “Modo desenvolvimento”. Dentro do app, o header exibe um seletor **Dev: Proprietário | Inquilino** para trocar de persona. O backend não é chamado no login em dev. Com o seed executado (passo 3), o usuário dev pode criar imóveis normalmente.  
    - **Se os botões "Entrar como…" deixarem você na tela de login:** em `frontend/.env` ou `frontend/.env.local` defina `NEXTAUTH_SECRET` (ex.: `openssl rand -base64 32`) e `NEXTAUTH_URL=http://localhost:3000`. Se ainda falhar, adicione `DEV_MODE=true` e reinicie o frontend.
 
