@@ -3,6 +3,9 @@ name: CD (Deploy to Cloud Run)
 on:
   push:
     branches: [main]
+    paths:
+      - "backend/**"
+      - "frontend/**"
 
 env:
   GCP_PROJECT_ID: intendra-deployments
