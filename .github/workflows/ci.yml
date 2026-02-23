@@ -28,6 +28,8 @@ jobs:
 
       - name: Prisma generate (backend)
         run: npm run db:generate -w aluguel-direto-backend
+        env:
+          DATABASE_URL: postgresql://localhost:5432/ci_placeholder?sslmode=disable
 
       - name: Build backend
         run: npm run build:backend
