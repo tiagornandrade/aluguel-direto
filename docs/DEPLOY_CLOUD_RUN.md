@@ -160,11 +160,26 @@ Em **Settings → Secrets and variables → Actions** crie:
 
 O workflow usa por padrão o projeto **intendra-deployments** e a service account **github-actions-sa@intendra-deployments.iam.gserviceaccount.com**. Para outro projeto, adicione o secret `GCP_PROJECT_ID`.
 
+### Repositório Artifact Registry (uma vez)
+
+O `gcloud run deploy --source` usa por padrão o repositório **cloud-run-source-deploy** na região do deploy. Se ele não existir, o comando tenta criá-lo e a service account precisa da permissão `artifactregistry.repositories.create`.
+
+**Recomendado:** crie o repositório uma vez com uma conta que tenha permissão (ex.: Owner), para que a SA do GitHub só precise de **Artifact Registry Writer**:
+
+```bash
+gcloud artifacts repositories create cloud-run-source-deploy \
+  --repository-format=docker \
+  --location=us-central1 \
+  --project=intendra-deployments
+```
+
+Se preferir que a SA crie o repositório, conceda a ela a role **Artifact Registry Administrator** (ou uma custom com `artifactregistry.repositories.create`).
+
 ### Service account no GCP
 
 O deploy está configurado para usar o projeto **intendra-deployments** e a service account **github-actions-sa@intendra-deployments.iam.gserviceaccount.com** para autenticar o pipeline (secret **GCP_SA_KEY** = chave JSON dessa SA).
 
-1. No projeto **intendra-deployments**, a service account `github-actions-sa` deve ter as roles: **Cloud Run Admin**, **Service Account User** e **Artifact Registry Writer** (ou **Storage Admin** se usar Container Registry).
+1. No projeto **intendra-deployments**, a service account `github-actions-sa` deve ter as roles: **Cloud Run Admin**, **Service Account User** e **Artifact Registry Writer**. (Se o repositório `cloud-run-source-deploy` ainda não existir e você não quiser criá-lo manualmente, use **Artifact Registry Administrator** em vez de Writer.)
 2. Crie uma chave JSON para essa service account e coloque o conteúdo no secret **GCP_SA_KEY** no GitHub.
 
 As **variáveis de ambiente** do backend e do frontend (DATABASE_URL, CORS_ORIGINS, NEXTAUTH_URL, etc.) não são definidas pelo workflow: configure-as uma vez no console do Cloud Run (ou no primeiro deploy manual). O CD apenas atualiza a imagem do serviço e mantém as env já configuradas.
