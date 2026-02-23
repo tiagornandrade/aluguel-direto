@@ -24,6 +24,7 @@ app.use("/api/v1/notifications", notificationsRouter);
 app.use("/api/v1/installments", installmentsRouter);
 app.use("/api/v1/conversations", conversationsRouter);
 
-app.listen(env.PORT, () => {
-  console.log(`Backend running at http://localhost:${env.PORT}`);
+const host = process.env.HOST ?? "0.0.0.0";
+app.listen(env.PORT, host, () => {
+  console.log(`Backend running at http://${host}:${env.PORT}`);
 });
