@@ -1,8 +1,9 @@
 import { getServerSession } from "next-auth";
+import { headers } from "next/headers";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getPropertiesForUser, getContractsForOwner, getInstallmentsForOwner, getNotificationsForUser } from "@/lib/backend-server";
+import { getPropertiesForUser, getContractsForOwner, getInstallmentsForOwner, getNotificationsForUser, getOwnerPendingDocumentsCount } from "@/lib/backend-server";
 
 function formatCurrency(val: number | null) {
   if (val == null) return "—";
@@ -29,18 +30,22 @@ export default async function DashboardProprietarioPage() {
   let ownerContracts: Awaited<ReturnType<typeof getContractsForOwner>> = [];
   let installments: Awaited<ReturnType<typeof getInstallmentsForOwner>> = [];
   let notifications: Awaited<ReturnType<typeof getNotificationsForUser>>["notifications"] = [];
+  let pendenciasDoc = 0;
 
+  const cookie = (await headers()).get("cookie") ?? undefined;
   try {
-    const [props, contracts, inst, notif] = await Promise.all([
+    const [props, contracts, inst, notif, pendingDocCount] = await Promise.all([
       getPropertiesForUser(),
       getContractsForOwner(),
       getInstallmentsForOwner(),
-      getNotificationsForUser(),
+      getNotificationsForUser(cookie),
+      getOwnerPendingDocumentsCount(),
     ]);
     properties = props;
     ownerContracts = contracts;
     installments = inst;
     notifications = notif.notifications;
+    pendenciasDoc = pendingDocCount;
   } catch (err) {
     return (
       <div className="max-w-[1200px] mx-auto px-4 md:px-10 py-8">
@@ -57,15 +62,15 @@ export default async function DashboardProprietarioPage() {
   }
 
   const ativos = properties.length;
-  const pendenciasDoc = 0;
   const proximosReceb = installments
     .filter((i) => i.installment.status !== "PAGO")
     .reduce((s, i) => s + i.installment.amount, 0);
 
-  const activeByProperty = new Map<string, { tenantName: string; rentAmount: number }>();
+  const activeByProperty = new Map<string, { contractId: string; tenantName: string; rentAmount: number }>();
   for (const c of ownerContracts) {
     if (c.contract.status === "ATIVO") {
       activeByProperty.set(c.contract.propertyId, {
+        contractId: c.contract.id,
         tenantName: c.tenant.fullName,
         rentAmount: c.contract.rentAmount + c.contract.chargesAmount,
       });
@@ -76,6 +81,23 @@ export default async function DashboardProprietarioPage() {
     (c) => c.contract.status === "PENDENTE_ASSINATURA" && !c.contract.ownerSignedAt
   );
   const contactRequests = notifications.filter((n) => n.notification.type === "CONTACT_REQUEST" && !n.notification.read);
+  const tenantRequests = notifications.filter(
+    (n) =>
+      ["PEDIDO_REPARO", "PEDIDO_TROCA", "PEDIDO_RESCISAO"].includes(n.notification.type) && !n.notification.read
+  );
+
+  function tenantRequestTypeLabel(type: string): string {
+    switch (type) {
+      case "PEDIDO_REPARO":
+        return "reparo/manutenção";
+      case "PEDIDO_TROCA":
+        return "troca de algo";
+      case "PEDIDO_RESCISAO":
+        return "rescisão do contrato";
+      default:
+        return type;
+    }
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto px-4 md:px-10 py-8">
@@ -94,15 +116,16 @@ export default async function DashboardProprietarioPage() {
             <p className="text-3xl font-bold dark:text-white mt-1">{ativos}</p>
           </div>
         </div>
-        <div className="rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#dcdfe5] dark:border-slate-800 shadow-sm flex items-start gap-4">
+        <Link href="/documentos" className="rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#dcdfe5] dark:border-slate-800 shadow-sm flex items-start gap-4 hover:border-primary/50 transition-colors">
           <div className="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center shrink-0">
             <span className="material-symbols-outlined text-amber-600 dark:text-amber-400 text-2xl">description</span>
           </div>
           <div>
             <p className="text-[#636f88] dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Pendências Documentais</p>
             <p className="text-3xl font-bold dark:text-white mt-1">{pendenciasDoc}</p>
+            <p className="text-xs text-primary font-medium mt-1">Analisar documentação</p>
           </div>
-        </div>
+        </Link>
         <div className="rounded-xl p-6 bg-white dark:bg-slate-900 border border-[#dcdfe5] dark:border-slate-800 shadow-sm flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0">
             <span className="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">payments</span>
@@ -138,6 +161,7 @@ export default async function DashboardProprietarioPage() {
                       <th className="p-4">Status</th>
                       <th className="p-4">Locatário</th>
                       <th className="p-4">Valor</th>
+                      <th className="p-4">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,6 +180,17 @@ export default async function DashboardProprietarioPage() {
                           <td className="p-4">{statusTag(p.status)}</td>
                           <td className="p-4 text-muted dark:text-gray-400">{active?.tenantName ?? "—"}</td>
                           <td className="p-4 font-medium dark:text-white">{formatCurrency(active?.rentAmount ?? (p.rentAmount ?? p.chargesAmount))}</td>
+                          <td className="p-4">
+                            {active && (
+                              <Link
+                                href={`/solicitacoes/enviar-ao-locatario?contractId=${encodeURIComponent(active.contractId)}`}
+                                className="text-sm font-medium text-primary hover:underline"
+                                title="Enviar uma solicitação ou aviso para o locatário"
+                              >
+                                Enviar solicitação ao locatário
+                              </Link>
+                            )}
+                          </td>
                         </tr>
                       );
                     })}
@@ -205,7 +240,25 @@ export default async function DashboardProprietarioPage() {
                 </div>
               </div>
             )}
-            {pendingOwnerSignature.length === 0 && contactRequests.length === 0 && (
+            {tenantRequests.length > 0 && (
+              <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900">
+                <div className="flex gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-amber-600 dark:text-amber-400">mail</span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold dark:text-white">Solicitação recebida do locatário</p>
+                    <p className="text-sm text-muted dark:text-gray-400">
+                      {tenantRequests[0].senderName} solicitou {tenantRequestTypeLabel(tenantRequests[0].notification.type)} — {tenantRequests[0].propertyTitle ?? "imóvel"}
+                    </p>
+                    <Link href="/notificacoes" className="inline-block mt-2 text-sm font-semibold text-primary hover:underline">
+                      Ver em Notificações
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+            {pendingOwnerSignature.length === 0 && contactRequests.length === 0 && tenantRequests.length === 0 && (
               <div className="p-4 rounded-xl border border-[#dcdfe5] dark:border-slate-700 bg-white dark:bg-slate-900 text-center">
                 <p className="text-muted dark:text-gray-400 text-sm">Nenhuma ação prioritária no momento.</p>
               </div>

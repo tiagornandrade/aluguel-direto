@@ -13,8 +13,7 @@ import { conversationsRouter } from "./routes/conversations";
 
 const app = express();
 app.use(cors({ origin: env.CORS_ORIGINS, credentials: true }));
-// Limite maior para upload de fotos em base64 (cada foto até 5 MB → ~6,7 MB em base64)
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "15mb" }));
 
 app.use("/api/v1/health", healthRouter);
 app.use("/api/v1/auth", authRouter);

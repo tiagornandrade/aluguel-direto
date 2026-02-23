@@ -1,0 +1,30 @@
+# Frontend Aluguel Direto (Next.js) - Cloud Run
+FROM node:23-alpine AS base
+
+# Dependencies
+FROM base AS deps
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev
+
+# Build
+FROM base AS builder
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm install
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
+
+# Runner (standalone)
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=8080
+EXPOSE 8080
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+CMD ["node", "server.js"]

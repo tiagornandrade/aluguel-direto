@@ -6,12 +6,15 @@ import { getConversationDetails } from "../../application/conversation/get-conve
 import { getOrCreateConversation } from "../../application/conversation/get-or-create-conversation";
 import { listMessages } from "../../application/conversation/list-messages";
 import { sendMessage } from "../../application/conversation/send-message";
+import { createNewMessageNotification } from "../../application/notification/create-new-message-notification";
 import { PrismaConversationRepository } from "../../infrastructure/persistence/PrismaConversationRepository";
 import { PrismaPropertyRepository } from "../../infrastructure/persistence/PrismaPropertyRepository";
+import { PrismaNotificationRepository } from "../../infrastructure/persistence/PrismaNotificationRepository";
 
 const conversationsRouter = Router();
 const conversationRepo = PrismaConversationRepository;
 const propertyRepo = PrismaPropertyRepository;
+const notificationRepo = PrismaNotificationRepository;
 
 function requireInternalAuth(req: Request, res: Response): string | null {
   const key = req.headers["x-api-key"];
@@ -93,10 +96,17 @@ conversationsRouter.get("/:id/messages", async (req, res) => {
 conversationsRouter.post("/:id/messages", async (req, res) => {
   const userId = requireInternalAuth(req, res);
   if (!userId) return;
-  const { id } = req.params;
+  const { id: conversationId } = req.params;
   try {
     const body = sendMessageBody.parse(req.body);
-    const { message } = await sendMessage(conversationRepo, id, userId, body.content);
+    const { message } = await sendMessage(conversationRepo, conversationId, userId, body.content);
+    await createNewMessageNotification(
+      notificationRepo,
+      conversationRepo,
+      conversationId,
+      userId,
+      body.content
+    );
     res.status(201).json(message);
   } catch (e) {
     if (e instanceof z.ZodError) return res.status(400).json({ error: "VALIDATION_ERROR", details: e.errors });

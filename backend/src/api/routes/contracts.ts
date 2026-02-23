@@ -9,6 +9,8 @@ import { signContract } from "../../application/contract/sign-contract";
 import { endContract } from "../../application/contract/end-contract";
 import { PrismaContractRepository } from "../../infrastructure/persistence/PrismaContractRepository";
 import { PrismaPropertyRepository } from "../../infrastructure/persistence/PrismaPropertyRepository";
+import { contractDocumentsRouter } from "./contract-documents";
+import { prisma } from "../../lib/db";
 
 const contractsRouter = Router();
 const contractRepo = PrismaContractRepository;
@@ -64,6 +66,25 @@ contractsRouter.get("/as-owner", async (req, res) => {
     throw e;
   }
 });
+
+contractsRouter.get("/as-owner/documents-pending-count", async (req, res) => {
+  const ownerId = requireInternalAuth(req, res);
+  if (!ownerId) return;
+  try {
+    const count = await prisma.tenantDocument.count({
+      where: {
+        status: "PENDENTE_ANALISE",
+        contract: { ownerId },
+      },
+    });
+    res.json({ count });
+  } catch (e) {
+    console.error("GET /contracts/as-owner/documents-pending-count error:", e);
+    res.status(500).json({ error: "Erro ao carregar." });
+  }
+});
+
+contractsRouter.use("/:id/documents", contractDocumentsRouter);
 
 contractsRouter.get("/:id", async (req, res) => {
   const userId = requireInternalAuth(req, res);

@@ -105,8 +105,32 @@ model Contract {
   tenant   User     @relation("TenantContracts", fields: [tenantId], references: [id], onDelete: Cascade)
   owner    User     @relation("OwnerContracts", fields: [ownerId], references: [id], onDelete: Cascade)
   installments RentInstallment[]
+  tenantDocuments TenantDocument[]
+  notifications   Notification[]
 
   @@map("contracts")
+}
+
+model TenantDocument {
+  id             String    @id @default(cuid())
+  contractId     String
+  tenantId       String
+  type           String    // RG | CPF | COMPROVANTE_RENDA | COMPROVANTE_ENDERECO
+  fileName       String
+  contentType    String    // application/pdf, image/jpeg, etc.
+  data           Bytes
+  status         String    @default("PENDENTE_ANALISE") // PENDENTE_ANALISE | APROVADO | REJEITADO
+  rejectedReason String?   @db.Text
+  reviewedAt     DateTime?
+  reviewedById   String?
+  analysisResult Json?     // resultado da análise por IA (resumo, checklist)
+  analyzedAt     DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@map("tenant_documents")
 }
 
 model RentInstallment {
@@ -128,18 +152,21 @@ model RentInstallment {
 }
 
 model Notification {
-  id          String    @id @default(cuid())
-  recipientId String
-  senderId    String
-  type        String    // CONTACT_REQUEST | ...
-  propertyId  String?
-  message     String?
-  read        Boolean   @default(false)
-  createdAt   DateTime  @default(now())
+  id             String    @id @default(cuid())
+  recipientId    String
+  senderId       String
+  type           String    // CONTACT_REQUEST | PEDIDO_* | SOLICITACAO_LOCADOR_TROCA | NOVA_MENSAGEM
+  propertyId     String?
+  contractId     String?
+  conversationId String?
+  message        String?
+  read           Boolean   @default(false)
+  createdAt      DateTime  @default(now())
 
   recipient User     @relation("NotificationsReceived", fields: [recipientId], references: [id], onDelete: Cascade)
   sender    User     @relation("NotificationsSent", fields: [senderId], references: [id], onDelete: Cascade)
   property  Property? @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+  contract  Contract? @relation(fields: [contractId], references: [id], onDelete: SetNull)
 
   @@map("notifications")
 }

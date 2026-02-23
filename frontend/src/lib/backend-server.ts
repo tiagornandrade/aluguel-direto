@@ -81,12 +81,34 @@ export async function getAvailablePropertyById(id: string): Promise<AvailablePro
 }
 
 export interface NotificationItem {
-  notification: { id: string; senderId: string; type: string; propertyId: string | null; message: string | null; read: boolean; createdAt: string };
+  notification: {
+    id: string;
+    senderId: string;
+    type: string;
+    propertyId: string | null;
+    contractId?: string | null;
+    conversationId?: string | null;
+    message: string | null;
+    read: boolean;
+    createdAt: string;
+  };
   senderName: string;
   propertyTitle: string | null;
 }
 
-export async function getNotificationsForUser(): Promise<{ notifications: NotificationItem[]; unreadCount: number }> {
+export async function getNotificationsForUser(cookieFromRequest?: string | null): Promise<{ notifications: NotificationItem[]; unreadCount: number }> {
+  if (cookieFromRequest) {
+    const baseUrl =
+      process.env.NEXTAUTH_URL ??
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+    const res = await safeFetchResponse(`${baseUrl}/api/proxy/notifications`, {
+      headers: { cookie: cookieFromRequest },
+      cache: "no-store",
+    });
+    if (!res?.ok) return { notifications: [], unreadCount: 0 };
+    const data = (await res.json().catch(() => null)) as { notifications?: NotificationItem[]; unreadCount?: number } | null;
+    return { notifications: data?.notifications ?? [], unreadCount: data?.unreadCount ?? 0 };
+  }
   const session = await getServerSession(authOptions);
   if (!session?.user?.id || !INTERNAL_KEY) return { notifications: [], unreadCount: 0 };
   const res = await safeFetchResponse(`${BACKEND}/api/v1/notifications`, {
@@ -96,6 +118,48 @@ export async function getNotificationsForUser(): Promise<{ notifications: Notifi
   if (!res?.ok) return { notifications: [], unreadCount: 0 };
   const data = (await res.json().catch(() => null)) as { notifications?: NotificationItem[]; unreadCount?: number } | null;
   return { notifications: data?.notifications ?? [], unreadCount: data?.unreadCount ?? 0 };
+}
+
+export interface SentContactRequestItem {
+  notification: {
+    id: string;
+    recipientId: string;
+    senderId: string;
+    type: string;
+    propertyId: string | null;
+    contractId?: string | null;
+    message: string | null;
+    read: boolean;
+    createdAt: string;
+  };
+  recipientName: string;
+  propertyTitle: string | null;
+}
+
+export type SentRequestItem = SentContactRequestItem;
+
+export async function getSentContactRequests(): Promise<SentContactRequestItem[]> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id || !INTERNAL_KEY) return [];
+  const res = await safeFetchResponse(`${BACKEND}/api/v1/notifications/sent-contact-requests`, {
+    headers: { "X-User-Id": session.user.id, "X-Api-Key": INTERNAL_KEY },
+    cache: "no-store",
+  });
+  if (!res?.ok) return [];
+  const data = (await res.json().catch(() => null)) as { requests?: SentContactRequestItem[] } | null;
+  return data?.requests ?? [];
+}
+
+export async function getSentRequests(): Promise<SentRequestItem[]> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id || !INTERNAL_KEY) return [];
+  const res = await safeFetchResponse(`${BACKEND}/api/v1/notifications/sent-requests`, {
+    headers: { "X-User-Id": session.user.id, "X-Api-Key": INTERNAL_KEY },
+    cache: "no-store",
+  });
+  if (!res?.ok) return [];
+  const data = (await res.json().catch(() => null)) as { requests?: SentRequestItem[] } | null;
+  return data?.requests ?? [];
 }
 
 export interface SenderProfileForAnalysis {
@@ -176,6 +240,18 @@ export async function getContractsForOwner(): Promise<ContractForOwnerItem[]> {
   if (!res?.ok) return [];
   const data = (await res.json().catch(() => null)) as { contracts?: ContractForOwnerItem[] } | null;
   return data?.contracts ?? [];
+}
+
+export async function getOwnerPendingDocumentsCount(): Promise<number> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id || !INTERNAL_KEY) return 0;
+  const res = await safeFetchResponse(`${BACKEND}/api/v1/contracts/as-owner/documents-pending-count`, {
+    headers: { "X-User-Id": session.user.id, "X-Api-Key": INTERNAL_KEY },
+    cache: "no-store",
+  });
+  if (!res?.ok) return 0;
+  const data = (await res.json().catch(() => null)) as { count?: number } | null;
+  return data?.count ?? 0;
 }
 
 export interface UserForContract {
@@ -302,8 +378,6 @@ export async function getInstallmentById(id: string): Promise<InstallmentDetail 
   return (await res.json().catch(() => null)) as InstallmentDetail | null;
 }
 
-// --- Conversas / Mensagens ---
-
 export interface ConversationListItem {
   conversation: { id: string; propertyId: string; ownerId: string; otherParticipantId: string; createdAt: string; updatedAt: string };
   property: { id: string; title: string; addressLine: string };
@@ -381,4 +455,101 @@ export async function sendMessageAction(conversationId: string, content: string)
     return { ok: false, error: err.error ?? "Erro ao enviar" };
   }
   return { ok: true };
+}
+
+export const DOCUMENT_TYPES = ["RG", "CPF", "COMPROVANTE_RENDA", "COMPROVANTE_ENDERECO"] as const;
+export const DOCUMENT_TYPE_LABELS: Record<(typeof DOCUMENT_TYPES)[number], string> = {
+  RG: "RG (Documento de identidade)",
+  CPF: "CPF",
+  COMPROVANTE_RENDA: "Comprovante de renda",
+  COMPROVANTE_ENDERECO: "Comprovante de endereço",
+};
+
+export interface DocumentAnalysisResult {
+  summary: string;
+  legivel: boolean;
+  checklist: {
+    documento_legivel: boolean;
+    dados_conferem_tipo: boolean;
+    observacoes?: string;
+  };
+  model: string;
+  analyzedAt: string;
+}
+
+export interface TenantDocumentMeta {
+  id: string;
+  contractId: string;
+  tenantId: string;
+  type: string;
+  fileName: string;
+  contentType: string;
+  status: string;
+  rejectedReason: string | null;
+  reviewedAt: string | null;
+  reviewedById: string | null;
+  analysisResult: DocumentAnalysisResult | null;
+  analyzedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function getContractDocuments(contractId: string): Promise<TenantDocumentMeta[]> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id || !INTERNAL_KEY) return [];
+  const res = await safeFetchResponse(`${BACKEND}/api/v1/contracts/${contractId}/documents`, {
+    headers: { "X-User-Id": session.user.id, "X-Api-Key": INTERNAL_KEY },
+    cache: "no-store",
+  });
+  if (!res?.ok) return [];
+  const data = (await res.json().catch(() => null)) as { documents?: TenantDocumentMeta[] } | null;
+  return data?.documents ?? [];
+}
+
+export async function uploadContractDocument(
+  contractId: string,
+  payload: { type: string; fileName: string; contentType: string; data: string }
+): Promise<{ document?: TenantDocumentMeta; error?: string }> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id || !INTERNAL_KEY) return { error: "UNAUTHORIZED" };
+  const res = await safeFetchResponse(`${BACKEND}/api/v1/contracts/${contractId}/documents`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-User-Id": session.user.id,
+      "X-Api-Key": INTERNAL_KEY,
+    },
+    body: JSON.stringify(payload),
+    cache: "no-store",
+  });
+  if (!res) return { error: "Falha de conexão com o servidor." };
+  const data = (await res.json().catch(() => ({}))) as { document?: TenantDocumentMeta; error?: string } | null;
+  if (!res.ok) return { error: (data?.error as string) ?? "Erro ao enviar documento." };
+  return { document: data?.document };
+}
+
+export async function reviewContractDocument(
+  contractId: string,
+  docId: string,
+  payload: { status: "APROVADO" | "REJEITADO"; rejectedReason?: string | null }
+): Promise<{ document?: TenantDocumentMeta; error?: string }> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id || !INTERNAL_KEY) return { error: "UNAUTHORIZED" };
+  const res = await safeFetchResponse(
+    `${BACKEND}/api/v1/contracts/${contractId}/documents/${docId}/review`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-User-Id": session.user.id,
+        "X-Api-Key": INTERNAL_KEY,
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    }
+  );
+  if (!res) return { error: "Falha de conexão com o servidor." };
+  const data = (await res.json().catch(() => ({}))) as { document?: TenantDocumentMeta; error?: string } | null;
+  if (!res.ok) return { error: (data?.error as string) ?? "Erro ao atualizar análise." };
+  return { document: data?.document };
 }
